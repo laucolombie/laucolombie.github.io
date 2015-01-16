@@ -26,7 +26,7 @@ var KONBINIMOBILEAD = (function () {
 			image.setAttribute('src',imgPath);
 			image.setAttribute('title',imgTitle);
 			image.style.position = 'fixed';
-			image.style.top = '200px';
+			image.style.top = '0px';
 		}
  	};
 
