@@ -1,11 +1,19 @@
 
 var KONBINIMOBILEAD = (function () {
 
-	var ad_container = document.getElementById('5196125');
+	var ad_container = document.getElementById('5196125'),
+		wrapper = document.createElement('div');
+
+	ad_container.appendChild(wrapper);
+
+	wrapper.setAttribute('id','wrapper');
 	
 	ad_container.style.width = '100%';
 	ad_container.style.height = '200px';
-	ad_container.style.backgroundImage = 'url(test.jpg)';
+	
+	wrapper.style.backgroundImage = 'url(test.jpg)';
+	wrapper.style.width = '100%';
+	wrapper.style.height = '100%';
 
 	//if element is an image
 	// var image = document.createElement('img'),
