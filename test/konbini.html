@@ -98,7 +98,7 @@
         <script src="http://www.konbini.com/fr/wp-content/themes/konbini/js/respond.min.js"></script>
 <![endif]-->
     </head>
-    <body class="home blog">
+    <body class="home blog" onload="loaded()">
         <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -178,7 +178,7 @@
 <div class="main-column column box-cell">
     <div class="main-column-inner">
         
-<div class="container-header clearfix" style='background-color:#fff'>
+<div class="container-header clearfix">
 	<header class="header clearfix">
 		<div id="logo">
 			<a href="http://www.konbini.com/fr"><img src="http://www.konbini.com/fr/wp-content/themes/konbini/images/logo_konbini.gif" alt="Konbini"></a>
@@ -227,9 +227,6 @@
     </div>
 </article>
 
-
-
-
 <!-- item column 1 -->
 <article class="item">
     <div class="item-thumb">
@@ -269,8 +266,6 @@
     </div>
 </article>
 
-
-
 <div class='item item-adv'><div id='5196125' data-placement='5196125' data-alias='fr_home_left' class='ADTECH_QUEUE' class='mobiletest'></div></div>
 
 <!-- item column 1 -->
@@ -292,9 +287,6 @@
         </div>
     </div>
 </article>
-
-
-
 
 <!-- item column 1 -->
 <article class="item">
@@ -389,37 +381,13 @@
 </div> <!-- end wrapper -->
 <a href="#top" class="btn-scrolltop"></a>
 <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="stellar.js"></script>
-<script type="text/javascript" src="http://markdalgleish.com/examples/mobileparallax/iscroll.js"></script>
+<script type="text/javascript" src="konbiniscrollm.js"></script>
 <script src="script_mobile_ad.js"></script>
 <script type="text/javascript">
-    // var ua = navigator.userAgent,
-    //     isMobileWebkit = /WebKit/.test(ua) && /Mobile/.test(ua);
-
-    // if (isMobileWebkit) {
-    //     $('html').addClass('mobile');
-    // }
-
-    $(function(){
-        var iScrollInstance;
-
-        // //if (isMobileWebkit) {
-        //     iScrollInstance = new iScroll('5196125');
-        //     console.log(iScrollInstance);
-
-        //     $('#wrapper').stellar({
-        //         scrollProperty: 'transform',
-        //         horizontalScrolling: false,
-        //         verticalOffset: 150
-        //     });
-        // } else {
-        //     $.stellar({
-        //         horizontalScrolling: false,
-        //         verticalOffset: 150
-        //     });
-        // }
-    });
-
+    function loaded () {
+        
+        var scrollMAd = new KonbiniScrollM('body');
+    }
 </script>
 </body>
 </html>
