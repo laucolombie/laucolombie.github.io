@@ -678,7 +678,8 @@ IScroll.prototype = {
 		this.scrollerHeight	= this.scroller.offsetHeight;
 
 		this.maxScrollX		= this.wrapperWidth - this.scrollerWidth;
-		this.maxScrollY		=  - (this.wrapperHeight - this.scrollerHeight);
+		//this.maxScrollY		=  this.wrapperHeight - this.scrollerHeight;
+		this.maxScrollY		= -200;
 
 		console.log(window.alert(this.maxScrollY));
 
