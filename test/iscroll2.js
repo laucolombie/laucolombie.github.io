@@ -432,7 +432,7 @@ IScroll.prototype = {
 
 	_move: function (e) {
 
-		console.log('move');
+		console.log(alert('move'));
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
 		}
@@ -535,7 +535,7 @@ IScroll.prototype = {
 		}
 
 		if ( this.options.preventDefault && !utils.preventDefaultException(e.target, this.options.preventDefaultException) ) {
-			e.preventDefault();
+			//e.preventDefault();
 		}
 
 		var point = e.changedTouches ? e.changedTouches[0] : e,
