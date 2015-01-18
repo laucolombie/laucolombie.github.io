@@ -252,7 +252,7 @@ function IScroll (el, options) {
 
 	this.options = {
 
-		resizeScrollbars: true,
+		resizeScrollbars: false,
 
 		mouseWheelSpeed: 20,
 
@@ -1617,6 +1617,7 @@ function createDefaultScrollbar (direction, interactive, type) {
 
 function Indicator (scroller, options) {
 	this.wrapper = typeof options.el == 'string' ? document.querySelector(options.el) : options.el;
+	console.log(this.wrapper);
 	this.wrapperStyle = this.wrapper.style;
 	this.indicator = this.wrapper.children[0];
 	this.indicatorStyle = this.indicator.style;
