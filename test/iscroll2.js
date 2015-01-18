@@ -474,7 +474,7 @@ IScroll.prototype = {
 
 		if ( this.directionLocked == 'h' ) {
 			if ( this.options.eventPassthrough == 'vertical' ) {
-				//e.preventDefault();
+				e.preventDefault();
 			} else if ( this.options.eventPassthrough == 'horizontal' ) {
 				this.initiated = false;
 				return;
