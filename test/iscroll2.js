@@ -438,7 +438,7 @@ IScroll.prototype = {
 		}
 
 		if ( this.options.preventDefault ) {	// increases performance on Android? TODO: check!
-			e.preventDefault();
+			//e.preventDefault();
 		}
 
 		var point		= e.touches ? e.touches[0] : e,
