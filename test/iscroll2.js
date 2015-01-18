@@ -778,36 +778,36 @@ IScroll.prototype = {
 		}
 	},
 
-	// scrollToElement: function (el, time, offsetX, offsetY, easing) {
-	// 	el = el.nodeType ? el : this.scroller.querySelector(el);
+	scrollToElement: function (el, time, offsetX, offsetY, easing) {
+		el = el.nodeType ? el : this.scroller.querySelector(el);
 
-	// 	if ( !el ) {
-	// 		return;
-	// 	}
+		if ( !el ) {
+			return;
+		}
 
-	// 	var pos = utils.offset(el);
+		var pos = utils.offset(el);
 
-	// 	pos.left -= this.wrapperOffset.left;
-	// 	pos.top  -= this.wrapperOffset.top;
+		pos.left -= this.wrapperOffset.left;
+		pos.top  -= this.wrapperOffset.top;
 
-	// 	// if offsetX/Y are true we center the element to the screen
-	// 	if ( offsetX === true ) {
-	// 		offsetX = Math.round(el.offsetWidth / 2 - this.wrapper.offsetWidth / 2);
-	// 	}
-	// 	if ( offsetY === true ) {
-	// 		offsetY = Math.round(el.offsetHeight / 2 - this.wrapper.offsetHeight / 2);
-	// 	}
+		// if offsetX/Y are true we center the element to the screen
+		if ( offsetX === true ) {
+			offsetX = Math.round(el.offsetWidth / 2 - this.wrapper.offsetWidth / 2);
+		}
+		if ( offsetY === true ) {
+			offsetY = Math.round(el.offsetHeight / 2 - this.wrapper.offsetHeight / 2);
+		}
 
-	// 	pos.left -= offsetX || 0;
-	// 	pos.top  -= offsetY || 0;
+		pos.left -= offsetX || 0;
+		pos.top  -= offsetY || 0;
 
-	// 	pos.left = pos.left > 0 ? 0 : pos.left < this.maxScrollX ? this.maxScrollX : pos.left;
-	// 	pos.top  = pos.top  > 0 ? 0 : pos.top  < this.maxScrollY ? this.maxScrollY : pos.top;
+		pos.left = pos.left > 0 ? 0 : pos.left < this.maxScrollX ? this.maxScrollX : pos.left;
+		pos.top  = pos.top  > 0 ? 0 : pos.top  < this.maxScrollY ? this.maxScrollY : pos.top;
 
-	// 	time = time === undefined || time === null || time === 'auto' ? Math.max(Math.abs(this.x-pos.left), Math.abs(this.y-pos.top)) : time;
+		time = time === undefined || time === null || time === 'auto' ? Math.max(Math.abs(this.x-pos.left), Math.abs(this.y-pos.top)) : time;
 
-	// 	this.scrollTo(pos.left, pos.top, time, easing);
-	// },
+		this.scrollTo(pos.left, pos.top, time, easing);
+	},
 
 	_transitionTime: function (time) {
 		time = time || 0;
@@ -1336,92 +1336,92 @@ IScroll.prototype = {
 		});
 	},
 
-	// _key: function (e) {
-	// 	if ( !this.enabled ) {
-	// 		return;
-	// 	}
+	_key: function (e) {
+		if ( !this.enabled ) {
+			return;
+		}
 
-	// 	var snap = this.options.snap,	// we are using this alot, better to cache it
-	// 		newX = snap ? this.currentPage.pageX : this.x,
-	// 		newY = snap ? this.currentPage.pageY : this.y,
-	// 		now = utils.getTime(),
-	// 		prevTime = this.keyTime || 0,
-	// 		acceleration = 0.250,
-	// 		pos;
+		var snap = this.options.snap,	// we are using this alot, better to cache it
+			newX = snap ? this.currentPage.pageX : this.x,
+			newY = snap ? this.currentPage.pageY : this.y,
+			now = utils.getTime(),
+			prevTime = this.keyTime || 0,
+			acceleration = 0.250,
+			pos;
 
-	// 	if ( this.options.useTransition && this.isInTransition ) {
-	// 		pos = this.getComputedPosition();
+		if ( this.options.useTransition && this.isInTransition ) {
+			pos = this.getComputedPosition();
 
-	// 		this._translate(Math.round(pos.x), Math.round(pos.y));
-	// 		this.isInTransition = false;
-	// 	}
+			this._translate(Math.round(pos.x), Math.round(pos.y));
+			this.isInTransition = false;
+		}
 
-	// 	this.keyAcceleration = now - prevTime < 200 ? Math.min(this.keyAcceleration + acceleration, 50) : 0;
+		this.keyAcceleration = now - prevTime < 200 ? Math.min(this.keyAcceleration + acceleration, 50) : 0;
 
-	// 	switch ( e.keyCode ) {
-	// 		case this.options.keyBindings.pageUp:
-	// 			if ( this.hasHorizontalScroll && !this.hasVerticalScroll ) {
-	// 				newX += snap ? 1 : this.wrapperWidth;
-	// 			} else {
-	// 				newY += snap ? 1 : this.wrapperHeight;
-	// 			}
-	// 			break;
-	// 		case this.options.keyBindings.pageDown:
-	// 			if ( this.hasHorizontalScroll && !this.hasVerticalScroll ) {
-	// 				newX -= snap ? 1 : this.wrapperWidth;
-	// 			} else {
-	// 				newY -= snap ? 1 : this.wrapperHeight;
-	// 			}
-	// 			break;
-	// 		case this.options.keyBindings.end:
-	// 			newX = snap ? this.pages.length-1 : this.maxScrollX;
-	// 			newY = snap ? this.pages[0].length-1 : this.maxScrollY;
-	// 			break;
-	// 		case this.options.keyBindings.home:
-	// 			newX = 0;
-	// 			newY = 0;
-	// 			break;
-	// 		case this.options.keyBindings.left:
-	// 			newX += snap ? -1 : 5 + this.keyAcceleration>>0;
-	// 			break;
-	// 		case this.options.keyBindings.up:
-	// 			newY += snap ? 1 : 5 + this.keyAcceleration>>0;
-	// 			break;
-	// 		case this.options.keyBindings.right:
-	// 			newX -= snap ? -1 : 5 + this.keyAcceleration>>0;
-	// 			break;
-	// 		case this.options.keyBindings.down:
-	// 			newY -= snap ? 1 : 5 + this.keyAcceleration>>0;
-	// 			break;
-	// 		default:
-	// 			return;
-	// 	}
+		switch ( e.keyCode ) {
+			case this.options.keyBindings.pageUp:
+				if ( this.hasHorizontalScroll && !this.hasVerticalScroll ) {
+					newX += snap ? 1 : this.wrapperWidth;
+				} else {
+					newY += snap ? 1 : this.wrapperHeight;
+				}
+				break;
+			case this.options.keyBindings.pageDown:
+				if ( this.hasHorizontalScroll && !this.hasVerticalScroll ) {
+					newX -= snap ? 1 : this.wrapperWidth;
+				} else {
+					newY -= snap ? 1 : this.wrapperHeight;
+				}
+				break;
+			case this.options.keyBindings.end:
+				newX = snap ? this.pages.length-1 : this.maxScrollX;
+				newY = snap ? this.pages[0].length-1 : this.maxScrollY;
+				break;
+			case this.options.keyBindings.home:
+				newX = 0;
+				newY = 0;
+				break;
+			case this.options.keyBindings.left:
+				newX += snap ? -1 : 5 + this.keyAcceleration>>0;
+				break;
+			case this.options.keyBindings.up:
+				newY += snap ? 1 : 5 + this.keyAcceleration>>0;
+				break;
+			case this.options.keyBindings.right:
+				newX -= snap ? -1 : 5 + this.keyAcceleration>>0;
+				break;
+			case this.options.keyBindings.down:
+				newY -= snap ? 1 : 5 + this.keyAcceleration>>0;
+				break;
+			default:
+				return;
+		}
 
-	// 	if ( snap ) {
-	// 		this.goToPage(newX, newY);
-	// 		return;
-	// 	}
+		if ( snap ) {
+			this.goToPage(newX, newY);
+			return;
+		}
 
-	// 	if ( newX > 0 ) {
-	// 		newX = 0;
-	// 		this.keyAcceleration = 0;
-	// 	} else if ( newX < this.maxScrollX ) {
-	// 		newX = this.maxScrollX;
-	// 		this.keyAcceleration = 0;
-	// 	}
+		if ( newX > 0 ) {
+			newX = 0;
+			this.keyAcceleration = 0;
+		} else if ( newX < this.maxScrollX ) {
+			newX = this.maxScrollX;
+			this.keyAcceleration = 0;
+		}
 
-	// 	if ( newY > 0 ) {
-	// 		newY = 0;
-	// 		this.keyAcceleration = 0;
-	// 	} else if ( newY < this.maxScrollY ) {
-	// 		newY = this.maxScrollY;
-	// 		this.keyAcceleration = 0;
-	// 	}
+		if ( newY > 0 ) {
+			newY = 0;
+			this.keyAcceleration = 0;
+		} else if ( newY < this.maxScrollY ) {
+			newY = this.maxScrollY;
+			this.keyAcceleration = 0;
+		}
 
-	// 	this.scrollTo(newX, newY, 0);
+		this.scrollTo(newX, newY, 0);
 
-	// 	this.keyTime = now;
-	// },
+		this.keyTime = now;
+	},
 
 	_animate: function (destX, destY, duration, easingFn) {
 		var that = this,
@@ -1469,7 +1469,7 @@ IScroll.prototype = {
 			case 'MSPointerDown':
 			case 'mousedown':
 			console.log('start from touch start');
-				//this._start(e);
+				this._start(e);
 				break;
 			case 'touchmove':
 			case 'pointermove':
