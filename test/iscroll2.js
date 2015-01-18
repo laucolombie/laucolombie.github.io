@@ -433,13 +433,13 @@ IScroll.prototype = {
 	_move: function (e) {
 
 		//console.log(alert('move'));
-		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
-			return;
-		}
+		// if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
+		// 	return;
+		// }
 
-		if ( this.options.preventDefault ) {	// increases performance on Android? TODO: check!
-			e.preventDefault();
-		}
+		// if ( this.options.preventDefault ) {	// increases performance on Android? TODO: check!
+		// 	e.preventDefault();
+		// }
 
 // 		var point		= e.touches ? e.touches[0] : e,
 // 			deltaX		= point.pageX - this.pointX,
