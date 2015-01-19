@@ -446,7 +446,7 @@ IScroll.prototype = {
 
 	_move: function (e) {
 
-		console.log(alert('move'));
+		//console.log(alert('move'));
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
 		}
@@ -1520,6 +1520,7 @@ IScroll.prototype = {
 			case 'pointermove':
 			case 'MSPointerMove':
 			case 'mousemove':
+				console.log(e);
 				this._move(e);
 				break;
 			case 'touchend':
