@@ -460,8 +460,6 @@ IScroll.prototype = {
 			newX, newY,
 			absDistX, absDistY;
 
-
-
 		this.pointX		= point.pageX;
 		this.pointY		= point.pageY;
 
@@ -497,6 +495,7 @@ IScroll.prototype = {
 			}
 
 			deltaY = 0;
+
 		} else if ( this.directionLocked == 'v' ) {
 			if ( this.options.eventPassthrough == 'horizontal' ) {
 				e.preventDefault();
@@ -793,14 +792,6 @@ IScroll.prototype = {
 		}
 	},
 
-	scrollBy: function (x, y, time, easing) {
-		x = this.x + x;
-		y = this.y + y;
-		time = time || 0;
-
-		this.scrollTo(x, y, time, easing);
-	},
-
 	scrollTo: function (x, y, time, easing) {
 
 		easing = easing || utils.ease.circular;
@@ -812,39 +803,9 @@ IScroll.prototype = {
 			this._transitionTime(time);
 			this._translate(x, y);
 		} else {
+			console.log(window.alert('animate'))
 			this._animate(x, y, time, easing.fn);
 		}
-	},
-
-	scrollToElement: function (el, time, offsetX, offsetY, easing) {
-		el = el.nodeType ? el : this.scroller.querySelector(el);
-
-		if ( !el ) {
-			return;
-		}
-
-		var pos = utils.offset(el);
-
-		pos.left -= this.wrapperOffset.left;
-		pos.top  -= this.wrapperOffset.top;
-
-		// if offsetX/Y are true we center the element to the screen
-		if ( offsetX === true ) {
-			offsetX = Math.round(el.offsetWidth / 2 - this.wrapper.offsetWidth / 2);
-		}
-		if ( offsetY === true ) {
-			offsetY = Math.round(el.offsetHeight / 2 - this.wrapper.offsetHeight / 2);
-		}
-
-		pos.left -= offsetX || 0;
-		pos.top  -= offsetY || 0;
-
-		pos.left = pos.left > 0 ? 0 : pos.left < this.maxScrollX ? this.maxScrollX : pos.left;
-		pos.top  = pos.top  > 0 ? 0 : pos.top  < this.maxScrollY ? this.maxScrollY : pos.top;
-
-		time = time === undefined || time === null || time === 'auto' ? Math.max(Math.abs(this.x-pos.left), Math.abs(this.y-pos.top)) : time;
-
-		this.scrollTo(pos.left, pos.top, time, easing);
 	},
 
 	_transitionTime: function (time) {
@@ -1103,38 +1064,7 @@ IScroll.prototype = {
 // INSERT POINT: _wheel
 	},
 
-	
 
-	
-
-
-	next: function (time, easing) {
-		var x = this.currentPage.pageX,
-			y = this.currentPage.pageY;
-
-		x++;
-
-		if ( x >= this.pages.length && this.hasVerticalScroll ) {
-			x = 0;
-			y++;
-		}
-
-		this.goToPage(x, y, time, easing);
-	},
-
-	prev: function (time, easing) {
-		var x = this.currentPage.pageX,
-			y = this.currentPage.pageY;
-
-		x--;
-
-		if ( x < 0 && this.hasVerticalScroll ) {
-			x = 0;
-			y--;
-		}
-
-		this.goToPage(x, y, time, easing);
-	},
 
 	
 
@@ -1216,8 +1146,6 @@ IScroll.prototype = {
 			case 'wheel':
 			case 'DOMMouseScroll':
 			case 'mousewheel':
-				// console.log(window.alert('test'));
-				// console.log(window.alert(e));
 				this._wheel(e);
 				break;
 			case 'keydown':
