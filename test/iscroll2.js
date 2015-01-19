@@ -553,7 +553,7 @@ IScroll.prototype = {
 
 		this.moved = true;
 
-		this._translate(newX, newY);
+		//this._translate(newX, newY);
 
 		
 
