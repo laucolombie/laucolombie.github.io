@@ -1546,6 +1546,7 @@ IScroll.prototype = {
 			case 'wheel':
 			case 'DOMMouseScroll':
 			case 'mousewheel':
+				console.log(window.alert('test'));
 				console.log(window.alert(e));
 				this._wheel(e);
 				break;
