@@ -535,9 +535,9 @@ IScroll.prototype = {
 		//newY = this.y + deltaY;
 
 
-		this.scroll2 = Math.min(0,this.targetHeight-this.targetContentHeight) * ((deltaY - this.minScrollY)/(this.maxScrollY-this.minScrollY));
+		this.scroll2 = Math.min(0,this.targetHeight-this.targetContentHeight) * (((this.y + deltaY) - this.minScrollY)/(this.maxScrollY-this.minScrollY));
 		
-		newY = this.y + this.scroll2;
+		newY = this.scroll2;
 
 		// Slow down if outside of the boundaries
 		if ( newX > 0 || newX < this.maxScrollX ) {
@@ -855,7 +855,7 @@ IScroll.prototype = {
 		if ( this.options.useTransform ) {
 
 
-			//console.log(this.scrollerStyle);
+			console.log(y);
 
 			/* REPLACE START: _translate */
 
