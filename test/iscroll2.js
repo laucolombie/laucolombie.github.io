@@ -799,6 +799,7 @@ IScroll.prototype = {
 		this.isInTransition = this.options.useTransition && time > 0;
 
 		if ( !time || (this.options.useTransition && easing.style) ) {
+			console.log(window.alert('translate'))
 			this._transitionTimingFunction(easing.style);
 			this._transitionTime(time);
 			this._translate(x, y);
