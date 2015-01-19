@@ -529,7 +529,7 @@ IScroll.prototype = {
 
 		this._translate(newX, newY);
 
-		console.log(newY);
+		console.log(window.alert(newY));
 
 /* REPLACE START: _move */
 
