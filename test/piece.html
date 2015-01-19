@@ -55,6 +55,41 @@ background-repeat: no-repeat no-repeat;"></div>
 		}
 	}
 
+	$(".launch_ad").on("click", function(){
+		$("#overlay").addClass("ak-hide");
+		launch_ad();
+	});
+	$(document).on("keypress", function(e){
+		if(e.charCode === 37 || e.charCode === 103){
+			launch_ad();
+		}
+	});
+
+	if(trigger.match(/m-escape/i)) {
+		$("#main-container").prepend("<div id='escape_help'>⇈ Pour déclencher le format, sortir la souris de l'écran ⇈</div>");
+		$("#main-container").css({position: "relative"});
+		$("#overlay").addClass("ak-hide");
+		launch_ad();
+		$("#escape_help").fadeIn(2000,function(){
+			$("#escape_help").fadeOut(6000);
+		});
+		
+	}
+	if(trigger.match(/m-stream/i)) {
+		document.getElementById("img_overlay").setAttribute("src", "/demoweb/demo_overlay_video.jpg");
+	} else if(trigger.match(/m-content/i) || trigger.match(/m-story/i)) {
+		if(trigger.match(/m-story/i)) {
+			$("#col-article-middle").addClass("col-article");
+		} else {
+			$("#col-article-bottom").addClass("col-article");
+		}
+		document.getElementById("img_overlay").setAttribute("src", "/demoweb/demo_overlay_content.jpg");
+
+		$(window).on('scroll', function(){
+			$(window).off('scroll');
+			$("#overlay").fadeOut();
+		});
+	}
 
 </script>
 <!-- End Check if mobile -->
