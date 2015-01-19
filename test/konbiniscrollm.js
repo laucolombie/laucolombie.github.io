@@ -803,6 +803,9 @@
 	},
 
 	_move: function (e) {
+
+		console.log(window.alert('move'));
+
 		var point = e.touches ? e.touches[0] : e,
 			deltaX, deltaY,
 			newX, newY,

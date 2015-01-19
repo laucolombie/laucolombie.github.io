@@ -245,11 +245,25 @@ var utils = (function () {
 	return me;
 })();
 
+function getPosition(element) {
+    var xPosition = 0;
+    var yPosition = 0;
+  
+    while(element) {
+        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+        element = element.offsetParent;
+    }
+    return { x: xPosition, y: yPosition };
+}
+
 function IScroll (el, target, options) {
 	this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
 	
 	this.scroller = typeof target == 'string' ? document.querySelector(target) : target;
-	console.log(this.scroller);
+
+	//console.log(getPosition(this.scroller));
+	//console.log(this.scroller);
 // 	this.scroller = this.wrapper.children[0];
 this.scrollerStyle = this.scroller.style;		// cache style for better performance
 
@@ -667,21 +681,40 @@ IScroll.prototype = {
 	},
 
 	refresh: function () {
+
 		var rf = this.wrapper.offsetHeight;		// Force reflow
 
 		this.wrapperWidth	= this.wrapper.clientWidth;
+		//fenetre
 		this.wrapperHeight	= this.wrapper.clientHeight;
+
+		//browser window height
+		// console.log(jQuery(window).height());
+		// //all content
+		// console.log(jQuery(document).height());
+
+
+		// console.log(this.wrapperHeight);
+
+
 
 /* REPLACE START: refresh */
 
 		this.scrollerWidth	= this.scroller.offsetWidth;
 		this.scrollerHeight	= this.scroller.offsetHeight;
 
+		// console.log(this.scrollerHeight);
+		// console.log('mum');
+
 		this.maxScrollX		= this.wrapperWidth - this.scrollerWidth;
 		//this.maxScrollY		=  this.wrapperHeight - this.scrollerHeight;
+
+
+		//0 - 300px
+		//degree d'avancement 
 		this.maxScrollY		= -200;
 
-		console.log(window.alert(this.maxScrollY));
+		//console.log(window.alert(this.maxScrollY));
 
 /* REPLACE END: refresh */
 
@@ -762,9 +795,9 @@ IScroll.prototype = {
 
 	scrollTo: function (x, y, time, easing) {
 
-		console.log('scrollTo');
-		console.log(y);
-		console.log('not good');
+		// console.log('scrollTo');
+		// console.log(y);
+		// console.log('not good');
 
 		easing = easing || utils.ease.circular;
 
@@ -950,6 +983,9 @@ IScroll.prototype = {
 	},
 
 	_wheel: function (e) {
+
+		//console.log(getPosition(this.scroller));
+
 		if ( !this.enabled ) {
 			return;
 		}
@@ -993,6 +1029,8 @@ IScroll.prototype = {
 			return;
 		}
 
+		
+
 		wheelDeltaX *= this.options.invertWheelDirection;
 		wheelDeltaY *= this.options.invertWheelDirection;
 
@@ -1010,6 +1048,8 @@ IScroll.prototype = {
 			newY = this.currentPage.pageY;
 
 
+
+
 			if ( wheelDeltaX > 0 ) {
 				newX--;
 			} else if ( wheelDeltaX < 0 ) {
@@ -1022,6 +1062,8 @@ IScroll.prototype = {
 				newY++;
 			}
 
+			
+
 			this.goToPage(newX, newY);
 
 			return;
@@ -1030,9 +1072,9 @@ IScroll.prototype = {
 		newX = this.x + Math.round(this.hasHorizontalScroll ? wheelDeltaX : 0);
 		newY = this.y + Math.round(this.hasVerticalScroll ? wheelDeltaY : 0);
 		
-		console.log(this);
-		console.log('wheelDeltaY');
-		console.log(wheelDeltaY);
+		// console.log(this);
+		// console.log('wheelDeltaY');
+		// console.log(wheelDeltaY);
 		// console.log(this.hasVerticalScroll);
 		// console.log(Math.round(this.hasVerticalScroll ? wheelDeltaY : 0));
 		
@@ -1048,6 +1090,8 @@ IScroll.prototype = {
 		} else if ( newY < this.maxScrollY ) {
 			newY = this.maxScrollY;
 		}
+
+		console.log(newY);
 
 		this.scrollTo(newX, newY, 0);
 
@@ -1469,7 +1513,7 @@ IScroll.prototype = {
 			case 'pointerdown':
 			case 'MSPointerDown':
 			case 'mousedown':
-			console.log('start from touch start');
+			//console.log('start from touch start');
 				this._start(e);
 				break;
 			case 'touchmove':
@@ -1501,7 +1545,7 @@ IScroll.prototype = {
 			case 'wheel':
 			case 'DOMMouseScroll':
 			case 'mousewheel':
-			console.log('start from mousewheel');
+				//console.log('start from mousewheel');
 				this._wheel(e);
 				break;
 			case 'keydown':
