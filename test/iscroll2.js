@@ -538,7 +538,7 @@ IScroll.prototype = {
 		console.log(newY);
 
 
-		this.scroll2 = Math.min(0,this.targetHeight-this.targetContentHeight) * ((newY - this.minScrollY)/(this.maxScrollY-this.minScrollY));
+		newY = this.scroll2 = Math.min(0,this.targetHeight-this.targetContentHeight) * ((newY - this.minScrollY)/(this.maxScrollY-this.minScrollY));
 		console.log(this.scroll2);
 
 		// Slow down if outside of the boundaries
@@ -558,7 +558,7 @@ IScroll.prototype = {
 
 		this.moved = true;
 
-		this._translate(newX, this.scroll2);
+		this._translate(newX, newY);
 
 		
 
