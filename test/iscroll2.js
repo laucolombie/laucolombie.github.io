@@ -446,7 +446,7 @@ IScroll.prototype = {
 
 	_move: function (e) {
 
-		//console.log(alert('move'));
+		console.log(alert('move'));
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
 		}
@@ -720,9 +720,9 @@ IScroll.prototype = {
 
 		this.hasHorizontalScroll	= this.options.scrollX && this.maxScrollX < 0;
 		this.hasVerticalScroll		= this.options.scrollY && this.maxScrollY < 0;
-		console.log('here');
-		console.log(this.options.scrollY && this.maxScrollY);
-		console.log(this.hasVerticalScroll);
+		// console.log('here');
+		// console.log(this.options.scrollY && this.maxScrollY);
+		// console.log(this.hasVerticalScroll);
 
 		if ( !this.hasHorizontalScroll ) {
 			this.maxScrollX = 0;
