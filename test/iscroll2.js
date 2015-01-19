@@ -1124,7 +1124,7 @@ IScroll.prototype = {
 			case 'pointercancel':
 			case 'MSPointerCancel':
 			case 'mousecancel':
-				//this._end(e);
+				this._end(e);
 				break;
 			case 'orientationchange':
 			case 'resize':
