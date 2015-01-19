@@ -1109,7 +1109,7 @@ IScroll.prototype = {
 			case 'MSPointerDown':
 			case 'mousedown':
 			//console.log('start from touch start');
-				this._start(e);
+				//this._start(e);
 				break;
 			case 'touchmove':
 			case 'pointermove':
@@ -1126,7 +1126,7 @@ IScroll.prototype = {
 			case 'pointercancel':
 			case 'MSPointerCancel':
 			case 'mousecancel':
-				this._end(e);
+				//this._end(e);
 				break;
 			case 'orientationchange':
 			case 'resize':
