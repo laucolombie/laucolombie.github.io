@@ -534,6 +534,7 @@ IScroll.prototype = {
 		newX = this.x + deltaX;
 		newY = this.y + deltaY;
 
+		console.log('move');
 		console.log(newY);
 
 		// Slow down if outside of the boundaries
@@ -1037,12 +1038,6 @@ IScroll.prototype = {
 
 		newX = this.x + Math.round(this.hasHorizontalScroll ? wheelDeltaX : 0);
 		newY = this.y + Math.round(this.hasVerticalScroll ? wheelDeltaY : 0);
-		
-		// console.log(this);
-		// console.log('wheelDeltaY');
-		// console.log(wheelDeltaY);
-		// console.log(this.hasVerticalScroll);
-		// console.log(Math.round(this.hasVerticalScroll ? wheelDeltaY : 0));
 		
 
 		if ( newX > 0 ) {
