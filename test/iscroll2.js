@@ -257,14 +257,42 @@ function getPosition(element) {
     return { x: xPosition, y: yPosition };
 }
 
-function IScroll (el, target, options) {
+function IScroll (el, targetwrapper, target, options) {
 
 	this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
+	//mask
+	this.scrollerWrapper = typeof target == 'string' ? document.querySelector(targetwrapper) : target;
+	//content of the targeted div to be scrolled
 	this.scroller = typeof target == 'string' ? document.querySelector(target) : target;
 
-	//console.log(getPosition(this.scroller));
-	//console.log(this.scroller);
-// 	this.scroller = this.wrapper.children[0];
+	/******************************
+	 * height of the browser window
+	 *******************************/
+	this.windowHeight = jQuery(window).height();
+	/******************************
+	 * height of the DOM content
+	 *******************************/
+	this.contentHeight = jQuery(document).height();
+	/******************************
+	 * height of the target window
+	 *******************************/
+	this.targetHeight = this.scrollerWrapper.clientHeight;
+	/******************************
+	 * height of the target window
+	 *******************************/
+	this.targetContentHeight = this.scroller.clientHeight;
+	/******************************
+	 * height of the target window
+	 *******************************/
+	this.targetYPos = getPosition(this.scroller);
+
+	// console.log(this.windowHeight);
+	// console.log(this.contentHeight);
+	// console.log(this.targetHeight);
+	// console.log(this.targetContentHeight);
+	// console.log(this.targetYPos);
+	
+	//this.scroller = this.wrapper.children[0];
 	this.scrollerStyle = this.scroller.style;		// cache style for better performance
 
 	this.options = {
@@ -275,7 +303,7 @@ function IScroll (el, target, options) {
 
 		snapThreshold: 0.334,
 
-// INSERT POINT: OPTIONS 
+		// INSERT POINT: OPTIONS 
 
 		startX: 0,
 		startY: 0,
@@ -330,7 +358,7 @@ function IScroll (el, target, options) {
 
 	this.options.invertWheelDirection = this.options.invertWheelDirection ? -1 : 1;
 
-// INSERT POINT: NORMALIZATION
+	// INSERT POINT: NORMALIZATION
 
 	// Some defaults	
 	this.x = 0;
@@ -339,7 +367,7 @@ function IScroll (el, target, options) {
 	this.directionY = 0;
 	this._events = {};
 
-// INSERT POINT: DEFAULTS
+	// INSERT POINT: DEFAULTS
 
 	this._init();
 	this.refresh();
@@ -349,35 +377,30 @@ function IScroll (el, target, options) {
 }
 
 IScroll.prototype = {
+
 	version: '5.1.3',
 
 	_init: function () {
-		this._initEvents();
 
-		if ( this.options.scrollbars || this.options.indicators ) {
-			//this._initIndicators();
-		}
+		this._initEvents();
 
 		if ( this.options.mouseWheel ) {
 			this._initWheel();
 		}
 
-		if ( this.options.snap ) {
-			this._initSnap();
-		}
-
-		
-// INSERT POINT: _init
+		// INSERT POINT: _init
 
 	},
 
 	destroy: function () {
-		this._initEvents(true);
 
+		this._initEvents(true);
 		this._execEvent('destroy');
+
 	},
 
 	_transitionEnd: function (e) {
+
 		if ( e.target != this.scroller || !this.isInTransition ) {
 			return;
 		}
@@ -443,8 +466,6 @@ IScroll.prototype = {
 
 	_move: function (e) {
 
-
-		//console.log(alert('move'));
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
 		}
@@ -513,6 +534,8 @@ IScroll.prototype = {
 		newX = this.x + deltaX;
 		newY = this.y + deltaY;
 
+		console.log(newY);
+
 		// Slow down if outside of the boundaries
 		if ( newX > 0 || newX < this.maxScrollX ) {
 			newX = this.options.bounce ? this.x + deltaX / 3 : newX > 0 ? 0 : this.maxScrollX;
@@ -534,7 +557,7 @@ IScroll.prototype = {
 
 		
 
-/* REPLACE START: _move */
+		/* REPLACE START: _move */
 
 		if ( timestamp - this.startTime > 300 ) {
 			this.startTime = timestamp;
@@ -542,7 +565,7 @@ IScroll.prototype = {
 			this.startY = this.y;
 		}
 
-/* REPLACE END: _move */
+		/* REPLACE END: _move */
 
 	},
 
@@ -623,7 +646,7 @@ IScroll.prototype = {
 			easing = this.options.bounceEasing;
 		}
 
-// INSERT POINT: _end
+		// INSERT POINT: _end
 
 		if ( newX != this.x || newY != this.y ) {
 			// change easing function when scroller goes out of the boundaries
@@ -682,7 +705,7 @@ IScroll.prototype = {
 	enable: function () {
 		this.enabled = true;
 	},
-
+	//done after resize
 	refresh: function () {
 
 		var rf = this.wrapper.offsetHeight;		// Force reflow
@@ -691,45 +714,31 @@ IScroll.prototype = {
 		//fenetre
 		this.wrapperHeight	= this.wrapper.clientHeight;
 
-		//browser window height
-		// console.log(jQuery(window).height());
-		// //all content
-		// console.log(jQuery(document).height());
-
-
-		// console.log(this.wrapperHeight);
-
-
-
-/* REPLACE START: refresh */
+		/* REPLACE START: refresh */
 
 		this.scrollerWidth	= this.scroller.offsetWidth;
 		this.scrollerHeight	= this.scroller.offsetHeight;
 
-		// console.log(this.scrollerHeight);
-		// console.log('mum');
+		/******************************
+		 * start scrolling and end scrolling
+		 ******************************/
+		if (this.windowHeight>this.targetHeight) {
+			this.maxScrollX = this.startScrolling = Math.min(0,this.windowHeight - (this.targetYPos.y + this.targetHeight));
+			console.log(this.startScrolling);
+			this.maxScrollY = this.endScrolling = - this.targetYPos.y;
+			console.log(this.endScrolling);
+		}
 
-		this.maxScrollX	= this.wrapperWidth - this.scrollerWidth;
-		this.maxScrollY	=  this.wrapperHeight - this.scrollerHeight;
+		// this.maxScrollX	= this.wrapperWidth - this.scrollerWidth;
+		// this.maxScrollY	=  this.wrapperHeight - this.scrollerHeight;
 
+		//degree d'avancement
 
-
-		console.log(this.maxScrollY);
-
-
-		//0 - 300px
-		//degree d'avancement 
-		//this.maxScrollY		= -200;
-
-		//console.log(window.alert(this.maxScrollY));
-
-/* REPLACE END: refresh */
+		/* REPLACE END: refresh */
 
 		this.hasHorizontalScroll	= this.options.scrollX && this.maxScrollX < 0;
 		this.hasVerticalScroll		= this.options.scrollY && this.maxScrollY < 0;
-		// console.log('here');
-		// console.log(this.options.scrollY && this.maxScrollY);
-		// console.log(this.hasVerticalScroll);
+		
 
 		if ( !this.hasHorizontalScroll ) {
 			this.maxScrollX = 0;
@@ -799,12 +808,12 @@ IScroll.prototype = {
 		this.isInTransition = this.options.useTransition && time > 0;
 
 		if ( !time || (this.options.useTransition && easing.style) ) {
-			console.log(window.alert('translate'))
+			//console.log(window.alert('translate'))
 			this._transitionTimingFunction(easing.style);
 			this._transitionTime(time);
 			this._translate(x, y);
 		} else {
-			console.log(window.alert('animate'))
+			//console.log(window.alert('animate'))
 			this._animate(x, y, time, easing.fn);
 		}
 	},
@@ -817,13 +826,6 @@ IScroll.prototype = {
 		if ( !time && utils.isBadAndroid ) {
 			this.scrollerStyle[utils.style.transitionDuration] = '0.001s';
 		}
-
-
-		// if ( this.indicators ) {
-		// 	for ( var i = this.indicators.length; i--; ) {
-		// 		this.indicators[i].transitionTime(time);
-		// 	}
-		// }
 
 
 // INSERT POINT: _transitionTime
@@ -846,18 +848,17 @@ IScroll.prototype = {
 	},
 
 	_translate: function (x, y) {
-		// console.log(y);
-		// console.log('translate');
+		
 		if ( this.options.useTransform ) {
 
 
 			//console.log(this.scrollerStyle);
 
-/* REPLACE START: _translate */
+			/* REPLACE START: _translate */
 
 			this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
 
-/* REPLACE END: _translate */
+			/* REPLACE END: _translate */
 
 		} else {
 			x = Math.round(x);
@@ -869,15 +870,13 @@ IScroll.prototype = {
 		this.x = x;
 		this.y = y;
 
-
 	if ( this.indicators ) {
 		for ( var i = this.indicators.length; i--; ) {
 			this.indicators[i].updatePosition();
 		}
 	}
 
-
-// INSERT POINT: _translate
+	// INSERT POINT: _translate
 
 	},
 
@@ -1062,12 +1061,8 @@ IScroll.prototype = {
 
 		this.scrollTo(newX, newY, 0);
 
-// INSERT POINT: _wheel
+		// INSERT POINT: _wheel
 	},
-
-
-
-	
 
 	_animate: function (destX, destY, duration, easingFn) {
 		var that = this,
