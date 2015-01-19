@@ -851,7 +851,7 @@ IScroll.prototype = {
 	},
 
 	_translate: function (x, y) {
-		
+		console.log(this.options.useTransform);
 		if ( this.options.useTransform ) {
 
 
