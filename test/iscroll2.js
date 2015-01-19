@@ -532,12 +532,12 @@ IScroll.prototype = {
 		deltaY = this.hasVerticalScroll ? deltaY : 0;
 
 		newX = this.x + deltaX;
-		//newY = this.y + deltaY;
+		newY = this.y + deltaY;
 
 
-		this.scroll2 = Math.min(0,this.targetHeight-this.targetContentHeight) * (((this.y + deltaY) - this.minScrollY)/(this.maxScrollY-this.minScrollY));
-		
-		newY = this.scroll2;
+		this.scroll2 = Math.min(0,this.targetHeight-this.targetContentHeight) * ((deltaY - this.minScrollY)/(this.maxScrollY-this.minScrollY));
+		console.log(this.scroll2);
+		//newY = this.scroll2;
 
 		// Slow down if outside of the boundaries
 		if ( newX > 0 || newX < this.maxScrollX ) {
@@ -855,7 +855,7 @@ IScroll.prototype = {
 		if ( this.options.useTransform ) {
 
 
-			console.log(y);
+			//console.log(y);
 
 			/* REPLACE START: _translate */
 
