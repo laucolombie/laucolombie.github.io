@@ -537,6 +537,10 @@ IScroll.prototype = {
 		console.log('move');
 		console.log(newY);
 
+
+		this.scroll2 = Math.min(0,this.targetHeight-this.targetContentHeight) * ((newY - this.minScrollY)/(this.maxScrollY-this.minScrollY));
+		console.log(this.scroll2);
+
 		// Slow down if outside of the boundaries
 		if ( newX > 0 || newX < this.maxScrollX ) {
 			newX = this.options.bounce ? this.x + deltaX / 3 : newX > 0 ? 0 : this.maxScrollX;
@@ -554,7 +558,7 @@ IScroll.prototype = {
 
 		this.moved = true;
 
-		//this._translate(newX, newY);
+		this._translate(newX, this.scroll2);
 
 		
 
@@ -724,13 +728,13 @@ IScroll.prototype = {
 		 * start scrolling and end scrolling
 		 ******************************/
 		if (this.windowHeight>this.targetHeight) {
-			this.maxScrollX = this.startScrolling = Math.min(0,this.windowHeight - (this.targetYPos.y + this.targetHeight));
+			this.minScrollY = this.startScrolling = Math.min(0,this.windowHeight - (this.targetYPos.y + this.targetHeight));
 			console.log(this.startScrolling);
 			this.maxScrollY = this.endScrolling = - this.targetYPos.y;
 			console.log(this.endScrolling);
 		}
 
-		// this.maxScrollX	= this.wrapperWidth - this.scrollerWidth;
+		this.maxScrollX	= this.wrapperWidth - this.scrollerWidth;
 		// this.maxScrollY	=  this.wrapperHeight - this.scrollerHeight;
 
 		//degree d'avancement
