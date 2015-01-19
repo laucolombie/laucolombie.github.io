@@ -258,14 +258,14 @@ function getPosition(element) {
 }
 
 function IScroll (el, target, options) {
+
 	this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
-	
 	this.scroller = typeof target == 'string' ? document.querySelector(target) : target;
 
 	//console.log(getPosition(this.scroller));
 	//console.log(this.scroller);
 // 	this.scroller = this.wrapper.children[0];
-this.scrollerStyle = this.scroller.style;		// cache style for better performance
+	this.scrollerStyle = this.scroller.style;		// cache style for better performance
 
 	this.options = {
 
@@ -366,10 +366,7 @@ IScroll.prototype = {
 			this._initSnap();
 		}
 
-		if ( this.options.keyBindings ) {
-			this._initKeys();
-		}
-
+		
 // INSERT POINT: _init
 
 	},
@@ -446,10 +443,6 @@ IScroll.prototype = {
 
 	_move: function (e) {
 
-		if (!this.hasStarted) {
-			console.log(window.alert('device mobile'));
-			this.hasStarted = true;
-		}
 
 		//console.log(alert('move'));
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
@@ -535,6 +528,8 @@ IScroll.prototype = {
 		this.moved = true;
 
 		this._translate(newX, newY);
+
+		console.log(newY);
 
 /* REPLACE START: _move */
 
@@ -711,13 +706,17 @@ IScroll.prototype = {
 		// console.log(this.scrollerHeight);
 		// console.log('mum');
 
-		this.maxScrollX		= this.wrapperWidth - this.scrollerWidth;
-		//this.maxScrollY		=  this.wrapperHeight - this.scrollerHeight;
+		this.maxScrollX	= this.wrapperWidth - this.scrollerWidth;
+		this.maxScrollY	=  this.wrapperHeight - this.scrollerHeight;
+
+
+
+		console.log(this.maxScrollY);
 
 
 		//0 - 300px
 		//degree d'avancement 
-		this.maxScrollY		= -200;
+		//this.maxScrollY		= -200;
 
 		//console.log(window.alert(this.maxScrollY));
 
@@ -799,10 +798,6 @@ IScroll.prototype = {
 	},
 
 	scrollTo: function (x, y, time, easing) {
-
-		// console.log('scrollTo');
-		// console.log(y);
-		// console.log('not good');
 
 		easing = easing || utils.ease.circular;
 
@@ -921,7 +916,7 @@ IScroll.prototype = {
 	},
 
 	_initEvents: function (remove) {
-		this.hasStarted = false;
+		
 		var eventType = remove ? utils.removeEvent : utils.addEvent,
 			target = this.options.bindToWrapper ? this.wrapper : window;
 
@@ -946,7 +941,7 @@ IScroll.prototype = {
 			eventType(target, utils.prefixPointerEvent('pointerup'), this);
 		}
 
-		if ( utils.hasTouch && !this.options.disableTouch ) {
+		if (utils.hasTouch && !this.options.disableTouch ) {
 			eventType(this.wrapper, 'touchstart', this);
 			eventType(target, 'touchmove', this);
 			eventType(target, 'touchcancel', this);
@@ -1104,224 +1099,10 @@ IScroll.prototype = {
 // INSERT POINT: _wheel
 	},
 
-	_initSnap: function () {
-		this.currentPage = {};
+	
 
-		if ( typeof this.options.snap == 'string' ) {
-			this.options.snap = this.scroller.querySelectorAll(this.options.snap);
-		}
+	
 
-		this.on('refresh', function () {
-			var i = 0, l,
-				m = 0, n,
-				cx, cy,
-				x = 0, y,
-				stepX = this.options.snapStepX || this.wrapperWidth,
-				stepY = this.options.snapStepY || this.wrapperHeight,
-				el;
-
-			this.pages = [];
-
-			if ( !this.wrapperWidth || !this.wrapperHeight || !this.scrollerWidth || !this.scrollerHeight ) {
-				return;
-			}
-
-			if ( this.options.snap === true ) {
-				cx = Math.round( stepX / 2 );
-				cy = Math.round( stepY / 2 );
-
-				while ( x > -this.scrollerWidth ) {
-					this.pages[i] = [];
-					l = 0;
-					y = 0;
-
-					while ( y > -this.scrollerHeight ) {
-						this.pages[i][l] = {
-							x: Math.max(x, this.maxScrollX),
-							y: Math.max(y, this.maxScrollY),
-							width: stepX,
-							height: stepY,
-							cx: x - cx,
-							cy: y - cy
-						};
-
-						y -= stepY;
-						l++;
-					}
-
-					x -= stepX;
-					i++;
-				}
-			} else {
-				el = this.options.snap;
-				l = el.length;
-				n = -1;
-
-				for ( ; i < l; i++ ) {
-					if ( i === 0 || el[i].offsetLeft <= el[i-1].offsetLeft ) {
-						m = 0;
-						n++;
-					}
-
-					if ( !this.pages[m] ) {
-						this.pages[m] = [];
-					}
-
-					x = Math.max(-el[i].offsetLeft, this.maxScrollX);
-					y = Math.max(-el[i].offsetTop, this.maxScrollY);
-					cx = x - Math.round(el[i].offsetWidth / 2);
-					cy = y - Math.round(el[i].offsetHeight / 2);
-
-					this.pages[m][n] = {
-						x: x,
-						y: y,
-						width: el[i].offsetWidth,
-						height: el[i].offsetHeight,
-						cx: cx,
-						cy: cy
-					};
-
-					if ( x > this.maxScrollX ) {
-						m++;
-					}
-				}
-			}
-
-			this.goToPage(this.currentPage.pageX || 0, this.currentPage.pageY || 0, 0);
-
-			// Update snap threshold if needed
-			if ( this.options.snapThreshold % 1 === 0 ) {
-				this.snapThresholdX = this.options.snapThreshold;
-				this.snapThresholdY = this.options.snapThreshold;
-			} else {
-				this.snapThresholdX = Math.round(this.pages[this.currentPage.pageX][this.currentPage.pageY].width * this.options.snapThreshold);
-				this.snapThresholdY = Math.round(this.pages[this.currentPage.pageX][this.currentPage.pageY].height * this.options.snapThreshold);
-			}
-		});
-
-		this.on('flick', function () {
-			var time = this.options.snapSpeed || Math.max(
-					Math.max(
-						Math.min(Math.abs(this.x - this.startX), 1000),
-						Math.min(Math.abs(this.y - this.startY), 1000)
-					), 300);
-
-			this.goToPage(
-				this.currentPage.pageX + this.directionX,
-				this.currentPage.pageY + this.directionY,
-				time
-			);
-		});
-	},
-
-	_nearestSnap: function (x, y) {
-		if ( !this.pages.length ) {
-			return { x: 0, y: 0, pageX: 0, pageY: 0 };
-		}
-
-		var i = 0,
-			l = this.pages.length,
-			m = 0;
-
-		// Check if we exceeded the snap threshold
-		if ( Math.abs(x - this.absStartX) < this.snapThresholdX &&
-			Math.abs(y - this.absStartY) < this.snapThresholdY ) {
-			return this.currentPage;
-		}
-
-		if ( x > 0 ) {
-			x = 0;
-		} else if ( x < this.maxScrollX ) {
-			x = this.maxScrollX;
-		}
-
-		if ( y > 0 ) {
-			y = 0;
-		} else if ( y < this.maxScrollY ) {
-			y = this.maxScrollY;
-		}
-
-		for ( ; i < l; i++ ) {
-			if ( x >= this.pages[i][0].cx ) {
-				x = this.pages[i][0].x;
-				break;
-			}
-		}
-
-		l = this.pages[i].length;
-
-		for ( ; m < l; m++ ) {
-			if ( y >= this.pages[0][m].cy ) {
-				y = this.pages[0][m].y;
-				break;
-			}
-		}
-
-		if ( i == this.currentPage.pageX ) {
-			i += this.directionX;
-
-			if ( i < 0 ) {
-				i = 0;
-			} else if ( i >= this.pages.length ) {
-				i = this.pages.length - 1;
-			}
-
-			x = this.pages[i][0].x;
-		}
-
-		if ( m == this.currentPage.pageY ) {
-			m += this.directionY;
-
-			if ( m < 0 ) {
-				m = 0;
-			} else if ( m >= this.pages[0].length ) {
-				m = this.pages[0].length - 1;
-			}
-
-			y = this.pages[0][m].y;
-		}
-
-		return {
-			x: x,
-			y: y,
-			pageX: i,
-			pageY: m
-		};
-	},
-
-	goToPage: function (x, y, time, easing) {
-		easing = easing || this.options.bounceEasing;
-
-		if ( x >= this.pages.length ) {
-			x = this.pages.length - 1;
-		} else if ( x < 0 ) {
-			x = 0;
-		}
-
-		if ( y >= this.pages[x].length ) {
-			y = this.pages[x].length - 1;
-		} else if ( y < 0 ) {
-			y = 0;
-		}
-
-		var posX = this.pages[x][y].x,
-			posY = this.pages[x][y].y;
-
-		time = time === undefined ? this.options.snapSpeed || Math.max(
-			Math.max(
-				Math.min(Math.abs(posX - this.x), 1000),
-				Math.min(Math.abs(posY - this.y), 1000)
-			), 300) : time;
-
-		this.currentPage = {
-			x: posX,
-			y: posY,
-			pageX: x,
-			pageY: y
-		};
-
-		this.scrollTo(posX, posY, time, easing);
-	},
 
 	next: function (time, easing) {
 		var x = this.currentPage.pageX,
@@ -1351,128 +1132,7 @@ IScroll.prototype = {
 		this.goToPage(x, y, time, easing);
 	},
 
-	_initKeys: function (e) {
-		// default key bindings
-		var keys = {
-			pageUp: 33,
-			pageDown: 34,
-			end: 35,
-			home: 36,
-			left: 37,
-			up: 38,
-			right: 39,
-			down: 40
-		};
-		var i;
-
-		// if you give me characters I give you keycode
-		if ( typeof this.options.keyBindings == 'object' ) {
-			for ( i in this.options.keyBindings ) {
-				if ( typeof this.options.keyBindings[i] == 'string' ) {
-					this.options.keyBindings[i] = this.options.keyBindings[i].toUpperCase().charCodeAt(0);
-				}
-			}
-		} else {
-			this.options.keyBindings = {};
-		}
-
-		for ( i in keys ) {
-			this.options.keyBindings[i] = this.options.keyBindings[i] || keys[i];
-		}
-
-		utils.addEvent(window, 'keydown', this);
-
-		this.on('destroy', function () {
-			utils.removeEvent(window, 'keydown', this);
-		});
-	},
-
-	_key: function (e) {
-		if ( !this.enabled ) {
-			return;
-		}
-
-		var snap = this.options.snap,	// we are using this alot, better to cache it
-			newX = snap ? this.currentPage.pageX : this.x,
-			newY = snap ? this.currentPage.pageY : this.y,
-			now = utils.getTime(),
-			prevTime = this.keyTime || 0,
-			acceleration = 0.250,
-			pos;
-
-		if ( this.options.useTransition && this.isInTransition ) {
-			pos = this.getComputedPosition();
-
-			this._translate(Math.round(pos.x), Math.round(pos.y));
-			this.isInTransition = false;
-		}
-
-		this.keyAcceleration = now - prevTime < 200 ? Math.min(this.keyAcceleration + acceleration, 50) : 0;
-
-		switch ( e.keyCode ) {
-			case this.options.keyBindings.pageUp:
-				if ( this.hasHorizontalScroll && !this.hasVerticalScroll ) {
-					newX += snap ? 1 : this.wrapperWidth;
-				} else {
-					newY += snap ? 1 : this.wrapperHeight;
-				}
-				break;
-			case this.options.keyBindings.pageDown:
-				if ( this.hasHorizontalScroll && !this.hasVerticalScroll ) {
-					newX -= snap ? 1 : this.wrapperWidth;
-				} else {
-					newY -= snap ? 1 : this.wrapperHeight;
-				}
-				break;
-			case this.options.keyBindings.end:
-				newX = snap ? this.pages.length-1 : this.maxScrollX;
-				newY = snap ? this.pages[0].length-1 : this.maxScrollY;
-				break;
-			case this.options.keyBindings.home:
-				newX = 0;
-				newY = 0;
-				break;
-			case this.options.keyBindings.left:
-				newX += snap ? -1 : 5 + this.keyAcceleration>>0;
-				break;
-			case this.options.keyBindings.up:
-				newY += snap ? 1 : 5 + this.keyAcceleration>>0;
-				break;
-			case this.options.keyBindings.right:
-				newX -= snap ? -1 : 5 + this.keyAcceleration>>0;
-				break;
-			case this.options.keyBindings.down:
-				newY -= snap ? 1 : 5 + this.keyAcceleration>>0;
-				break;
-			default:
-				return;
-		}
-
-		if ( snap ) {
-			this.goToPage(newX, newY);
-			return;
-		}
-
-		if ( newX > 0 ) {
-			newX = 0;
-			this.keyAcceleration = 0;
-		} else if ( newX < this.maxScrollX ) {
-			newX = this.maxScrollX;
-			this.keyAcceleration = 0;
-		}
-
-		if ( newY > 0 ) {
-			newY = 0;
-			this.keyAcceleration = 0;
-		} else if ( newY < this.maxScrollY ) {
-			newY = this.maxScrollY;
-			this.keyAcceleration = 0;
-		}
-
-		this.scrollTo(newX, newY, 0);
-
-		this.keyTime = now;
-	},
+	
 
 	_animate: function (destX, destY, duration, easingFn) {
 		var that = this,
