@@ -465,7 +465,7 @@ IScroll.prototype = {
 		this.pointX		= point.pageX;
 		this.pointY		= point.pageY;
 
-		console.log(window.alert(this.pointY));
+		//console.log(window.alert(this.pointY));
 
 		this.distX		+= deltaX;
 		this.distY		+= deltaY;
