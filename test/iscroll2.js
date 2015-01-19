@@ -446,6 +446,11 @@ IScroll.prototype = {
 
 	_move: function (e) {
 
+		if (!this.hasStarted) {
+			console.log(window.alert('device mobile'));
+			this.hasStarted = true;
+		}
+
 		//console.log(alert('move'));
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
@@ -916,6 +921,7 @@ IScroll.prototype = {
 	},
 
 	_initEvents: function (remove) {
+		this.hasStarted = false;
 		var eventType = remove ? utils.removeEvent : utils.addEvent,
 			target = this.options.bindToWrapper ? this.wrapper : window;
 
@@ -1546,8 +1552,8 @@ IScroll.prototype = {
 			case 'wheel':
 			case 'DOMMouseScroll':
 			case 'mousewheel':
-				console.log(window.alert('test'));
-				console.log(window.alert(e));
+				// console.log(window.alert('test'));
+				// console.log(window.alert(e));
 				this._wheel(e);
 				break;
 			case 'keydown':
