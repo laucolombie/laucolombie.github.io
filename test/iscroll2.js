@@ -460,8 +460,12 @@ IScroll.prototype = {
 			newX, newY,
 			absDistX, absDistY;
 
+
+
 		this.pointX		= point.pageX;
 		this.pointY		= point.pageY;
+
+		console.log(window.alert(this.pointY));
 
 		this.distX		+= deltaX;
 		this.distY		+= deltaY;
@@ -529,7 +533,7 @@ IScroll.prototype = {
 
 		this._translate(newX, newY);
 
-		console.log(window.alert(newY));
+		
 
 /* REPLACE START: _move */
 
