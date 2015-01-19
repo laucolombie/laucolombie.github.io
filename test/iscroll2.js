@@ -1520,7 +1520,7 @@ IScroll.prototype = {
 			case 'pointermove':
 			case 'MSPointerMove':
 			case 'mousemove':
-				console.log(e);
+				console.log(window.alert(e));
 				this._move(e);
 				break;
 			case 'touchend':
