@@ -36,7 +36,8 @@
 		this.openArea = document.createElement('div');
 
 		this.options = {
-			openAreaNode: document.getElementById('billboard')
+			openAreaNode: document.getElementById('billboard'),
+			openAreaNodeHeight: '200px'
 		};
 		//overwrite options
 		for ( var i in options ) {
@@ -59,7 +60,7 @@
 			//make sure that the parent container is displayed 
 			this.getParentNode().style.display = 'inline';
 
-			this.options.openAreaNode.style.height = '200px';
+			this.options.openAreaNode.style.height = this.options.openAreaNodeHeight;
 			
 		},
 		setWallpaperImage: function(path,width,height) {
