@@ -22,7 +22,32 @@
     if (window.adgroupid == undefined) {
         window.adgroupid = Math.round(Math.random() * 1000);
     }
-    
+    var helpers = {
+        "isFrontPage":false,
+        "isPage":false,
+        "templateURI": 'http://www.konbini.com/en/wp-content/themes/konbini',
+        "lang": 'en',
+        "gcscx": '012706700396563502854:osrp8jh4apw',
+        "addthis_twitter_via": "Konbini",
+        "adtech": {
+                    protocol: 'http',
+                    server: 'adserver.adtech.de',
+                    network: '1218.1',
+                    siteid: '694009',
+                    performGeoDetection: 'true',
+                    performScreenDetection: 'true',
+                    params: { loc: '100', grp: window.adgroupid },
+                    kv: {
+                            shares: '0', 
+                            page: 'ARTICLE', 
+                            author: 'Jordan Gold', 
+                            postid: '94609', 
+                            referrer: document.referrer, 
+                            tag: [], 
+                            adtest: ''                    
+                        }
+                    }
+    };
 </script>
 <!-- ============================================================================= -->
 
@@ -90,13 +115,7 @@
 
         <div id="fb-root"></div>
         
-        
-
-                    <div class="arrow-left"> <a href="http://www.konbini.com/en/lifestyle/infographic-switzerland-norway-venezuela-expensive-countries-live/" rel="prev"></a> </div>
-            <div class="arrow-right">  </div>
-            
-                    <div class="wallpaper" id="wallpaper" style='display:block'>
-                        <div class="ak-image" id="ak-story-image" style="background-image: url(https://adserver-images.adikteev.com/uploads/campaign_param/file/73172/m-mobile_maquette_v2.jpg);
+        <div class="ak-image" id="ak-story-image" style="background-image: url(https://adserver-images.adikteev.com/uploads/campaign_param/file/73172/m-mobile_maquette_v2.jpg);
 background-attachment: scroll;
 background-color: transparent;
 background-size: 730px;
@@ -106,7 +125,12 @@ height: 1296px;
 /* display: none; */
 top: -418px;
 background-position: 0px 0px;
-background-repeat: no-repeat no-repeat; position: fixed;"></div>
+background-repeat: no-repeat no-repeat; position: fixed;"></div></div>
+
+                    <div class="arrow-left"> <a href="http://www.konbini.com/en/lifestyle/infographic-switzerland-norway-venezuela-expensive-countries-live/" rel="prev"></a> </div>
+            <div class="arrow-right">  </div>
+            
+                    <div class="wallpaper" id="wallpaper">
                 <div class='item item-adv'><div id='5196428' data-placement='5196428' data-alias='uk_lifestyle_fireplace' class='ADTECH_QUEUE'></div></div>
             </div>            
         
@@ -370,7 +394,9 @@ background-repeat: no-repeat no-repeat; position: fixed;"></div>
 <li id="menu-item-90441" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-90441"><a href="http://www.konbini.com/en/legals/">Terms</a></li>
 </ul></nav>                    
                 </div>
-            </div>   
+            </div>
+
+            
 
 <div id="mc_embed_signup" class="suscribe-newsletter">
     <form action="http://konbini.us1.list-manage.com/subscribe/post?u=d31f55b4a5053e84c619b6bb2&amp;id=8e70f90119" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
