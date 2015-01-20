@@ -23,8 +23,10 @@
 
 		utility.extend(utility, {
 			hasTouch: 'ontouchstart' in window,
-			hasPointer: window.PointerEvent || window.MSPointerEvent // IE10 is prefixed
+			hasPointer: window.PointerEvent || window.MSPointerEvent, // IE10 is prefixed,
+			isPortrait: window.matchMedia("(orientation:portrait)")
 		});
+
 
 		return utility;
 
@@ -63,10 +65,17 @@
 			this.getParentNode().style.display = 'inline';
 
 			this.options.openAreaNode.style.height = this.options.openAreaNodeHeight;
+
+			console.log(utils.isPortrait.matches);
 			
 		},
-		setWallpaperImage: function(path,width,height) {
-			this.wrapper.style.backgroundImage = 'url("' + path + '")';
+
+		setWallpaperImage: function(images) {
+			if (utils.isPortrait.matches) {
+				this.wrapper.style.backgroundImage = 'url("' + images.path1 + '")';
+			} else {
+				this.wrapper.style.backgroundImage = 'url("' + images.path2 + '")';
+			}
 	  		this.wrapper.style.width =  "100%";
 	  		this.wrapper.style.backgroundSize = "100%";
 	  		this.wrapper.style.height = "100%";
@@ -80,6 +89,7 @@
 		  	this.wrapper.style.display ='block';
 		  	this.wrapper.style.overflow = 'hidden';
 		},
+
 		initEvents:function(remove) {
 
 			var eventType = remove ? utils.removeEvent : utils.addEvent;
@@ -90,9 +100,11 @@
 			eventType(this.options.openAreaNode, 'click', this, true);
 
 		},
+
 		resize: function(e) {	
 			//console.log(window.alert(e));
 		},
+
 		handleEvent: function (e) {
 			switch ( e.type ) {
 				case 'orientationchange':
@@ -107,6 +119,7 @@
 				break;
 			}
 		},
+
 		addCloseButton: function() {
 			this.openAreaCloseButton.style.width = '20px';
 			this.openAreaCloseButton.style.height = '20px';
