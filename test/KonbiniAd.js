@@ -34,6 +34,8 @@
 
 		this.wrapper = document.createElement('div');
 		this.openArea = document.createElement('div');
+		this.openAreaCloseButton = document.createElement('div');
+
 
 		this.options = {
 			openAreaNode: document.getElementById('billboard'),
@@ -87,7 +89,7 @@
 
 		},
 		resize: function(e) {	
-			console.log(window.alert('e'));
+			console.log(window.alert(e));
 		},
 		handleEvent: function (e) {
 			switch ( e.type ) {
@@ -98,11 +100,13 @@
 				case 'click':
 					if ( !e._constructed ) {
 						e.preventDefault();
-						e.stopPropagation();
-						
+						e.stopPropagation();	
 					}
 				break;
 			}
+		},
+		addCloseButton: function() {
+
 		}
 
 	};
