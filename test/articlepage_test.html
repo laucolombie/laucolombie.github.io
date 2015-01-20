@@ -318,17 +318,27 @@
     <script type='text/javascript' src='http://www.konbini.com/wp-content/themes/konbini/js/production_footer_20150116-1105.js'></script>
 <script type="text/javascript" src="KonbiniAd.js"></script>
 <script type="text/javascript">
+    
+    var header = jQuery('.entry-content')[0];
+    var parentElement = jQuery('.entry-inner')[0];
 
-    var ad = new KonbiniAd('mobileAd','100%','100%');
-    ad.appendAdTo(document.getElementById('wallpaper'));
-    ad.setStyles();
-    ad.setBgImage('shoes.jpg','612px','612px');
-    ad.setStyles(document.getElementById('wrapper'));
+    var newDiv = document.createElement('div');
+    
+    var transAd = parentElement.insertBefore(newDiv, header);
+
+    var ad = new KonbiniAd('mobileAd',document.getElementById('wallpaper'),{openAreaNode:transAd});
+
+    ad.setWallpaperImage('shoes.jpg','612px','612px');
+    ad.initEvents();
+   
+    document.getElementById('wrapper').style.background = 'transparent';
     jQuery('.wrapper-inner')[0].style.background = 'transparent';
     jQuery('.wrapper-inner')[0].style.padding = '0';
     jQuery('.entry-content')[0].style.background = '#fff';
+    //apply padding
+    //console.log(jQuery('.entry-content p'));
+    //jQuery('.entry-content p').style.padding = '10px';
     jQuery('.container-header')[0].style.marginBottom = '0px';
-    jQuery('.entry-header')[0].style.marginBottom = '200px';
     jQuery('.entry-header')[0].style.background = '#fff';
 
    

@@ -1,95 +1,114 @@
 /**
  * @module KonbiniAd
  **/
-function KonbiniAd(name,width,height) {
+(function (window, document, Math) {
 
-	var _nodeParent;
+	var utils = (function () {
 
-	// public function
-	this.getName = function () {
-		return name;
+		var utility = {};
+
+		utility.extend = function (target, obj) {
+			for ( var i in obj ) {
+				target[i] = obj[i];
+			}
+		};
+		//add event
+		utility.addEvent = function (el, type, fn, capture) {
+			el.addEventListener(type, fn, !!capture);
+		};
+		//remove event
+		utility.removeEvent = function (el, type, fn, capture) {
+			el.removeEventListener(type, fn, !!capture);
+		};
+
+		utility.extend(utility, {
+			hasTouch: 'ontouchstart' in window,
+			hasPointer: window.PointerEvent || window.MSPointerEvent // IE10 is prefixed
+		});
+
+		return utility;
+
+	})();
+
+	function KonbiniAd(name,parentNode,options) {
+
+		this.wrapper = document.createElement('div');
+		this.openArea = document.createElement('div');
+
+		this.options = {
+			openAreaNode: document.getElementById('billboard')
+		};
+		//overwrite options
+		for ( var i in options ) {
+			this.options[i] = options[i];
+		}
+
+		// public function
+		this.getParentNode = function () {
+			return parentNode;
+		};
+
+		this.init();
+	}
+
+	KonbiniAd.prototype = {
+
+		init: function () {
+			//append ad wrapper to parent node
+			this.getParentNode().appendChild(this.wrapper);
+			//make sure that the parent container is displayed 
+			this.getParentNode().style.display = 'inline';
+
+			this.options.openAreaNode.style.height = '200px';
+			
+		},
+		setWallpaperImage: function(path,width,height) {
+			this.wrapper.style.backgroundImage = 'url("' + path + '")';
+	  		this.wrapper.style.width =  width;
+	  		this.wrapper.style.backgroundSize = width;
+	  		this.wrapper.style.height = height;
+	  		this.wrapper.style.left = '0px';
+	  		this.wrapper.style.top = '0px';
+	  		this.wrapper.style.position = 'fixed';
+		  	this.wrapper.style.backgroundPosition = '0px 0px';
+		  	this.wrapper.style.backgroundRepeat = 'no-repeat no-repeat';
+		  	this.wrapper.style.backgroundAttachment = 'scroll';
+		  	this.wrapper.style.backgroundColor = 'transparent';
+		},
+		initEvents:function(remove) {
+
+			var eventType = remove ? utils.removeEvent : utils.addEvent;
+
+			eventType(window, 'orientationchange', this);
+			eventType(window, 'resize', this);
+
+			eventType(this.options.openAreaNode, 'click', this, true);
+
+		},
+		handleEvent: function (e) {
+			switch ( e.type ) {
+				case 'orientationchange':
+				case 'resize':
+					this.resize();
+				break;
+				case 'click':
+					if ( !e._constructed ) {
+						e.preventDefault();
+						e.stopPropagation();
+						console.log(window.alert('clicked'));
+					}
+				break;
+			}
+		}
+
 	};
 
-	// public function
-	this.getWidth = function () {
-		return width;
-	};
+	window.KonbiniAd = KonbiniAd;
 
-	// public function
-	this.getHeight = function () {
-		return height;
-	};
-}
-
-KonbiniAd.prototype = (function () {
-
-	var _container1 = document.createElement('div'),
-		_container2 = document.createElement('div'),
-		_container1Style = _container1.style;
-
-  	//public
-  	var appendAdTo = function (node) {
-
-  		_nodeParent = node;
-  		_nodeParent.appendChild(_container1);
-
-  		//make sure that the parent container is displayed 
-  		if(_nodeParent.getAttribute('id') === 'wallpaper') {
-  			//default value 
-  			_nodeParent.style.display = 'inline';
-  		}
- 
-  	};
-
-  	//public
-  	var setBgImage = function(path,width,height) {
-
-  		_container1Style.backgroundImage = 'url("' + path + '")';
-  		_container1Style.width = _container1Style.backgroundSize = width;
-  		_container1Style.height = height;
-  		_container1Style.left = -200 + 'px';
-  		_container1Style.top = '0px';
-
-  	}
-
-  	//public
-  	var setStyles = function (node) {
-
-  		if(node) {
-  			node.style.background = 'transparent';
-  		} else {
-  			console.log('no node');
-	  		//mobile device
-	  		_container1Style.position = 'fixed';
-	  		_container1Style.backgroundPosition = '0px 0px';
-	  		_container1Style.backgroundRepeat = 'no-repeat no-repeat';
-	  		_container1Style.backgroundAttachment = 'scroll';
-	  		_container1Style.backgroundColor = 'transparent';
-  		}
-
-  	};
-
-  	//public
-  	var insertAdBefore = function (node) {
-  		//add it after header tag
-  	};
-
-  	//public
-  	var modifyNode = function (node) {
-  		
-
-  	};
-
-  	return {
-    	appendAdTo: appendAdTo,
-    	setStyles: setStyles,
-    	setBgImage: setBgImage,
-    	insertAdBefore: insertAdBefore,
-    	modifyNode: modifyNode
-    }
-}());
+})(window, document, Math);
 
 //close button
+//clickable area
 //style='text-align: center; position: absolute; top: 0px; width: 100%; height: 100%; z-index: 100; background-color: transparent; background-position: initial initial; background-repeat: initial initial'
 //use media queries?
 
