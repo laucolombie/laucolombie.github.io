@@ -77,6 +77,8 @@
 		  	this.wrapper.style.backgroundRepeat = 'no-repeat no-repeat';
 		  	this.wrapper.style.backgroundAttachment = 'scroll';
 		  	this.wrapper.style.backgroundColor = 'transparent';
+		  	this.wrapper.style.display ='block';
+		  	this.wrapper.style.overflow = 'hidden';
 		},
 		initEvents:function(remove) {
 
@@ -89,7 +91,7 @@
 
 		},
 		resize: function(e) {	
-			console.log(window.alert(e));
+			//console.log(window.alert(e));
 		},
 		handleEvent: function (e) {
 			switch ( e.type ) {
@@ -106,7 +108,8 @@
 			}
 		},
 		addCloseButton: function() {
-
+			this.openAreaCloseButton.style.width = '20px';
+			this.openAreaCloseButton.style.height = '20px';
 		}
 
 	};
