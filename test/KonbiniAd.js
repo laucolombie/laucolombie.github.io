@@ -67,9 +67,9 @@
 		},
 		setWallpaperImage: function(path,width,height) {
 			this.wrapper.style.backgroundImage = 'url("' + path + '")';
-	  		this.wrapper.style.width =  width;
-	  		this.wrapper.style.backgroundSize = width;
-	  		this.wrapper.style.height = height;
+	  		this.wrapper.style.width =  "100%";
+	  		this.wrapper.style.backgroundSize = "100%";
+	  		this.wrapper.style.height = "100%";
 	  		this.wrapper.style.left = '0px';
 	  		this.wrapper.style.top = '0px';
 	  		this.wrapper.style.position = 'fixed';
