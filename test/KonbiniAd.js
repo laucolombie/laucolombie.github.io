@@ -73,7 +73,7 @@
 
 		setWallpaperImage: function(images) {
 			this.images = images;
-			applyImage();
+			this.applyImage();
 	  		this.wrapper.style.width =  "100%";
 	  		this.wrapper.style.backgroundSize = "100%";
 	  		this.wrapper.style.height = "100%";
