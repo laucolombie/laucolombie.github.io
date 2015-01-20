@@ -86,17 +86,20 @@
 			eventType(this.options.openAreaNode, 'click', this, true);
 
 		},
+		resize: function(e) {	
+			console.log(window.alert('e'));
+		},
 		handleEvent: function (e) {
 			switch ( e.type ) {
 				case 'orientationchange':
 				case 'resize':
-					this.resize();
+					this.resize(e);
 				break;
 				case 'click':
 					if ( !e._constructed ) {
 						e.preventDefault();
 						e.stopPropagation();
-						console.log(window.alert('clicked'));
+						
 					}
 				break;
 			}
