@@ -71,10 +71,11 @@
 		},
 
 		setWallpaperImage: function(images) {
+			this.images = images;
 			if (utils.isPortrait.matches) {
-				this.wrapper.style.backgroundImage = 'url("' + images.path1 + '")';
+				this.wrapper.style.backgroundImage = 'url("' + this.images.path1 + '")';
 			} else {
-				this.wrapper.style.backgroundImage = 'url("' + images.path2 + '")';
+				this.wrapper.style.backgroundImage = 'url("' + this.images.path2 + '")';
 			}
 	  		this.wrapper.style.width =  "100%";
 	  		this.wrapper.style.backgroundSize = "100%";
@@ -103,6 +104,11 @@
 
 		resize: function(e) {	
 			//console.log(window.alert(e));
+			if (utils.isPortrait.matches) {
+				this.wrapper.style.backgroundImage = 'url("' + this.images.path1 + '")';
+			} else {
+				this.wrapper.style.backgroundImage = 'url("' + this.images.path2 + '")';
+			}
 		},
 
 		handleEvent: function (e) {
