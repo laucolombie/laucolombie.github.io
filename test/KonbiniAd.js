@@ -68,6 +68,29 @@
 			this.options.openAreaNode.style.height = this.options.openAreaNodeHeight;
 
 			console.log(utils.isPortrait.matches);
+
+			document.getElementById('wrapper').style.background = 'transparent';
+		    document.getElementById('wrapper').style.display = 'block';
+		    document.getElementById('wrapper').style.overflow = 'hidden';
+		    document.getElementById('wrapper').style.width = '100%';
+
+		    jQuery('.wrapper-inner')[0].style.background = 'transparent';
+		    jQuery('.wrapper-inner')[0].style.padding = '0';
+		    jQuery('.entry-content')[0].style.background = '#fff';
+
+		    //apply padding
+		    //console.log(jQuery('.entry-content p'));
+		    //jQuery('.entry-content p').style.padding = '10px';
+		    jQuery('.container-header')[0].style.marginBottom = '0px';
+		    jQuery('.entry-header')[0].style.background = '#fff';
+
+			//adapt layout for the ad
+			jQuery('.entry-shares')[0].style.backgroundColor = '#fff';
+			console.log(jQuery('.entry-shares')[0].style.backgroundColor);
+			jQuery('.mobile')[0].style.backgroundColor = '#fff';
+			document.getElementById('author-bio-box').style.backgroundColor = '#fff important!';
+
+			
 			
 		},
 
