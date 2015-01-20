@@ -98,9 +98,8 @@
 			eventType(this.options.openAreaNode, 'click', this, true);
 
 		},
-
 		resize: function(e) {	
-			applyImage();
+			this.applyImage();
 		},
 		applyImage: function() {
 			if (utils.isPortrait.matches) {
