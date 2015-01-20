@@ -73,8 +73,7 @@
 
 		setWallpaperImage: function(images) {
 			this.images = images;
-			//apply image according to orientation
-			this.applyImage();
+			applyImage();
 	  		this.wrapper.style.width =  "100%";
 	  		this.wrapper.style.backgroundSize = "100%";
 	  		this.wrapper.style.height = "100%";
@@ -88,6 +87,7 @@
 		  	this.wrapper.style.display ='block';
 		  	this.wrapper.style.overflow = 'hidden';
 		},
+
 		initEvents:function(remove) {
 
 			var eventType = remove ? utils.removeEvent : utils.addEvent;
@@ -98,8 +98,9 @@
 			eventType(this.options.openAreaNode, 'click', this, true);
 
 		},
+
 		resize: function(e) {	
-			this.applyImage();
+			applyImage();
 		},
 		applyImage: function() {
 			if (utils.isPortrait.matches) {
@@ -107,8 +108,7 @@
 			} else {
 				this.wrapper.style.backgroundImage = 'url("' + this.images.path2 + '")';
 			}
-		}
-
+		},
 		handleEvent: function (e) {
 			switch ( e.type ) {
 				case 'orientationchange':
