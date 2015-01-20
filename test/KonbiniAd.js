@@ -47,7 +47,7 @@ KonbiniAd.prototype = (function () {
   		_container1Style.backgroundImage = 'url("' + path + '")';
   		_container1Style.width = _container1Style.backgroundSize = width;
   		_container1Style.height = height;
-  		_container1Style.left = '0px';
+  		_container1Style.left = -400 + 'px';
   		_container1Style.top = '0px';
 
   	}
