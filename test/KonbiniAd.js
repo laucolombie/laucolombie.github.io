@@ -66,9 +66,14 @@
 			this.getParentNode().style.display = 'inline';
 
 			this.options.openAreaNode.style.height = this.options.openAreaNodeHeight;
+			this.options.openAreaNode.style.width = '100%';
+			this.options.openAreaNode.style.position = 'relative';
+			this.options.openAreaNode.setAttribute('id','openArea');
 
-			console.log(utils.isPortrait.matches);
+			this.addCloseButton();
 
+
+			//ADAPT LAYOUT TO PAGE
 			document.getElementById('wrapper').style.background = 'transparent';
 		    document.getElementById('wrapper').style.display = 'block';
 		    document.getElementById('wrapper').style.overflow = 'hidden';
@@ -85,12 +90,11 @@
 		    jQuery('.entry-header')[0].style.background = '#fff';
 
 			//adapt layout for the ad
-			jQuery('.entry-shares')[0].style.backgroundColor = '#fff';
+			//doesn't work 
+			jQuery('.entry-shares')[0].style.backgroundColor = '#fff !important';
 			console.log(jQuery('.entry-shares')[0].style.backgroundColor);
 			jQuery('.mobile')[0].style.backgroundColor = '#fff';
-			document.getElementById('author-bio-box').style.backgroundColor = '#fff important!';
-
-			
+			document.getElementById('author-bio-box').style.backgroundColor = '#fff !important';
 			
 		},
 
@@ -120,6 +124,8 @@
 
 			eventType(this.options.openAreaNode, 'click', this, true);
 
+			eventType(this.openAreaCloseButton, 'click', this, true);
+
 		},
 		resize: function(e) {	
 			this.applyImage();
@@ -141,15 +147,34 @@
 					if ( !e._constructed ) {
 						e.preventDefault();
 						e.stopPropagation();	
-						if (this.clicktag) window.open(this.clicktag,'_blank');
+						if (e.target === this.openAreaCloseButton) {
+							this.options.openAreaNode.style.height = '0px';
+							this.wrapper.style.display = this.openAreaCloseButton.style.display = 'none';
+						} else {
+							if (this.clicktag) window.open(this.clicktag,'_blank');
+						}
+						
 					}
 				break;
 			}
 		},
 
 		addCloseButton: function() {
-			this.openAreaCloseButton.style.width = '20px';
-			this.openAreaCloseButton.style.height = '20px';
+
+			this.options.openAreaNode.appendChild(this.openAreaCloseButton);
+			this.openAreaCloseButton.style.width = '40px';
+			this.openAreaCloseButton.style.height = '30px';
+			this.openAreaCloseButton.style.backgroundColor = '#484848';
+			this.openAreaCloseButton.style.position = 'absolute';
+			this.openAreaCloseButton.style.top = '-10px';
+			this.openAreaCloseButton.style.right = '0px';
+			this.openAreaCloseButton.style.display = 'block';
+			this.openAreaCloseButton.setAttribute('class','ad-close');
+
+
+			
+
+
 		}
 
 	};
