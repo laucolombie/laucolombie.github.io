@@ -68,6 +68,9 @@
 		init: function () {	
 			//init events
 			this.initEvents();
+
+			this.resize();
+			
 			//append ad wrapper to parent node
 			this.getParentNode().appendChild(this.wrapper);
 			//make sure that the parent container is displayed 
