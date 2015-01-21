@@ -20,13 +20,19 @@
 		utility.removeEvent = function (el, type, fn, capture) {
 			el.removeEventListener(type, fn, !!capture);
 		};
-
+		//create a new custom event 
+		utility.createCustomEvent = function(el,type,fn,capture) {
+			var evt = new Event(type);
+			el.addEventListener(type, fn, !!capture);
+			return evt;
+		};
 		utility.extend(utility, {
 			hasTouch: 'ontouchstart' in window,
 			hasPointer: window.PointerEvent || window.MSPointerEvent, // IE10 is prefixed,
-			isPortrait: window.matchMedia("(orientation:portrait)")
+			isPortrait: window.matchMedia("(orientation:portrait)"),
+			hasModernizr: window.Modernizr ? true : false,
+			hasJQuery: window.jQuery ? true : false
 		});
-
 
 		return utility;
 
@@ -44,6 +50,7 @@
 			openAreaNode: document.getElementById('billboard'),
 			openAreaNodeHeight: '200px'
 		};
+
 		//overwrite options
 		for ( var i in options ) {
 			this.options[i] = options[i];
@@ -54,12 +61,13 @@
 			return parentNode;
 		};
 
-		this.init();
 	}
 
 	KonbiniAd.prototype = {
 
-		init: function () {
+		init: function () {	
+			//init events
+			this.initEvents();
 			//append ad wrapper to parent node
 			this.getParentNode().appendChild(this.wrapper);
 			//make sure that the parent container is displayed 
@@ -71,7 +79,6 @@
 			this.options.openAreaNode.setAttribute('id','openArea');
 
 			this.addCloseButton();
-
 
 			//ADAPT LAYOUT TO PAGE
 			document.getElementById('wrapper').style.background = 'transparent';
@@ -91,10 +98,12 @@
 
 			//adapt layout for the ad
 			//doesn't work 
-			jQuery('.entry-shares')[0].style.backgroundColor = '#fff !important';
-			console.log(jQuery('.entry-shares')[0].style.backgroundColor);
-			jQuery('.mobile')[0].style.backgroundColor = '#fff';
-			document.getElementById('author-bio-box').style.backgroundColor = '#fff !important';
+			// jQuery('.entry-shares')[0].style.backgroundColor = '#fff !important';
+			// console.log(jQuery('.entry-shares')[0].style.backgroundColor);
+			// jQuery('.mobile')[0].style.backgroundColor = '#fff';
+			// document.getElementById('author-bio-box').style.backgroundColor = '#fff !important';
+
+			window.dispatchEvent(this.isReadyEvent);
 			
 		},
 
@@ -119,6 +128,8 @@
 
 			var eventType = remove ? utils.removeEvent : utils.addEvent;
 
+			this.isReadyEvent = utils.createCustomEvent(window,'adReady',this.handleEvent);
+
 			eventType(window, 'orientationchange', this);
 			eventType(window, 'resize', this);
 
@@ -127,8 +138,15 @@
 			eventType(this.openAreaCloseButton, 'click', this, true);
 
 		},
-		resize: function(e) {	
+		resize: function() {	
 			this.applyImage();
+			//get the width and height of the viewport:
+			if (utils.hasJQuery) {
+				var viewportWidth = jQuery(window).width();
+				var viewportHeight = jQuery(window).height();
+				console.log(viewportWidth);
+				console.log(viewportHeight);
+			}
 		},
 		applyImage: function() {
 			if (utils.isPortrait.matches) {
@@ -139,9 +157,13 @@
 		},
 		handleEvent: function (e) {
 			switch ( e.type ) {
+				case 'adReady':
+					console.log('ad is ready');
+					//display ad;
+				break;
 				case 'orientationchange':
 				case 'resize':
-					this.resize(e);
+					this.resize();
 				break;
 				case 'click':
 					if ( !e._constructed ) {
@@ -153,12 +175,10 @@
 						} else {
 							if (this.clicktag) window.open(this.clicktag,'_blank');
 						}
-						
 					}
 				break;
 			}
 		},
-
 		addCloseButton: function() {
 
 			this.options.openAreaNode.appendChild(this.openAreaCloseButton);
@@ -171,10 +191,6 @@
 			this.openAreaCloseButton.style.display = 'block';
 			this.openAreaCloseButton.setAttribute('class','ad-close');
 
-
-			
-
-
 		}
 
 	};
@@ -183,8 +199,4 @@
 
 })(window, document, Math);
 
-//close button
-//clickable area
-//style='text-align: center; position: absolute; top: 0px; width: 100%; height: 100%; z-index: 100; background-color: transparent; background-position: initial initial; background-repeat: initial initial'
-//use media queries?
 
