@@ -109,11 +109,11 @@
 		    document.getElementById('wrapper').style.overflow = 'hidden';
 		    document.getElementById('wrapper').style.width = '100%';
 
-		 //    if(utils.hasJQuery) {
-			//     jQuery('.wrapper-inner')[0].style.background = 'transparent';
-			//     jQuery('.wrapper-inner')[0].style.padding = '0';
-			//     jQuery('.entry-content')[0].style.background = '#fff';
-			//  }
+		    if(utils.hasJQuery) {
+			    jQuery('.wrapper-inner')[0].style.background = 'transparent';
+			    jQuery('.wrapper-inner')[0].style.padding = '0';
+			    jQuery('.entry-content')[0].style.background = '#fff';
+			 }
 
 		 //    //apply padding
 		 //    //console.log(jQuery('.entry-content p'));
@@ -222,8 +222,8 @@
 			this.openAreaCloseButton.style.height = '30px';
 			this.openAreaCloseButton.style.backgroundColor = '#484848';
 			this.openAreaCloseButton.style.position = 'absolute';
-			this.openAreaCloseButton.style.top = '-10px';
-			this.openAreaCloseButton.style.right = '0px';
+			this.openAreaCloseButton.style.top = '5px';
+			this.openAreaCloseButton.style.right = '5px';
 			this.openAreaCloseButton.style.display = 'block';
 			this.openAreaCloseButton.setAttribute('class','ad-close');
 
