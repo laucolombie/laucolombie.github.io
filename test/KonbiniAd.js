@@ -26,13 +26,31 @@
 			el.addEventListener(type, fn, !!capture);
 			return evt;
 		};
+		utility.addStyleSheet = function() {
+			var style = document.createElement("style");
+			// WebKit hack :(
+			style.appendChild(document.createTextNode(""));
+			// Add the <style> element to the page
+			document.head.appendChild(style);
+			return style.sheet;
+		};
+		utility.addCSSRule = function(sheet, selector, rules, index) {
+			if("insertRule" in sheet) {
+				console.log("insertRule");
+				sheet.insertRule(selector + "{" + rules + "}", index);
+			}
+			else if("addRule" in sheet) {
+				console.log("addRule");
+				sheet.addRule(selector, rules, index);
+			}
+		};
 		utility.extend(utility, {
 			hasTouch: 'ontouchstart' in window,
 			hasPointer: window.PointerEvent || window.MSPointerEvent, // IE10 is prefixed,
 			isPortrait: window.matchMedia("(orientation:portrait)"),
 			hasModernizr: window.Modernizr ? true : false,
 			hasJQuery: window.jQuery ? true : false
-		});
+		})
 
 		return utility;
 
@@ -43,6 +61,8 @@
 		this.wrapper = document.createElement('div');
 		this.openArea = document.createElement('div');
 		this.openAreaCloseButton = document.createElement('div');
+		//style sheet 
+		this.styleSheet = utils.addStyleSheet();
 
 		if (clicktag) this.clicktag = clicktag;
 
@@ -70,7 +90,7 @@
 			this.initEvents();
 
 			this.resize();
-			
+
 			//append ad wrapper to parent node
 			this.getParentNode().appendChild(this.wrapper);
 			//make sure that the parent container is displayed 
@@ -89,21 +109,24 @@
 		    document.getElementById('wrapper').style.overflow = 'hidden';
 		    document.getElementById('wrapper').style.width = '100%';
 
-		    jQuery('.wrapper-inner')[0].style.background = 'transparent';
-		    jQuery('.wrapper-inner')[0].style.padding = '0';
-		    jQuery('.entry-content')[0].style.background = '#fff';
+		 //    if(utils.hasJQuery) {
+			//     jQuery('.wrapper-inner')[0].style.background = 'transparent';
+			//     jQuery('.wrapper-inner')[0].style.padding = '0';
+			//     jQuery('.entry-content')[0].style.background = '#fff';
+			//  }
 
-		    //apply padding
-		    //console.log(jQuery('.entry-content p'));
-		    //jQuery('.entry-content p').style.padding = '10px';
-		    jQuery('.container-header')[0].style.marginBottom = '0px';
-		    jQuery('.entry-header')[0].style.background = '#fff';
-
-			//adapt layout for the ad
-			//doesn't work 
-			// jQuery('.entry-shares')[0].style.backgroundColor = '#fff !important';
-			// console.log(jQuery('.entry-shares')[0].style.backgroundColor);
-			// jQuery('.mobile')[0].style.backgroundColor = '#fff';
+		 //    //apply padding
+		 //    //console.log(jQuery('.entry-content p'));
+		 //    //jQuery('.entry-content p').style.padding = '10px';
+		 //    jQuery('.container-header')[0].style.marginBottom = '0px';
+		 //    jQuery('.entry-header')[0].style.background = '#fff';
+		    
+		 //    //jQuery('.entry-shares')[0].style.display= 'none';
+			// // adapt layout for the ad
+			// // doesn't work 
+			
+			// jQuery('.widget-recommendation-results')[0].style.background = '#fff';
+			
 			// document.getElementById('author-bio-box').style.backgroundColor = '#fff !important';
 
 			window.dispatchEvent(this.isReadyEvent);
@@ -147,8 +170,8 @@
 			if (utils.hasJQuery) {
 				var viewportWidth = jQuery(window).width();
 				var viewportHeight = jQuery(window).height();
-				console.log(viewportWidth);
-				console.log(viewportHeight);
+				// console.log(viewportWidth);
+				// console.log(viewportHeight);
 			}
 		},
 		applyImage: function() {
@@ -161,8 +184,11 @@
 		handleEvent: function (e) {
 			switch ( e.type ) {
 				case 'adReady':
-					console.log('ad is ready');
-					//display ad;
+					window.setTimeout(function(){ 
+						console.log(jQuery('.entry-shares')[0]);
+						jQuery('.entry-shares')[0].style.background = '#fff';
+						jQuery('.addthis_toolbox')[0].style.background = '#fff !important';
+					}, 500);
 				break;
 				case 'orientationchange':
 				case 'resize':
@@ -174,6 +200,12 @@
 						e.stopPropagation();	
 						if (e.target === this.openAreaCloseButton) {
 							this.options.openAreaNode.style.height = '0px';
+							//use transition
+							// if (utils.hasJQuery) {
+							// 	jQuery(this.options.openAreaNode).animate({
+							// 	    height: "0px",
+							// 	},500);
+							// }
 							this.wrapper.style.display = this.openAreaCloseButton.style.display = 'none';
 						} else {
 							if (this.clicktag) window.open(this.clicktag,'_blank');
@@ -182,6 +214,7 @@
 				break;
 			}
 		},
+		//think of one parameter to choose the close button color
 		addCloseButton: function() {
 
 			this.options.openAreaNode.appendChild(this.openAreaCloseButton);
@@ -193,6 +226,10 @@
 			this.openAreaCloseButton.style.right = '0px';
 			this.openAreaCloseButton.style.display = 'block';
 			this.openAreaCloseButton.setAttribute('class','ad-close');
+
+			utils.addCSSRule(this.styleSheet,".ad-close::before", "-moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); transform: rotate(45deg);");
+			utils.addCSSRule(this.styleSheet,".ad-close::after", "-moz-transform: rotate(135deg); -ms-transform: rotate(135deg); -webkit-transform: rotate(135deg); transform: rotate(135deg);");
+			utils.addCSSRule(this.styleSheet,".ad-close::before, .ad-close::after", "content: ''; position: absolute; top: 14px; left: 10px; display: inline-block; width: 22px; height: 3px; background-color: #fff; -moz-transition: -moz-transform 250ms; -webkit-transition: -webkit-transform 250ms; transition: transform 250ms;");
 
 		}
 
