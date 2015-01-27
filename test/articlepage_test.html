@@ -318,24 +318,56 @@
 <link rel='stylesheet' id='authorbiobox-style-css'  href='http://www.konbini.com/en/wp-content/plugins/author-bio-box/assets/css/box.css?ver=2.0.0' type='text/css' media='all' />
 
     <script type='text/javascript' src='http://www.konbini.com/wp-content/themes/konbini/js/production_footer_20150116-1105.js'></script>
+
 <script type="text/javascript" src="KonbiniAd.js"></script>
-<script type="text/javascript">
-    
-    var header = jQuery('.entry-content')[0];
-    var parentElement = jQuery('.entry-inner')[0];
-
-    var newDiv = document.createElement('div');
-    
-    var transAd = parentElement.insertBefore(newDiv, header);
-
-    var ad = new KonbiniAd('mobileAd',document.getElementById('wallpaper'),{openAreaNode:transAd},'https://www.adidas.co.uk/');
-
-    ad.setWallpaperImage({path1:'testphoto2.jpg',path2:'testphoto3.jpg'});
-
-
-    ad.init();
-    
-   
+ <script type="text/javascript">
+    var hasJQuery = window.jQuery ? true : false;
+   if (hasJQuery) {
+       jQuery( document ).ready(function( $ ) {
+       //remove any padding for the item-adv
+      // //make sure that the injection into wallpaper and not item-adv is fine
+      //  var adCallNum = jQuery('.item-adv').length;
+      //  if (adCallNum===1) {
+           jQuery('.item-adv')[0].style.paddingBottom = 0;
+           jQuery('.wrapper-inner')[0].style.background = 'transparent';
+           jQuery('.wrapper-inner')[0].style.padding = '0px 0px';
+           jQuery('.container-header')[0].style.padding = '0px 0px';
+           jQuery('.container-header')[0].style.margin = '0px 0px';
+           jQuery('header')[0].style.padding = '0px 0px';
+           jQuery('header')[0].style.margin = '0px 0px';
+           jQuery('.entry-shares')[0].style.margin = '0px 0px';
+           //set white color
+           jQuery('header.entry-header')[0].style.background = '#ffffff';
+           jQuery('header.entry-header')[0].style.marginBottom = '0px';
+           jQuery('.entry-content')[0].style.background = '#fff';
+           jQuery('.entry-shares')[1].style.margin = '0px 0px';
+           jQuery('.entry-shares')[1].style.background = '#fff';
+           jQuery('.tablette')[0].style.background = '#fff';
+           jQuery('.tablette')[0].style.margin = '0px 0px';
+           jQuery('.mobile')[0].style.background = '#fff';
+           jQuery('.mobile')[0].style.margin = '0px 0px';
+           jQuery('.entry-biobox')[0].style.margin = '0px 0px';
+           jQuery('.entry-biobox')[0].style.padding = '0px 0px';
+           jQuery('.entry-biobox')[0].style.background = '#fff';
+           // jQuery('footer')[0].style.background = '#f5f5f5';
+           // jQuery('footer')[0].style.position = 'relative';
+           // jQuery('footer')[0].style.zIndex = '1000';
+           // jQuery('footer')[0].style.marginTop = '-15px';
+       //}
+       //create window space 
+       var header = jQuery('.entry-content')[0];
+       var parentElement = jQuery('.entry-inner')[0];
+       var newDiv = document.createElement('div');
+       var windowAd = parentElement.insertBefore(newDiv, header);
+       //create ad 
+       var ad = new KonbiniAd('mobileAd',document.getElementById('wallpaper'),{openAreaNode:windowAd},'https://www.adidas.co.uk/');
+       //console.log('laurence');
+       //set images
+       ad.setWallpaperImage({path1:'http://laucolombie.github.io/test/testphoto2.jpg',path2:'http://laucolombie.github.io/test/testphoto3.jpg'});
+       //init ad
+       ad.init();
+       });
+   }
 </script>
 </body>
 </html>
