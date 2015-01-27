@@ -212,7 +212,7 @@
 			if (utils.hasJQuery) { 
 				jQuery(this.options.openAreaNode).after(this.openAreaOpenButton);
 				this.openAreaOpenButton.setAttribute('class','ad-open');
-				utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ddd");
+				utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc");
 				this.openAreaOpenButton.innerHTML = 'Afficher la pub';
 
 			} else {
