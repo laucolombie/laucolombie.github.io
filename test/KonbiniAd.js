@@ -1,12 +1,26 @@
 /**
  * @module KonbiniAd
  **/
-(function (window, document, Math) {
+(function (window, document, navigator) {
+
+	//"use strict";
+
+	//size properties for responsive support
+	var MAX_MOBILE_DEVICE_SIZE = {
+			portrait:{
+				w:414,h:736
+			},
+			landscape: {
+				w:736,h:414
+			}
+		},
+		MAX_TABLET_DEVICE_SIZE = {},
+		MIN_DESKTOP_DEVICE_SIZE = {};
 
 	var utils = (function () {
 
 		var utility = {};
-
+		
 		utility.extend = function (target, obj) {
 			for ( var i in obj ) {
 				target[i] = obj[i];
@@ -36,11 +50,9 @@
 		};
 		utility.addCSSRule = function(sheet, selector, rules, index) {
 			if("insertRule" in sheet) {
-				console.log("insertRule");
 				sheet.insertRule(selector + "{" + rules + "}", index);
 			}
 			else if("addRule" in sheet) {
-				console.log("addRule");
 				sheet.addRule(selector, rules, index);
 			}
 		};
@@ -50,13 +62,27 @@
 			isPortrait: window.matchMedia("(orientation:portrait)"),
 			hasModernizr: window.Modernizr ? true : false,
 			hasJQuery: window.jQuery ? true : false
-		})
+		});
+		utility.viewport = function() {
+
+			var e = window,
+				a = 'inner';
+			if (!('innerWidth' in window)) {
+				a = 'client';
+				e = document.documentElement || document.body;
+			}
+
+			return { width : e[ a+'Width' ] , height : e[ a+'Height' ] }
+
+		};
 
 		return utility;
 
 	})();
 
 	function KonbiniAd(name,parentNode,options,clicktag) {
+
+		console.log(Math);
 
 		this.imgWrapper = document.createElement('div');
 		this.openArea = document.createElement('div');
@@ -85,6 +111,8 @@
 			return parentNode;
 		};
 
+
+
 	}
 
 	KonbiniAd.prototype = {
@@ -110,7 +138,7 @@
 			this.addCloseButton();
 			this.addOpenButton();
 
-			//ADAPT LAYOUT TO PAGE
+			//ADAPT LAYOUT TO PAGE - NOT NICE AT ALL AS HARD CODED
 			document.getElementById('wrapper').style.background = 'transparent';
 		    document.getElementById('wrapper').style.display = 'block';
 		    document.getElementById('wrapper').style.overflow = 'hidden';
@@ -121,18 +149,51 @@
 		},
 
 		setWallpaperImage: function(images) {
+
 			this.images = images;
-			this.applyImage();
+			
 			utils.addCSSRule(this.styleSheet,"#ad_image","position:fixed; background-color:transparent; display:block; overflow: hidden");
 			//HERE I AM GOING TO MANIPULATE THE POSITION OF THE IMAGE
-	  		this.imgWrapper.style.width =  "100%";
-	  		this.imgWrapper.style.backgroundSize = "100%";
-	  		this.imgWrapper.style.height = "100%";
-	  		this.imgWrapper.style.left = '0px';
-	  		this.imgWrapper.style.top = '0px';
-		  	this.imgWrapper.style.backgroundPosition = '0px 0px';
-		  	this.imgWrapper.style.backgroundRepeat = 'no-repeat no-repeat';
-		  	this.imgWrapper.style.backgroundAttachment = 'scroll';
+	  		//get viewport dimensions
+			
+	  		//detect if portrait mode
+			if (utils.isPortrait.matches) {
+				
+				if (utils.viewport().width <= MAX_MOBILE_DEVICE_SIZE.portrait.w) {
+
+					var cropWidth = MAX_MOBILE_DEVICE_SIZE.landscape.w - utils.viewport().width;
+					
+					var ratio = Math.round((utils.viewport().width/MAX_MOBILE_DEVICE_SIZE.landscape.w) * 100);
+
+					/* Set rules to fill background */
+					this.imgWrapper.style.minWidth =  "100%";
+					this.imgWrapper.style.minHeight =  utils.viewport().height + "px";
+
+					/* Set up proportionate scaling */
+					this.imgWrapper.style.width =  "auto";
+					this.imgWrapper.style.height =  "100%";
+
+					this.imgWrapper.style.backgroundSize = "cover";
+
+			  		this.imgWrapper.style.left = '0px';
+			  		this.imgWrapper.style.top = '0px';
+				  	this.imgWrapper.style.backgroundPosition = '0px 0px';
+				  	
+				  	this.imgWrapper.style.backgroundAttachment = 'scroll';
+
+				}
+			} 
+
+			
+
+	  		// this.imgWrapper.style.width =  "100%";
+	  		// this.imgWrapper.style.backgroundSize = "100%";
+	  		//this.imgWrapper.style.minHeight = "100%";
+	  		// this.imgWrapper.style.left = '0px';
+	  		// this.imgWrapper.style.top = '0px';
+		  	// this.imgWrapper.style.backgroundPosition = '0px 0px';
+		  	// this.imgWrapper.style.backgroundRepeat = 'no-repeat no-repeat';
+		  	// this.imgWrapper.style.backgroundAttachment = 'scroll';
 		  	
 		},
 
@@ -155,17 +216,17 @@
 			this.applyImage();
 			//get the width and height of the viewport:
 			if (utils.hasJQuery) {
-				var viewportWidth = jQuery(window).width();
-				var viewportHeight = jQuery(window).height();
+				//var viewportWidth = jQuery(window).width();
+				//var viewportHeight = jQuery(window).height();
 				// console.log(viewportWidth);
 				// console.log(viewportHeight);
 			}
 		},
 		applyImage: function() {
 			if (utils.isPortrait.matches) {
-				this.imgWrapper.style.backgroundImage = 'url("' + this.images.path1 + '")';
+				this.imgWrapper.style.background = 'url("' + this.images.urlm + '") no-repeat center center';
 			} else {
-				this.imgWrapper.style.backgroundImage = 'url("' + this.images.path2 + '")';
+				this.imgWrapper.style.background = 'url("' + this.images.urlm + '") no-repeat center center';
 			}
 		},
 		handleEvent: function (e) {
