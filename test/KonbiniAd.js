@@ -144,7 +144,7 @@
 	  		this.imgWrapper.style.height = "100%";
 	  		this.imgWrapper.style.left = '0px';
 	  		this.imgWrapper.style.top = '0px';
-		  	this.imgWrapper.style.backgroundPosition = '0px 0px';
+		  	this.imgWrapper.style.backgroundPosition = 'center center';
 		  	this.imgWrapper.style.backgroundRepeat = 'no-repeat no-repeat';
 		  	this.imgWrapper.style.backgroundAttachment = 'scroll';
 		  	
