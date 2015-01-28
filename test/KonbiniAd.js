@@ -165,7 +165,6 @@
 					
 					var ratio = Math.round((utils.viewport().width/MAX_MOBILE_DEVICE_SIZE.landscape.w) * 100);
 
-					/* Set rules to fill background */
 					this.imgWrapper.style.minWidth =  "100%";
 					this.imgWrapper.style.minHeight =  utils.viewport().height + "px";
 
@@ -173,13 +172,34 @@
 					this.imgWrapper.style.width =  "auto";
 					this.imgWrapper.style.height =  "100%";
 
+
+	
+  
+	
+  
+					/* Set up positioning */
+
+	
+  /* Set up positioning */
+  // position: fixed;
+  // top: 0;
+  ///left: 0;
+
+					// this.imgWrapper.style.width =  utils.viewport().width + "px";
+					// this.imgWrapper.style.height =  utils.viewport().height + "px";
 					this.imgWrapper.style.backgroundSize = "cover";
 
-			  		this.imgWrapper.style.left = '0px';
-			  		this.imgWrapper.style.top = '0px';
-				  	this.imgWrapper.style.backgroundPosition = '0px 0px';
-				  	
-				  	this.imgWrapper.style.backgroundAttachment = 'scroll';
+
+					
+					// this.imgWrapper.style.minHeight = "100%";
+	  		this.imgWrapper.style.left = '0px';
+	  		this.imgWrapper.style.top = '0px';
+		  	// this.imgWrapper.style.backgroundPosition = '0px 0px';
+		  	// this.imgWrapper.style.backgroundRepeat = 'no-repeat no-repeat';
+		  	// this.imgWrapper.style.backgroundAttachment = 'scroll';
+
+					//console.log((736 - wt) / MAX_MOBILE_DEVICE_SIZE.landscape.w);
+
 
 				}
 			} 
@@ -224,9 +244,9 @@
 		},
 		applyImage: function() {
 			if (utils.isPortrait.matches) {
-				this.imgWrapper.style.background = 'url("' + this.images.urlm + '") no-repeat center center';
+				this.imgWrapper.style.background = 'url("' + this.images.urlm + '") no-repeat center center fixed';
 			} else {
-				this.imgWrapper.style.background = 'url("' + this.images.urlm + '") no-repeat center center';
+				this.imgWrapper.style.background = 'url("' + this.images.urlm + '") no-repeat center center fixed';
 			}
 		},
 		handleEvent: function (e) {
