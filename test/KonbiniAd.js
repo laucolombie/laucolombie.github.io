@@ -179,11 +179,6 @@
   
 					/* Set up positioning */
 
-	
-  /* Set up positioning */
-  // position: fixed;
-  // top: 0;
-  ///left: 0;
 
 					// this.imgWrapper.style.width =  utils.viewport().width + "px";
 					// this.imgWrapper.style.height =  utils.viewport().height + "px";
