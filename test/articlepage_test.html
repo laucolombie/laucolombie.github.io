@@ -324,36 +324,8 @@
     var hasJQuery = window.jQuery ? true : false;
    if (hasJQuery) {
        jQuery( document ).ready(function( $ ) {
-       //remove any padding for the item-adv
-      // //make sure that the injection into wallpaper and not item-adv is fine
-      //  var adCallNum = jQuery('.item-adv').length;
-      //  if (adCallNum===1) {
-           jQuery('.item-adv')[0].style.paddingBottom = 0;
-           jQuery('.wrapper-inner')[0].style.background = 'transparent';
-           jQuery('.wrapper-inner')[0].style.padding = '0px 0px';
-           jQuery('.container-header')[0].style.padding = '0px 0px';
-           jQuery('.container-header')[0].style.margin = '0px 0px';
-           jQuery('header')[0].style.padding = '0px 0px';
-           jQuery('header')[0].style.margin = '0px 0px';
-           jQuery('.entry-shares')[0].style.margin = '0px 0px';
-           //set white color
-           jQuery('header.entry-header')[0].style.background = '#ffffff';
-           jQuery('header.entry-header')[0].style.marginBottom = '0px';
-           jQuery('.entry-content')[0].style.background = '#fff';
-           jQuery('.entry-shares')[1].style.margin = '0px 0px';
-           jQuery('.entry-shares')[1].style.background = '#fff';
-           jQuery('.tablette')[0].style.background = '#fff';
-           jQuery('.tablette')[0].style.margin = '0px 0px';
-           jQuery('.mobile')[0].style.background = '#fff';
-           jQuery('.mobile')[0].style.margin = '0px 0px';
-           jQuery('.entry-biobox')[0].style.margin = '0px 0px';
-           jQuery('.entry-biobox')[0].style.padding = '0px 0px';
-           jQuery('.entry-biobox')[0].style.background = '#fff';
-           // jQuery('footer')[0].style.background = '#f5f5f5';
-           // jQuery('footer')[0].style.position = 'relative';
-           // jQuery('footer')[0].style.zIndex = '1000';
-           // jQuery('footer')[0].style.marginTop = '-15px';
-       //}
+             
+      
        //create window space 
        var header = jQuery('.entry-content')[0];
        var parentElement = jQuery('.entry-inner')[0];
@@ -361,11 +333,35 @@
        var windowAd = parentElement.insertBefore(newDiv, header);
        //create ad 
        var ad = new KonbiniAd('mobileAd',document.getElementById('wrapper'),{openAreaNode:windowAd},'https://www.adidas.co.uk/');
-       //console.log('laurence');
        //set images
        ad.setWallpaperImage({path1:'http://laucolombie.github.io/test/testphoto2.jpg',path2:'http://laucolombie.github.io/test/testphoto3.jpg'});
        //init ad
        ad.init();
+       //remove any padding for the item-adv
+       //make sure that the injection into wallpaper and not item-adv is fine
+       // var adCallNum = jQuery('.item-adv').length;
+       // if (adCallNum===1) {
+          //jQuery('.item-adv')[0].style.paddingBottom = 0;
+           //set color
+           jQuery('.wrapper-inner').css('background', 'transparent');
+           jQuery('.wrapper-inner').css('padding', '0px 0px');
+           jQuery('header').css('background', '#ffffff');
+           jQuery('header').css('padding', '15px 10px 0px 10px ');
+           jQuery('header').css('margin-top', '-15px');
+           jQuery('header').css('margin-bottom', '0px');
+           jQuery('.entry-content').css('background', '#ffffff');
+           jQuery('.entry-content').css('padding', '10px');
+           jQuery('.entry-shares').css('margin', '0px');
+           jQuery('.entry-shares').css('background', '#ffffff');
+           jQuery('.tablette').css('background', '#ffffff');
+           jQuery('.mobile').css('background', '#ffffff');
+           jQuery('.entry-biobox').css('background', '#ffffff');
+           jQuery('.entry-biobox').css('padding-top', '15px');
+           jQuery('footer').css('position', 'absolute');
+           jQuery('footer').css('z-index', '1000');
+           jQuery('footer').css('margin-top', '-15px');
+   
+       //}
        });
    }
 </script>
