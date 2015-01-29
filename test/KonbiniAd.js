@@ -199,13 +199,13 @@
 				var openWposY = utils.getNodePosition(_self.options.openWindow).y;
 				
 				if (openWposY <= - _self.options.openWindowH) {
-					this.imgWrapper.style.display = 'none';
+					_self.imgWrapper.style.display = 'none';
 					console.log('hide');
 					//cancel rAF
 					
 				} else {
 					console.log(openWposY);
-					this.imgWrapper.style.display = 'block';
+					_self.imgWrapper.style.display = 'block';
 				}
 
 				_self.ticking = false;
