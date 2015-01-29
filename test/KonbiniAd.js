@@ -209,12 +209,15 @@
 				
 				var openWposY = utils.getNodePosition(_self.options.openWindow).y,
 					//hardcoded - please change it really
-					//elm = document.getElementById('ad_image'),
+					elm = document.getElementById('ad_image'),
 					h = - _self.options.openWindowH - 30;
 				
 				if (openWposY < h) {
 
-					_self.options.openWindow.style.height = '0px';
+					//_self.ticking = true
+
+					//elm.style.opacity = '0';
+					elm.style.display = 'none';
 					adIsInViewport = false;
 
 				// } else if (openWposY < - h && openWposY > - h - 5) {
@@ -224,8 +227,7 @@
 					//_self.ticking = false;
 					if (!adIsInViewport) {
 						console.log('show');
-						_self.options.openWindow.style.height = _self.options.openWindowH + 'px';
-						
+						elm.style.display = 'block';
 						// jQuery(elm).animate({
 						// 	opacity: "1",
 						// },500, "linear", function() {
