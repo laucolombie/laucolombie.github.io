@@ -252,7 +252,7 @@
 			if (utils.hasTouch && this.options.enableTick) {
 				eventType(window, 'touchmove', this);
 				this.ticking = true;
-				requestTick();
+				//requestTick();
 			}
 
 		},
@@ -284,7 +284,11 @@
 					//}, 500);
 				break;
 				case 'touchmove':
-					console.log(utils.isNodeVisible(this.options.openWindow));
+					if (!utils.isNodeVisible(this.options.openWindow)) {
+						elm.style.display = 'none';
+					} else {
+						elm.style.display = 'block';
+					}
 				break;
 				case 'orientationchange':
 				case 'resize':
