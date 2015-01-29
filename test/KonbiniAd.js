@@ -240,6 +240,7 @@
 			};
 
 			if (utils.hasTouch && this.options.enableTick) {
+				eventType(window, 'touchmove', this);
 				this.ticking = true;
 				requestTick();
 			}
@@ -271,6 +272,9 @@
 					// 	jQuery('.entry-shares')[0].style.background = '#fff';
 					// 	jQuery('.addthis_toolbox')[0].style.background = '#fff !important';
 					//}, 500);
+				break;
+				case 'touchmove':
+					console.log('touchmove');
 				break;
 				case 'orientationchange':
 				case 'resize':
