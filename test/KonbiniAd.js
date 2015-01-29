@@ -110,7 +110,7 @@
 
 		this.options = {
 			openWindow: document.getElementById('billboard'),
-			openWindowH: 200,
+			openWindowH: 250,
 			enableTick: false
 		};
 
