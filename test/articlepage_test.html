@@ -329,11 +329,11 @@
        var header = jQuery('.entry-content')[0];
        var parentElement = jQuery('.entry-inner')[0];
        var newDiv = document.createElement('div');
-       var windowAd = parentElement.insertBefore(newDiv, header);
+       var adWindow = parentElement.insertBefore(newDiv, header);
        //create ad 
-       var ad = new KonbiniAd('mobileAd',document.getElementById('wrapper'),{openAreaNode:windowAd},'https://www.adidas.co.uk/');
+       var ad = new KonbiniAd('mobileAd',document.getElementById('wrapper'),{openWindow:adWindow,scrollDetect:true},'https://www.adidas.co.uk/');
        //set images
-       ad.setWallpaperImage({urlmp:'http://laucolombie.github.io/test/high_portrait.jpg',urlml:'http://laucolombie.github.io/test/high_landscape.jpg'});
+       ad.setWallpaperImage({urlmp:'http://laucolombie.github.io/test/high_portrait.jpg',urlml:'http://laucolombie.github.io/test/high_lanscape.jpg'});
        //init ad
        ad.init();
        //remove any padding for the item-adv

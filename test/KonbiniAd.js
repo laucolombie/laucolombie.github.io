@@ -5,6 +5,13 @@
 
 	"use strict";
 
+	var rAF = window.requestAnimationFrame	||
+			window.webkitRequestAnimationFrame	||
+			window.mozRequestAnimationFrame		||
+			window.oRequestAnimationFrame		||
+			window.msRequestAnimationFrame		||
+			function (callback) { window.setTimeout(callback, 1000 / 60); };
+
 	var utils = (function () {
 
 		var utility = {};
@@ -16,6 +23,7 @@
 		};
 		//add event
 		utility.addEvent = function (el, type, fn, capture) {
+			//document.attachEvent
 			el.addEventListener(type, fn, !!capture);
 		};
 		//remove event
@@ -38,7 +46,6 @@
 		};
 		utility.addCSSRule = function(sheet, selector, rules, index) {
 			if("insertRule" in sheet) {
-				console.log("insertRule");
 				sheet.insertRule(selector + "{" + rules + "}", index);
 			}
 			else if("addRule" in sheet) {
@@ -73,7 +80,7 @@
 	function KonbiniAd(name,parentNode,options,clicktag) {
 
 		this.imgWrapper = document.createElement('div');
-		this.openArea = document.createElement('div');
+		//this.openWindow = document.createElement('div');
 		this.openAreaCloseButton = document.createElement('div');
 		this.openAreaOpenButton = document.createElement('div');
 
@@ -85,8 +92,9 @@
 		if (clicktag) this.clicktag = clicktag;
 
 		this.options = {
-			openAreaNode: document.getElementById('billboard'),
-			openAreaNodeHeight: '200px'
+			openWindow: document.getElementById('billboard'),
+			openWindowH: '200px',
+			scrollDetect: false
 		};
 
 		//overwrite options
@@ -104,6 +112,7 @@
 	KonbiniAd.prototype = {
 
 		init: function () {	
+
 			//init events
 			this.initEvents();
 
@@ -115,10 +124,10 @@
 			//make sure that the parent container is displayed 
 			this.getParentNode().style.display = 'inline';
 
-			this.options.openAreaNode.style.height = this.options.openAreaNodeHeight;
-			this.options.openAreaNode.style.width = '100%';
-			this.options.openAreaNode.style.position = 'relative';
-			this.options.openAreaNode.setAttribute('id','openArea');
+			this.options.openWindow.style.height = this.options.openWindowH;
+			this.options.openWindow.style.width = '100%';
+			this.options.openWindow.style.position = 'relative';
+			this.options.openWindow.setAttribute('id','openArea');
 
 			//ADD CLOSE AND OPEN BUTTON
 			this.addCloseButton();
@@ -130,15 +139,20 @@
 		    document.getElementById('wrapper').style.overflow = 'hidden';
 		    document.getElementById('wrapper').style.width = '100%';
 
-			window.dispatchEvent(this.isReadyEvent);
+		    if (utils.hasTouch && this.options.scrollDetect) {
+				console.log('start tick then');
+			}
+
+			window.dispatchEvent(this.readyEvent);
 			
 		},
 
 		setWallpaperImage: function(images) {
+
 			this.images = images;
 			this.applyImage();
 			utils.addCSSRule(this.styleSheet,"#ad_image","position:fixed; background-color:transparent; display:block; overflow: hidden");
-			//HERE I AM GOING TO MANIPULATE THE POSITION OF THE IMAGE
+			
 	  		this.imgWrapper.style.width =  "100%";
 	  		this.imgWrapper.style.backgroundSize = "cover";
 	  		this.imgWrapper.style.height = "100%";
@@ -154,16 +168,19 @@
 
 			var eventType = remove ? utils.removeEvent : utils.addEvent;
 
-			this.isReadyEvent = utils.createCustomEvent(window,'adReady',this.handleEvent);
+			this.readyEvent = utils.createCustomEvent(window,'ready',this.handleEvent);
+			this.tickEvent = utils.createCustomEvent(window,'tick',this.handleEvent);
 
 			eventType(window, 'orientationchange', this);
 			eventType(window, 'resize', this);
+			eventType(window, 'scroll',this);
 
-			eventType(this.options.openAreaNode, 'click', this, true);
+			eventType(this.options.openWindow, 'click', this, true);
 
 			eventType(this.openAreaCloseButton, 'click', this, true);
 			eventType(this.openAreaOpenButton, 'click', this, true);
 
+			
 		},
 		resize: function() {	
 
@@ -172,8 +189,8 @@
 			if (utils.hasJQuery) {
 				//var viewportWidth = jQuery(window).width();
 				//var viewportHeight = jQuery(window).height();
-				// console.log(viewportWidth);
-				// console.log(viewportHeight);
+				//console.log(viewportWidth);
+				//console.log(viewportHeight);
 			}
 		},
 		applyImage: function() {
@@ -186,7 +203,8 @@
 		},
 		handleEvent: function (e) {
 			switch ( e.type ) {
-				case 'adReady':
+				case 'ready':
+					console.log('I am ready');
 					//window.setTimeout(function(){ 
 					// 	jQuery('.entry-shares')[0].style.background = '#fff';
 					// 	jQuery('.addthis_toolbox')[0].style.background = '#fff !important';
@@ -195,6 +213,9 @@
 				case 'orientationchange':
 				case 'resize':
 					this.resize();
+				break;
+				case 'scroll':
+					console.log('scroll');
 				break;
 				case 'click':
 					if ( !e._constructed ) {
@@ -214,7 +235,7 @@
 		//think of one parameter to choose the close button color
 		addCloseButton: function() {
 
-			this.options.openAreaNode.appendChild(this.openAreaCloseButton);
+			this.options.openWindow.appendChild(this.openAreaCloseButton);
 
 			this.openAreaCloseButton.setAttribute('class','ad-close');
 			
@@ -226,7 +247,7 @@
 		},
 		addOpenButton: function() {
 			if (utils.hasJQuery) { 
-				jQuery(this.options.openAreaNode).after(this.openAreaOpenButton);
+				jQuery(this.options.openWindow).after(this.openAreaOpenButton);
 				this.openAreaOpenButton.setAttribute('class','ad-open');
 				utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc");
 				this.openAreaOpenButton.innerHTML = 'Afficher la pub';
@@ -239,7 +260,7 @@
 				case "close":
 					if (utils.hasJQuery) {
 						//close open area window
-						jQuery(this.options.openAreaNode).animate({
+						jQuery(this.options.openWindow).animate({
 							height: "0px",
 						},300, "linear", function() {
 		 
@@ -262,8 +283,8 @@
 				case "open":
 					if (utils.hasJQuery) {
 						//show open area window
-						jQuery(this.options.openAreaNode).animate({
-							height: this.options.openAreaNodeHeight,
+						jQuery(this.options.openWindow).animate({
+							height: this.options.openWindowH,
 						},300, "linear", function() {
 		 
 						});
