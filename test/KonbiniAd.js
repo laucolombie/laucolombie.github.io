@@ -87,6 +87,16 @@
     		return { x: xPos, y: yPos };
 
 		};
+		utility.isNodeVisible = function(elm) {
+
+			var elmPosY = utils.getNodePosition(elm).y,
+				elmHeight = elm.clientHeight;
+
+			if (elmPosY < - elmHeight) return false;									
+			else if (elmPosY > utility.viewport().height) return false;
+			else return true;
+
+		};
 
 		return utility;
 
@@ -274,7 +284,7 @@
 					//}, 500);
 				break;
 				case 'touchmove':
-					console.log('touchmove');
+					console.log(utils.isNodeVisible(this.options.openWindow));
 				break;
 				case 'orientationchange':
 				case 'resize':
