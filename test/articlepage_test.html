@@ -331,7 +331,7 @@
        var newDiv = document.createElement('div');
        var adWindow = parentElement.insertBefore(newDiv, header);
        //create ad 
-       var ad = new KonbiniAd('mobileAd',document.getElementById('wrapper'),{openWindow:adWindow,scrollDetect:true},'https://www.adidas.co.uk/');
+       var ad = new KonbiniAd('mobileAd',document.getElementById('wrapper'),{openWindow:adWindow,enableTick:true},'https://www.adidas.co.uk/');
        //set images
        ad.setWallpaperImage({urlmp:'http://laucolombie.github.io/test/high_portrait.jpg',urlml:'http://laucolombie.github.io/test/high_lanscape.jpg'});
        //init ad

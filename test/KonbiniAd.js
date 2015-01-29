@@ -12,7 +12,7 @@
 			window.msRequestAnimationFrame		||
 			function (callback) { window.setTimeout(callback, 1000 / 60); };
 
-	var _self, makeFading = false;
+	var _self, adIsInViewport = false;
 
 	var utils = (function () {
 
@@ -98,7 +98,6 @@
 				this.ticking = false;
 
 		this.imgWrapper = document.createElement('div');
-		//this.openWindow = document.createElement('div');
 		this.openAreaCloseButton = document.createElement('div');
 		this.openAreaOpenButton = document.createElement('div');
 
@@ -112,7 +111,7 @@
 		this.options = {
 			openWindow: document.getElementById('billboard'),
 			openWindowH: 200,
-			scrollDetect: false
+			enableTick: false
 		};
 
 		//overwrite options
@@ -157,6 +156,18 @@
 		    document.getElementById('wrapper').style.overflow = 'hidden';
 		    document.getElementById('wrapper').style.width = '100%';
 
+		    //////////////// CHANGE PLEASE
+		    //check if the ad is visible (can be used for tracking and optimisation)
+		    var openWposY = utils.getNodePosition(this.options.openWindow).y,
+			//hardcoded - please change it really
+			elm = document.getElementById('ad_image');
+			//here you need to ad another condition // maybe do a function at best
+			if (openWposY <= - this.options.openWindowH) {
+				adIsInViewport = false;
+			} else {
+				adIsInViewport = true;
+			}
+
 			window.dispatchEvent(this.readyEvent);
 			
 		},
@@ -195,44 +206,45 @@
 
 
 			var update = function() {
-
+				
 				var openWposY = utils.getNodePosition(_self.options.openWindow).y,
+					//hardcoded - please change it really
 					elm = document.getElementById('ad_image');
 				
 				if (openWposY <= - _self.options.openWindowH) {
 
-					_self.makeFading = true;
+					// _self.ticking = true
 
 					elm.style.opacity = '0';
+					console.log('not visible anymore');
+					adIsInViewport = false;
 
-
-					
+				} else if (openWposY < - _self.options.openWindowH && openWposY >= - _self.options.openWindowH - 10) {
+					_self.ticking = false;
 				} else {
-					if (_self.makeFading) {
-						
+					if (!adIsInViewport) {
 						jQuery(elm).animate({
 							opacity: "1",
-						},1000, "linear", function() {
-		 					console.log('j');
+						},500, "linear", function() {
+		 					
 						});
-						_self.makeFading = false;
+						adIsInViewport = true;
 					}
 				}
 
-				_self.ticking = false;
+				requestTick();
 				
 			};
 
 			var requestTick = function() {
-				
+
 				if (!_self.ticking) {
 					rAF(update);
-					_self.ticking = true;
+					//_self.ticking = true;
 				}
 			};
 
-			if (utils.hasTouch && this.options.scrollDetect) {
-				eventType(window, 'scroll',requestTick);
+			if (utils.hasTouch && this.options.enableTick) {
 				requestTick();
 			}
 
