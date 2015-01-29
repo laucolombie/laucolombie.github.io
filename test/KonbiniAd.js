@@ -215,6 +215,7 @@
 			};
 
 			var requestTick = function() {
+				console.log('maybe this is the issue');
 				
 				if (!_self.ticking) {
 					rAF(update);
