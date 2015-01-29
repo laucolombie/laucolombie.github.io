@@ -227,6 +227,10 @@
 				eventType(window, 'scroll',requestTick);
 				requestTick();
 			}
+
+			jQuery(window).scroll(function(){
+        		console.log('on mobile');   
+    		});
 		},
 		resize: function() {	
 
