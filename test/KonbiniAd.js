@@ -212,7 +212,7 @@
 					elm = document.getElementById('ad_image'),
 					h = _self.options.openWindowH + 30;
 				
-				if (openWposY <= - h) {
+				if (openWposY < - h) {
 
 					// _self.ticking = true
 
@@ -220,10 +220,12 @@
 					elm.style.display = 'none';
 					adIsInViewport = false;
 
-				} else if (openWposY < - h && openWposY >= - h - 10) {
+				} else if (openWposY < - h && openWposY > - h - 5) {
+					console.log('jjjj');
 					_self.ticking = false;
 				} else {
 					if (!adIsInViewport) {
+						console.log('show');
 						elm.style.display = 'block';
 						// jQuery(elm).animate({
 						// 	opacity: "1",
