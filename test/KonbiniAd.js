@@ -288,14 +288,12 @@
 					e.stopPropagation();
 					var elm = document.getElementById('ad_image');
 					if (!utils.isNodeVisible(this.options.openWindow)) {
-						if (elm.style.opacity == '1' || elm.style.opacity == '') {
-							console.log('hide');
-							elm.style.opacity = '0';
+						if (elm.style.display == '' || elm.style.display == 'block') {
+							elm.style.display = 'none';
 						}
 					} else {
-						if (elm.style.opacity == '0') {
-							console.log('show');
-							elm.style.opacity = '1';
+						if (elm.style.display == 'none') {
+							elm.style.display = 'block';
 						}
 					}
 				break;
