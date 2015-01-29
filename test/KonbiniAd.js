@@ -286,9 +286,13 @@
 				case 'touchmove':
 					var elm = document.getElementById('ad_image');
 					if (!utils.isNodeVisible(this.options.openWindow)) {
-						elm.style.display = 'none';
+						if (elm.style.display == '' || elm.style.display == 'block') {
+							elm.style.display = 'none';
+						}
 					} else {
-						elm.style.display = 'block';
+						if (elm.style.display == 'none') {
+							elm.style.display = 'block';
+						}
 					}
 				break;
 				case 'orientationchange':
