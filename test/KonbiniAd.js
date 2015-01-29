@@ -288,7 +288,7 @@
 					e.stopPropagation();
 					var elm = document.getElementById('ad_image');
 					if (!utils.isNodeVisible(this.options.openWindow)) {
-						if (elm.style.opacity == '1') {
+						if (elm.style.opacity == '1' || elm.style.opacity == '') {
 							console.log('hide');
 							elm.style.opacity = '0';
 						}
