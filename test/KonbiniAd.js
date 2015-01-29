@@ -285,7 +285,7 @@
 					//}, 500);
 				break;
 				case 'touchmove':
-					e.preventDefault();
+					//e.preventDefault();
 					var elm = document.getElementById('ad_image');
 					if (!utils.isNodeVisible(this.options.openWindow)) {
 						if (elm.style.display == '' || elm.style.display == 'block') {
