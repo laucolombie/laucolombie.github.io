@@ -215,7 +215,7 @@
 
 					// _self.ticking = true
 
-					elm.style.opacity = '0';
+					//elm.style.opacity = '0';
 					elm.style.display = 'none';
 					adIsInViewport = false;
 
@@ -224,11 +224,11 @@
 				} else {
 					if (!adIsInViewport) {
 						elm.style.display = 'block';
-						jQuery(elm).animate({
-							opacity: "1",
-						},500, "linear", function() {
+						// jQuery(elm).animate({
+						// 	opacity: "1",
+						// },500, "linear", function() {
 		 					
-						});
+						// });
 						adIsInViewport = true;
 					}
 				}
