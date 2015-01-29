@@ -12,6 +12,8 @@
 			window.msRequestAnimationFrame		||
 			function (callback) { window.setTimeout(callback, 1000 / 60); };
 
+	var _self;
+
 	var utils = (function () {
 
 		var utility = {};
@@ -49,7 +51,6 @@
 				sheet.insertRule(selector + "{" + rules + "}", index);
 			}
 			else if("addRule" in sheet) {
-				console.log("addRule");
 				sheet.addRule(selector, rules, index);
 			}
 		};
@@ -72,12 +73,29 @@
 			return { width : e[ a+'Width' ] , height : e[ a+'Height' ] }
 
 		};
+		utility.getNodePosition = function(elm) {
+
+			var xPos = 0,
+				yPos = 0;
+
+			    while(elm) {
+			        xPos += (elm.offsetLeft - elm.scrollLeft + elm.clientLeft);
+			        yPos += (elm.offsetTop - elm.scrollTop + elm.clientTop);
+			        elm = elm.offsetParent;
+    			}
+    		
+    		return { x: xPos, y: yPos };
+
+		};
 
 		return utility;
 
 	})();
 
 	function KonbiniAd(name,parentNode,options,clicktag) {
+
+		_self = this,
+				this.ticking = false;
 
 		this.imgWrapper = document.createElement('div');
 		//this.openWindow = document.createElement('div');
@@ -93,7 +111,7 @@
 
 		this.options = {
 			openWindow: document.getElementById('billboard'),
-			openWindowH: '200px',
+			openWindowH: 200,
 			scrollDetect: false
 		};
 
@@ -124,7 +142,7 @@
 			//make sure that the parent container is displayed 
 			this.getParentNode().style.display = 'inline';
 
-			this.options.openWindow.style.height = this.options.openWindowH;
+			this.options.openWindow.style.height = this.options.openWindowH + 'px';
 			this.options.openWindow.style.width = '100%';
 			this.options.openWindow.style.position = 'relative';
 			this.options.openWindow.setAttribute('id','openArea');
@@ -138,10 +156,6 @@
 		    document.getElementById('wrapper').style.display = 'block';
 		    document.getElementById('wrapper').style.overflow = 'hidden';
 		    document.getElementById('wrapper').style.width = '100%';
-
-		    if (utils.hasTouch && this.options.scrollDetect) {
-				console.log('start tick then');
-			}
 
 			window.dispatchEvent(this.readyEvent);
 			
@@ -173,14 +187,43 @@
 
 			eventType(window, 'orientationchange', this);
 			eventType(window, 'resize', this);
-			eventType(window, 'scroll',this);
 
 			eventType(this.options.openWindow, 'click', this, true);
 
 			eventType(this.openAreaCloseButton, 'click', this, true);
 			eventType(this.openAreaOpenButton, 'click', this, true);
 
-			
+
+			var update = function() {
+
+				var openWposY = utils.getNodePosition(_self.options.openWindow).y;
+				
+				if (openWposY <= - _self.options.openWindowH) {
+					this.imgWrapper.style.display = 'none';
+					console.log('hide');
+					//cancel rAF
+					
+				} else {
+					console.log(openWposY);
+					this.imgWrapper.style.display = 'block';
+				}
+
+				_self.ticking = false;
+				
+			};
+
+			var requestTick = function() {
+				
+				if (!_self.ticking) {
+					rAF(update);
+					_self.ticking = true;
+				}
+			};
+
+			if (utils.hasTouch && this.options.scrollDetect) {
+				eventType(window, 'scroll',requestTick);
+				requestTick();
+			}
 		},
 		resize: function() {	
 
@@ -204,7 +247,6 @@
 		handleEvent: function (e) {
 			switch ( e.type ) {
 				case 'ready':
-					console.log('I am ready');
 					//window.setTimeout(function(){ 
 					// 	jQuery('.entry-shares')[0].style.background = '#fff';
 					// 	jQuery('.addthis_toolbox')[0].style.background = '#fff !important';
@@ -213,9 +255,6 @@
 				case 'orientationchange':
 				case 'resize':
 					this.resize();
-				break;
-				case 'scroll':
-					console.log('scroll');
 				break;
 				case 'click':
 					if ( !e._constructed ) {
@@ -284,7 +323,7 @@
 					if (utils.hasJQuery) {
 						//show open area window
 						jQuery(this.options.openWindow).animate({
-							height: this.options.openWindowH,
+							height: this.options.openWindowH + 'px',
 						},300, "linear", function() {
 		 
 						});
