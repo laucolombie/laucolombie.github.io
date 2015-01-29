@@ -12,7 +12,7 @@
 			window.msRequestAnimationFrame		||
 			function (callback) { window.setTimeout(callback, 1000 / 60); };
 
-	var _self;
+	var _self, makeFading = false;
 
 	var utils = (function () {
 
@@ -196,18 +196,27 @@
 
 			var update = function() {
 
-				var openWposY = utils.getNodePosition(_self.options.openWindow).y;
+				var openWposY = utils.getNodePosition(_self.options.openWindow).y,
+					elm = document.getElementById('ad_image');
 				
 				if (openWposY <= - _self.options.openWindowH) {
-					
-					var elm = document.getElementById('ad_image');
-					elm.style.display = 'none';
-					console.log(elm);
-					//cancel rAF
+
+					_self.makeFading = true;
+
+					elm.style.opacity = '0';
+
+
 					
 				} else {
-					console.log(openWposY);
-					//_self.imgWrapper.style.display = 'block';
+					if (_self.makeFading) {
+						
+						jQuery(elm).animate({
+							opacity: "1",
+						},1000, "linear", function() {
+		 					console.log('j');
+						});
+						_self.makeFading = false;
+					}
 				}
 
 				_self.ticking = false;
@@ -215,7 +224,6 @@
 			};
 
 			var requestTick = function() {
-				console.log('maybe this is the issue');
 				
 				if (!_self.ticking) {
 					rAF(update);
@@ -228,9 +236,6 @@
 				requestTick();
 			}
 
-			jQuery(window).scroll(function(){
-        		console.log('on mobile');   
-    		});
 		},
 		resize: function() {	
 
