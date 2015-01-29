@@ -284,6 +284,7 @@
 					//}, 500);
 				break;
 				case 'touchmove':
+					var elm = document.getElementById('ad_image');
 					if (!utils.isNodeVisible(this.options.openWindow)) {
 						elm.style.display = 'none';
 					} else {
