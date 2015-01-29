@@ -209,9 +209,10 @@
 				
 				var openWposY = utils.getNodePosition(_self.options.openWindow).y,
 					//hardcoded - please change it really
-					elm = document.getElementById('ad_image');
+					elm = document.getElementById('ad_image'),
+					h = _self.options.openWindowH + 30;
 				
-				if (openWposY <= - _self.options.openWindowH + 30) {
+				if (openWposY <= - h) {
 
 					// _self.ticking = true
 
@@ -219,7 +220,7 @@
 					elm.style.display = 'none';
 					adIsInViewport = false;
 
-				} else if (openWposY < - _self.options.openWindowH && openWposY >= - _self.options.openWindowH - 10) {
+				} else if (openWposY < - h && openWposY >= - h - 10) {
 					_self.ticking = false;
 				} else {
 					if (!adIsInViewport) {
