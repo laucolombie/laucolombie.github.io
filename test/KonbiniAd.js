@@ -216,13 +216,14 @@
 					// _self.ticking = true
 
 					elm.style.opacity = '0';
-					console.log('not visible anymore');
+					elm.style.display = 'none';
 					adIsInViewport = false;
 
 				} else if (openWposY < - _self.options.openWindowH && openWposY >= - _self.options.openWindowH - 10) {
 					_self.ticking = false;
 				} else {
 					if (!adIsInViewport) {
+						elm.style.display = 'block';
 						jQuery(elm).animate({
 							opacity: "1",
 						},500, "linear", function() {
