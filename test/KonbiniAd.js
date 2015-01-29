@@ -214,16 +214,17 @@
 				
 				if (openWposY < - h) {
 
-					// _self.ticking = true
+					//_self.ticking = true
 
 					//elm.style.opacity = '0';
 					elm.style.display = 'none';
 					adIsInViewport = false;
 
-				} else if (openWposY < - h && openWposY > - h - 5) {
-					console.log('jjjj');
-					_self.ticking = false;
+				// } else if (openWposY < - h && openWposY > - h - 5) {
+				// 	console.log('jjjj');
+				// 	_self.ticking = false;
 				} else {
+					//_self.ticking = false;
 					if (!adIsInViewport) {
 						console.log('show');
 						elm.style.display = 'block';
@@ -242,13 +243,14 @@
 
 			var requestTick = function() {
 
-				if (!_self.ticking) {
+				if (_self.ticking) {
 					rAF(update);
 					//_self.ticking = true;
 				}
 			};
 
 			if (utils.hasTouch && this.options.enableTick) {
+				this.ticking = true;
 				requestTick();
 			}
 
