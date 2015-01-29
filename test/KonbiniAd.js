@@ -211,7 +211,7 @@
 					//hardcoded - please change it really
 					elm = document.getElementById('ad_image');
 				
-				if (openWposY <= - _self.options.openWindowH + 1) {
+				if (openWposY <= - _self.options.openWindowH + 10) {
 
 					// _self.ticking = true
 
