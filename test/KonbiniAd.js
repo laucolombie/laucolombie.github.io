@@ -214,25 +214,15 @@
 				
 				if (openWposY < h) {
 
-					//_self.ticking = true
-
-					//elm.style.opacity = '0';
 					elm.style.display = 'none';
 					adIsInViewport = false;
+					console.log('hide');
 
-				// } else if (openWposY < - h && openWposY > - h - 5) {
-				// 	console.log('jjjj');
-				// 	_self.ticking = false;
 				} else {
-					//_self.ticking = false;
+
 					if (!adIsInViewport) {
 						console.log('show');
 						elm.style.display = 'block';
-						// jQuery(elm).animate({
-						// 	opacity: "1",
-						// },500, "linear", function() {
-		 					
-						// });
 						adIsInViewport = true;
 					}
 				}
@@ -245,7 +235,7 @@
 
 				if (_self.ticking) {
 					rAF(update);
-					//_self.ticking = true;
+					//_self.ticking = false;
 				}
 			};
 
