@@ -179,7 +179,7 @@
 			utils.addCSSRule(this.styleSheet,"#ad_image","position:fixed; background-color:transparent; display:block; overflow: hidden");
 			
 	  		this.imgWrapper.style.width =  "100%";
-	  		this.imgWrapper.style.backgroundSize = "cover";
+	  		this.imgWrapper.style.backgroundSize = "100%";
 	  		this.imgWrapper.style.height = "100%";
 	  		this.imgWrapper.style.left = '0px';
 	  		this.imgWrapper.style.top = '0px';
@@ -210,9 +210,9 @@
 				var openWposY = utils.getNodePosition(_self.options.openWindow).y,
 					//hardcoded - please change it really
 					elm = document.getElementById('ad_image'),
-					h = _self.options.openWindowH + 30;
+					h = - _self.options.openWindowH - 300;
 				
-				if (openWposY < - h) {
+				if (openWposY < h) {
 
 					//_self.ticking = true
 
