@@ -295,12 +295,12 @@
 							//elm.style.display = 'none';
 							console.log('width to be changed');
 
-							elm.style.left == vpw + 'px';
+							elm.style.left = vpw + 'px';
 						}
 					} else {
 						if (elm.style.left == vpw + 'px') {
 							console.log('party');
-							elm.style.left == '0px';
+							elm.style.left = '0px';
 						}
 					}
 				break;
@@ -314,12 +314,12 @@
 							//elm.style.display = 'none';
 							console.log('width to be changed');
 
-							elm.style.left == vpw + 'px';
+							elm.style.left = 320 + 'px';
 						}
 					} else {
 						if (elm.style.left == vpw + 'px') {
 							console.log('party');
-							elm.style.left == '0px';
+							elm.style.left = '0px';
 						}
 					}
 				break;
@@ -333,12 +333,12 @@
 							//elm.style.display = 'none';
 							console.log('width to be changed');
 
-							elm.style.left == vpw + 'px';
+							elm.style.left = 320 + 'px';
 						}
 					} else {
 						if (elm.style.left == vpw + 'px') {
 							console.log('party');
-							elm.style.left == '0px';
+							elm.style.left = '0px';
 						}
 					}
 				break;
