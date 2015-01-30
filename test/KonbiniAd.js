@@ -77,12 +77,14 @@
 
 			var xPos = 0,
 				yPos = 0;
-
-			    while(elm) {
-			        xPos += (elm.offsetLeft - elm.scrollLeft + elm.clientLeft);
-			        yPos += (elm.offsetTop - elm.scrollTop + elm.clientTop);
-			        elm = elm.offsetParent;
-    			}
+				console.log(elm);
+				if (elm) {
+				    while(elm) {
+				        xPos += (elm.offsetLeft - elm.scrollLeft + elm.clientLeft);
+				        yPos += (elm.offsetTop - elm.scrollTop + elm.clientTop);
+				        elm = elm.offsetParent;
+	    			}
+    			}	
     		
     		return { x: xPos, y: yPos };
 
@@ -330,6 +332,22 @@
 							elm.style.width = '100%';
 						}
 					}
+					setTimeout(function(){ 
+						console.log('set time out');
+						//I think you need to put it as variable to optimise please
+						var elm = document.getElementById('ad_image');
+						if (!utils.isNodeVisible(this.options.openWindow,30)) {
+							if (elm.style.width == '100%') {
+								//elm.style.display = 'none';
+								console.log('width');
+								elm.style.width = '1px';
+							}
+						} else {
+							if (elm.style.width == '1px') {
+								elm.style.width = '100%';
+							}
+						}
+					}, 1000);
 				break;
 				case 'orientationchange':
 				case 'resize':
