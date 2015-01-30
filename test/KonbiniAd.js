@@ -87,12 +87,12 @@
     		return { x: xPos, y: yPos };
 
 		};
-		utility.isNodeVisible = function(elm) {
+		utility.isNodeVisible = function(elm,margin) {
 
 			var elmPosY = utils.getNodePosition(elm).y,
 				elmHeight = elm.clientHeight;
 
-			if (elmPosY < - elmHeight) return false;									
+			if (elmPosY < - elmHeight - margin) return false;									
 			else if (elmPosY > utility.viewport().height) return false;
 			else return true;
 
@@ -289,7 +289,7 @@
 					e.stopPropagation();
 					//PLEASE PUT
 					var elm = document.getElementById('ad_image');
-					if (!utils.isNodeVisible(this.options.openWindow)) {
+					if (!utils.isNodeVisible(this.options.openWindow,30)) {
 						if (elm.style.width == '100%') {
 							//elm.style.display = 'none';
 							console.log('width');
@@ -304,7 +304,7 @@
 				case 'touchmove':
 					e.stopPropagation();
 					var elm = document.getElementById('ad_image');
-					if (!utils.isNodeVisible(this.options.openWindow)) {
+					if (!utils.isNodeVisible(this.options.openWindow,30)) {
 						if (elm.style.left == '0px') {
 							//elm.style.display = 'none';
 							console.log('width');
@@ -319,7 +319,7 @@
 				case 'touchend':
 					e.stopPropagation();
 					var elm = document.getElementById('ad_image');
-					if (!utils.isNodeVisible(this.options.openWindow)) {
+					if (!utils.isNodeVisible(this.options.openWindow,30)) {
 						if (elm.style.width == '100%') {
 							//elm.style.display = 'none';
 							console.log('width');
