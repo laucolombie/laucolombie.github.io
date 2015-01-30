@@ -232,7 +232,7 @@
 
 					if (!adIsInViewport) {
 						console.log('show');
-						elm.style.display = 'block';
+						elm.style.display = 'inline-block';
 						adIsInViewport = true;
 					}
 				}
