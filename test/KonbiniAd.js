@@ -226,7 +226,7 @@
 
 					//elm.style.display = 'none';
 					adIsInViewport = false;
-					console.log('hide');
+					console.log('hide 2');
 
 				} else {
 
