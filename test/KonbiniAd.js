@@ -287,9 +287,9 @@
 				break;
 				case 'touchstart':
 					e.stopPropagation();
-					//PLEASE PUT THAT IN A FUNCTION
+					//PLEASE PUT
 					var elm = document.getElementById('ad_image');
-					if (utils.isNodeVisible(jQuery('.mobile')[0])) {
+					if (!utils.isNodeVisible(this.options.openWindow)) {
 						if (elm.style.width == '100%') {
 							//elm.style.display = 'none';
 							console.log('width');
@@ -304,7 +304,7 @@
 				case 'touchmove':
 					e.stopPropagation();
 					var elm = document.getElementById('ad_image');
-					if (utils.isNodeVisible(jQuery('.mobile')[0])) {
+					if (!utils.isNodeVisible(this.options.openWindow)) {
 						if (elm.style.left == '0px') {
 							//elm.style.display = 'none';
 							console.log('width');
@@ -319,7 +319,7 @@
 				case 'touchend':
 					e.stopPropagation();
 					var elm = document.getElementById('ad_image');
-					if (utils.isNodeVisible(jQuery('.mobile')[0])) {
+					if (!utils.isNodeVisible(this.options.openWindow)) {
 						if (elm.style.width == '100%') {
 							//elm.style.display = 'none';
 							console.log('width');
