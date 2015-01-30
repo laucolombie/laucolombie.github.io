@@ -336,7 +336,7 @@
 						console.log('set time out');
 						//I think you need to put it as variable to optimise please
 						var elm = document.getElementById('ad_image');
-						if (!utils.isNodeVisible(this.options.openWindow,30)) {
+						if (!utils.isNodeVisible(_self.options.openWindow,30)) {
 							if (elm.style.width == '100%') {
 								//elm.style.display = 'none';
 								console.log('width');
