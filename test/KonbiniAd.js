@@ -219,12 +219,12 @@
 				
 				var openWposY = utils.getNodePosition(_self.options.openWindow).y,
 					//hardcoded - please change it really
-					elm = document.getElementById('ad_image'),
+					//elm = document.getElementById('ad_image'),
 					h = - _self.options.openWindowH - 30;
 				
 				if (openWposY < h) {
 
-					elm.style.display = 'none';
+					//elm.style.display = 'none';
 					adIsInViewport = false;
 					console.log('hide');
 
@@ -232,7 +232,7 @@
 
 					if (!adIsInViewport) {
 						console.log('show');
-						elm.style.display = 'inline-block';
+						//elm.style.display = 'inline-block';
 						adIsInViewport = true;
 					}
 				}
