@@ -287,46 +287,58 @@
 				break;
 				case 'touchstart':
 					e.stopPropagation();
-					var elm = document.getElementById('ad_image');
+					var elm = document.getElementById('ad_image'),
+						vpw = utils.viewport().width;
+
 					if (!utils.isNodeVisible(this.options.openWindow)) {
-						if (elm.style.width == '100%') {
+						if (elm.style.left == '0px') {
 							//elm.style.display = 'none';
-							console.log('width');
-							elm.style.width == '1px';
+							console.log('width to be changed');
+
+							elm.style.left == vpw + 'px';
 						}
 					} else {
-						if (elm.style.width == '1px') {
-							elm.style.width == '100%';
+						if (elm.style.left == vpw + 'px') {
+							console.log('party');
+							elm.style.left == '0px';
 						}
 					}
 				break;
 				case 'touchmove':
 					e.stopPropagation();
-					var elm = document.getElementById('ad_image');
+					var elm = document.getElementById('ad_image'),
+						vpw = utils.viewport().width;
+
 					if (!utils.isNodeVisible(this.options.openWindow)) {
-						if (elm.style.width == '100%') {
+						if (elm.style.left == '0px') {
 							//elm.style.display = 'none';
-							console.log('width');
-							elm.style.width == '1px';
+							console.log('width to be changed');
+
+							elm.style.left == vpw + 'px';
 						}
 					} else {
-						if (elm.style.width == '1px') {
-							elm.style.width == '100%';
+						if (elm.style.left == vpw + 'px') {
+							console.log('party');
+							elm.style.left == '0px';
 						}
 					}
 				break;
 				case 'touchend':
 					e.stopPropagation();
-					var elm = document.getElementById('ad_image');
+					var elm = document.getElementById('ad_image'),
+						vpw = utils.viewport().width;
+
 					if (!utils.isNodeVisible(this.options.openWindow)) {
-						if (elm.style.width == '100%') {
+						if (elm.style.left == '0px') {
 							//elm.style.display = 'none';
-							console.log('width');
-							elm.style.width == '1px';
+							console.log('width to be changed');
+
+							elm.style.left == vpw + 'px';
 						}
 					} else {
-						if (elm.style.width == '1px') {
-							elm.style.width == '100%';
+						if (elm.style.left == vpw + 'px') {
+							console.log('party');
+							elm.style.left == '0px';
 						}
 					}
 				break;
