@@ -323,13 +323,11 @@
 
 			window_xPos = middle + utils.getNodePosition(this.imgWrapper).x + 'px 0px';
 
+			//background-position we need to calculate the position when width is set to 60%
+
 			(width === '100%') ?  jQuery('#ad_image').css('background-size','cover') : jQuery('#ad_image').css('background-size','auto 100%');
 			(width === '100%') ?  jQuery('#ad_image').css('background-position','50% 50%') : jQuery('#ad_image').css('background-position',window_xPos);
 			jQuery('#ad_window').css('background-color','#f4f4f4');
-
-			//pour le background-position we need to calculate the position when width is set to 60%
-
-			(width === '100%') ?  console.log('100%') : console.log('60%');
 
 		},
 		/**
