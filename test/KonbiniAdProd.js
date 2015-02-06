@@ -287,6 +287,7 @@
 							+ 'max-width: ' + SIZES.desktop + 'px;'
 							+ 'padding-top:50%;'
 							+ 'position: relative;'
+							+ 'cursor:pointer;'
 							+ 'background-attachment: fixed;'
 							+ 'background-repeat: no-repeat;'
 							+ 'background-position: 50% 50%;';
