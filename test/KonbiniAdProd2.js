@@ -504,7 +504,7 @@
 					e.stopPropagation();
 					
 					if (!utils.isNodeVisible(document.getElementById('ad_window'),30)) {
-						console.log('forceement');
+						
 					}
 					
 					// if (!utils.isNodeVisible(this.options.openWindow,30)) {
@@ -521,6 +521,7 @@
 					// }
 				break;
 				case 'touchmove':
+				console.log('forceemenyyyyyyt');
 					e.stopPropagation();
 					if (!utils.isNodeVisible(document.getElementById('ad_window'),30)) {
 						console.log('forceement 2');
