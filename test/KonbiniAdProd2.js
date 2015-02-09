@@ -157,6 +157,8 @@
 		//per default I create a container for the open button area
 		this.openAreaOpenButton = document.createElement('div');
 
+		this.wrapperId = document.getElementById('wrapper');
+
 		//style sheet 
 		this.styleSheet = utils.addStyleSheet();
 
@@ -172,11 +174,6 @@
 			this.options[i] = options[i];
 		}
 
-		// public function
-		this.getParentNode = function () {
-			return parentNode;
-		};
-
 	}
 
 	KonbiniAd.prototype = {
@@ -187,12 +184,6 @@
 				src;
 
 			this.resize();
-
-			//append ad wrapper to parent node
-			//this.getParentNode().appendChild(this.imgWrapper);
-
-			//make sure that the parent container is displayed 
-			// this.getParentNode().style.display = 'inline';
 
 			// this.options.openWindow.style.height = this.options.openWindowH + 'px';
 			// this.options.openWindow.style.width = '100%';
@@ -206,13 +197,6 @@
 			//add fullscreen icon
 			//this.addContainer('fullscreen_icon','position:absolute; width:40px; height:30px; background-color: #484848; top:5px; right:50px');
 
-			// //ADAPT LAYOUT TO PAGE
-			// document.getElementById('wrapper').style.background = 'transparent';
-		 	// document.getElementById('wrapper').style.display = 'block';
-		 	// document.getElementById('wrapper').style.overflow = 'hidden';
-		 	// document.getElementById('wrapper').style.width = '100%';
-
-
 
 		 	//init events
 			this.initEvents();
@@ -224,7 +208,8 @@
 				this.speedDetectImg.onload = function () {
 					
 					//ready to be shown
-					window.dispatchEvent(root.readyEvent);
+					root.imgLoadingComplete();
+					
 				}
 
 				(utils.isPortrait.matches) ? src = this.images.urlmp : src = this.images.urlml;
@@ -242,6 +227,9 @@
 			}
 			
 		},
+		imgLoadingComplete: function () {
+			this.updateDomCssProps();
+		},
 		/**
 		 * Add an image asset 
 		 *@param {object} images - hold the paths of the images according to the platform
@@ -252,11 +240,16 @@
 
 			//set image using the css property background-image
 			if (_device === 'desktop') {
+				//check as there is resize
 				this.addCSSBgImage();
 				this.addCssPropsToImgContainer();
 			} else {
 				//show image once loaded only
+				//append image container to the wrapper element of the page
+				this.wrapperId.appendChild(this.imgWrapper);
 				this.speedDetectImg = document.createElement('img');
+				this.addCssPropsToImgContainer();
+
 			}
 		  	
 		},
@@ -298,7 +291,7 @@
 			var cssProps =  'width:100%;'
 							+ 'height:' + this.options.openWindowH + 'px;'
 							+ 'position:relative;'
-							+ 'background-color:transparent;'
+							+ 'background-color:#fff;'
 							+ 'background-position: 50% 50%;'
 							+ 'background-repeat: no-repeat no-repeat;'
 							+ 'background-image:url("' + LOADERIMG + '")';
@@ -395,6 +388,32 @@
 
 		},
 		/**
+		 * For the mobile experience some css properties of the page must be changed to achieve the scrolling unit effect
+		 */
+		updateDomCssProps: function() {
+
+			//wrapper 
+			var cssPropsWrapper =  'background-color:transparent;'
+							+ 'display: block;'
+							+ 'width:100%;'
+							+ 'overflow: hidden;';
+
+			//make sure that is the mobile experience
+			if (utils.hasTouch) {
+				utils.addCSSRule(this.styleSheet,'#wrapper',cssPropsWrapper);
+				utils.addCSSRule(this.styleSheet,'.wrapper-inner','background:transparent;padding: 0px 0px');
+				utils.addCSSRule(this.styleSheet,'header','background:#ffffff; padding: 15px 10px 0px 10px; margin-top:-15px; margin-bottom:0px');
+				utils.addCSSRule(this.styleSheet,'.entry-content','background:#ffffff;padding: 10px');
+				utils.addCSSRule(this.styleSheet,'.entry-shares','background:#ffffff;margin: 0');
+				utils.addCSSRule(this.styleSheet,'.tablette','background:#ffffff');
+				utils.addCSSRule(this.styleSheet,'.mobile','background:#ffffff');
+				utils.addCSSRule(this.styleSheet,'.entry-biobox','background:#ffffff; padding-top:15px');
+				utils.addCSSRule(this.styleSheet,'footer','position:absolute; z-index:1000; margin-top:-20px');
+           		jQuery('.mobile .widget-recommendation-results').css('padding','10px');
+           		jQuery('.addthis_toolbox.flex-box').css('padding','10px');
+			}
+		},
+		/**
 		 * Add a close button
 		 * Maybe add a parameter to choose the color of the button
 		 */
@@ -436,12 +455,11 @@
 
 			var eventType = remove ? utils.removeEvent : utils.addEvent;
 
-			this.readyEvent = utils.createCustomEvent(window,'ready',this.handleEvent);
+			//this.readyEvent = utils.createCustomEvent(window,'ready',this.handleEvent);
 			//this.tickEvent = utils.createCustomEvent(window,'tick',this.handleEvent);
 
 			eventType(window, 'orientationchange', this);
 			eventType(window, 'resize', this);
-
 
 			//(_device === 'desktop') ? eventType(this.imgWrapper, 'click', this, true) : eventType(this.options.openWindow, 'click', this, true);
 
@@ -480,10 +498,10 @@
 			}
 		},
 		handleEvent: function (e) {
-			switch ( e.type ) {
+			
+			switch (e.type) {
 				case 'ready':
-					console.log('illness');
-					window.alert('loaded')
+					
 				break;
 				case 'touchstart':
 					e.stopPropagation();

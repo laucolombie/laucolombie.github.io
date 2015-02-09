@@ -421,8 +421,8 @@
                 //detect desktop or mobile
                 if (window.KonbiniUtils.hasTouch) {
                     //add window before the first tag p of the article
-                    var wTarget = $('.entry-content p')[0];
-                    ad.addAdWindow(wTarget,'after');
+                    var wTarget = $('.entry-content')[0];
+                    ad.addAdWindow(wTarget,'before');
                     ad.addImage({urlmp:'https://laucolombie.github.io/test/high_portrait.jpg',urlml:'https://laucolombie.github.io/test/high_lanscape.jpg'});
                     ad.init();
 
