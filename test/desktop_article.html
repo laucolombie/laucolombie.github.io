@@ -17,35 +17,35 @@
 
         <!-- ======================================== PARAMETRES ========================= -->
 <script>
-    if (window.adgroupid == undefined) {
-        window.adgroupid = Math.round(Math.random() * 1000);
-    }
-    var helpers = {
-        "isFrontPage":false,
-        "isPage":false,
-        "templateURI": 'http://www.konbini.com/fr/wp-content/themes/konbini',
-        "lang": 'fr',
-        "gcscx": '012706700396563502854:uest6whd3ro',
-        "addthis_twitter_via": "KonbiniFR",
-        "adtech": {
-                    protocol: 'http',
-                    server: 'adserver.adtech.de',
-                    network: '1218.1',
-                    siteid: '694009',
-                    performGeoDetection: 'true',
-                    performScreenDetection: 'true',
-                    params: { loc: '100', grp: window.adgroupid },
-                    kv: {
-                            shares: '89', 
-                            page: 'ARTICLE', 
-                            author: 'Louis Lepron', 
-                            postid: '203262', 
-                            referrer: document.referrer, 
-                            tag: [], 
-                            adtest: 'laurence'                    
-                        }
-                    }
-    };
+    // if (window.adgroupid == undefined) {
+    //     window.adgroupid = Math.round(Math.random() * 1000);
+    // }
+    // var helpers = {
+    //     "isFrontPage":false,
+    //     "isPage":false,
+    //     "templateURI": 'http://www.konbini.com/fr/wp-content/themes/konbini',
+    //     "lang": 'fr',
+    //     "gcscx": '012706700396563502854:uest6whd3ro',
+    //     "addthis_twitter_via": "KonbiniFR",
+    //     "adtech": {
+    //                 protocol: 'http',
+    //                 server: 'adserver.adtech.de',
+    //                 network: '1218.1',
+    //                 siteid: '694009',
+    //                 performGeoDetection: 'true',
+    //                 performScreenDetection: 'true',
+    //                 params: { loc: '100', grp: window.adgroupid },
+    //                 kv: {
+    //                         shares: '89', 
+    //                         page: 'ARTICLE', 
+    //                         author: 'Louis Lepron', 
+    //                         postid: '203262', 
+    //                         referrer: document.referrer, 
+    //                         tag: [], 
+    //                         adtest: 'laurence'                    
+    //                     }
+    //                 }
+    // };
 </script>
 <!-- ============================================================================= -->
 
@@ -116,7 +116,8 @@
             
                     <div class="wallpaper" id="wallpaper">
                 <div class='item item-adv'><div id='5196127' data-placement='5196127' data-alias='fr_entertainment_fireplace' class='ADTECH_QUEUE'>
-                    <script type="text/javascript" src="http://laucolombie.github.io/test/KonbiniAdProd.js"></script>
+                    <script type="text/javascript" src="KonbiniAdProd2.js"></script>
+ <link rel="stylesheet" href="icomoon.css">
  <script type="text/javascript">
 
     var hasJQuery = window.jQuery ? true : false;
@@ -125,8 +126,7 @@
 
         jQuery(document).ready(function($) {
 
-            //var ad = new KonbiniAd({clicktag1:'https://www.apple.com/uk/iphone-6/'});
-            var ad = new KonbiniAd({clicktag1:'https://www.apple.com/uk/iphone-6/'});
+            var ad = new KonbiniAd({clicktag1:'https://www.apple.com/uk/iphone-6/',bgColor:'#f4f4f4',mouseWheel:true});
 
             //check if you are on an article page
             if (window.KonbiniUtils.isNodeInTheDom('.entry')) {
@@ -136,7 +136,7 @@
                     var wTarget = $('.entry-content p')[0];
                     //var wTarget = $('#billboard');
                     ad.addAdWindow(wTarget,'after');
-                    ad.addImage({urld:'http://laucolombie.github.io/test/hero_sport_white_large_1024.jpg'});
+                    ad.addImage({urld:'hero_sport_white_large_1024.jpg'});
                     ad.init();
                 } else {
 

@@ -16,10 +16,11 @@
 		_device;
 
 	var SIZES = {
-		desktop: 1024,
-		tablet: 1024,
-		mobile: 736
-	};
+			desktop: 1024,
+			tablet: 1024,
+			mobile: 736
+		},
+		LOADERIMG = "http://www.konbini.com/fr/wp-content/themes/konbini/images/loader.gif";
 
 	var utils = (function () {
 
@@ -109,6 +110,11 @@
 			return percent + '%';
 				
 		};
+		/**
+		 * Indentify if the dom element is visible in the viewport (DOESN'T WORK FOR DESKTOP)
+		 *@param {Object} - node
+		 *@param {Number} - margin
+		 */
 		utility.isNodeVisible = function(elm,margin) {
 
 			var elmPosY = utils.getNodePosition(elm).y,
@@ -119,7 +125,6 @@
 			else return true;
 
 		};
-
 		utility.isNodeInTheDom = function(target) {
 			if (this.hasJQuery) {
 				var hasElm = (jQuery(target).length>0) ? true : false;
@@ -133,7 +138,7 @@
 
 	})();
 
-	//function KonbiniAd(name,parentNode,options,clicktag) {
+	//function KonbiniAd(options) {
 	function KonbiniAd(options) {
 
 		_self = this,
@@ -155,9 +160,8 @@
 		//style sheet 
 		this.styleSheet = utils.addStyleSheet();
 
-		//if (clicktag) this.clicktag = clicktag;
-
 		this.options = {
+			bgColor: '#ffffff',
 			openWindow: null,
 			openWindowH: 250,
 			enableTick: false
@@ -181,9 +185,6 @@
 
 			//console.log(_device);
 
-			//init events
-			this.initEvents();
-
 			this.resize();
 
 			//append ad wrapper to parent node
@@ -201,11 +202,17 @@
 			this.addCloseButton();
 			this.addOpenButton();
 
+			//add fullscreen icon
+			this.addContainer('fullscreen_icon','position:absolute; width:40px; height:30px; background-color: #484848; top:5px; right:50px');
+
 			// //ADAPT LAYOUT TO PAGE
 			// document.getElementById('wrapper').style.background = 'transparent';
 		 	// document.getElementById('wrapper').style.display = 'block';
 		 	// document.getElementById('wrapper').style.overflow = 'hidden';
 		 	// document.getElementById('wrapper').style.width = '100%';
+
+		 	//init events
+			this.initEvents();
 
 			window.dispatchEvent(this.readyEvent);
 			
@@ -223,27 +230,54 @@
 			this.addCssPropsToImgContainer();
 		  	
 		},
+		addContainer: function(id,css) {
+			var container = document.createElement('div');
+			document.getElementById('ad_image').appendChild(container);
+			container.setAttribute('id',id);
+			utils.addCSSRule(this.styleSheet,"#" + id,css);
+			this.fullscreen  = container;
+			
+		},
 		/**
 		 * Add a window (node) 
 		 *@param {object} target - node which will be used to append the window node to the dom
-		 *@param {String} height - value in pixels for the height of the window node
 		 *@param {String} where - indicates where to add the new window node in the dom. It can be 'after' or 'before'
+		 *@param {String} height - value in pixels for the height of the window node
 		 */
 		addAdWindow: function(target,where,height) {
 			//maybe here further detection will be needed to make sure that the window is not next to an image or video in the article page
 			switch(where) {
 				case 'before':
 					jQuery(target).before('<div id="ad_window"></div>');
-					jQuery('#ad_window').append(this.imgWrapper);
+					//if desktop then add a container for the image itself otherwise add a preloader 
+					(_device === 'desktop') ? jQuery('#ad_window').append(this.imgWrapper) : this.addPreloader();
 					utils.addCSSRule(this.styleSheet,'#ad_window','width: 100%; margin: 10px 0px; display:block; overflow:hidden; position:relative');
 				break;
 				case 'after':
-				console.log('spooky');
 					jQuery(target).after('<div id="ad_window"></div>');
-					jQuery('#ad_window').append(this.imgWrapper);
+					//if desktop then add a container for the image itself otherwise add a preloader 
+					(_device === 'desktop') ? jQuery('#ad_window').append(this.imgWrapper) : this.addPreloader();
 					utils.addCSSRule(this.styleSheet,'#ad_window','width: 100%; margin: 10px 0px; display:block; overflow:hidden; position:relative');
 				break;
 			}
+		},
+		/**
+		 * Add preloader 
+		 */
+		addPreloader: function() {
+
+			var cssProps =  'width:100%;'
+							+ 'height: 250px;'
+							+ 'position:relative;'
+							+ 'background-color:transparent;'
+							+ 'background-position: 50% 50%;'
+							+ 'background-repeat: no-repeat no-repeat;'
+							+ 'background-image:url("' + LOADERIMG + '")';
+
+			var container = document.createElement('div');
+			container.setAttribute('id','ad_preloader');
+			utils.addCSSRule(this.styleSheet,'#ad_preloader',cssProps);
+			jQuery('#ad_window').append(container);
 		},
 		/**
 		 * Add an image using background-image css property
@@ -328,7 +362,7 @@
 
 			(width === '100%') ?  jQuery('#ad_image').css('background-size','cover') : jQuery('#ad_image').css('background-size','auto 100%');
 			(width === '100%') ?  jQuery('#ad_image').css('background-position','50% 50%') : jQuery('#ad_image').css('background-position',window_xPos);
-			jQuery('#ad_window').css('background-color','#f4f4f4');
+			jQuery('#ad_window').css('background-color',this.options.bgColor);
 
 		},
 		/**
@@ -383,48 +417,22 @@
 
 			eventType(this.openAreaCloseButton, 'click', this, true);
 			eventType(this.openAreaOpenButton, 'click', this, true);
-
-
-			// var update = function() {
-				
-			// 	var openWposY = utils.getNodePosition(_self.options.openWindow).y,
-			// 		//hardcoded - please change it really
-			// 		//elm = document.getElementById('ad_image'),
-			// 		h = - _self.options.openWindowH - 30;
-				
-			// 	if (openWposY < h) {
-
-			// 		//elm.style.display = 'none';
-			// 		adIsInViewport = false;
-			// 		console.log('hide 2');
-
-			// 	} else {
-
-			// 		if (!adIsInViewport) {
-			// 			console.log('show');
-			// 			//elm.style.display = 'inline-block';
-			// 			adIsInViewport = true;
-			// 		}
-			// 	}
-
-			// 	requestTick();
-				
-			//};
-
-			var requestTick = function() {
-
-				if (_self.ticking) {
-					rAF(update);
-					//_self.ticking = false;
-				}
-			};
+			if (this.fullscreen) eventType(this.fullscreen, 'click', this, true);
 
 			if (utils.hasTouch && this.options.enableTick) {
 				eventType(window, 'touchstart', this);
 				eventType(window, 'touchmove', this);
 				eventType(window, 'touchend', this);
 				this.ticking = true;
-				//requestTick();
+			}
+
+			if (this.options.mouseWheel) {
+				eventType(window, 'wheel', this);
+				eventType(window, 'mousewheel', this);
+				eventType(window, 'DOMMouseScroll', this);
+				//utils.addEvent(this.wrapper, 'wheel', this);
+				//utils.addEvent(this.wrapper, 'mousewheel', this);
+				//utils.addEvent(this.wrapper, 'DOMMouseScroll', this);
 			}
 
 		},
@@ -498,10 +506,9 @@
 							this.imgWrapper.style.width = '100%';
 						}
 					}
-					setTimeout(function(){ 
+					setTimeout(function() { 
+
 						console.log('set time out');
-						
-							
 						
 						if (!utils.isNodeVisible(_self.options.openWindow,30)) {
 							if (_self.imgWrapper.style.width == '100%') {
@@ -527,11 +534,17 @@
 							this.selectAnimState("close");
 						} else if (e.target === this.openAreaOpenButton) {
 							this.selectAnimState("open");
+						} else if (e.target === this.fullscreen) {
+							this.selectAnimState("fullscreen");
 						} else {
-							console.log('click');
 							if (this.options.clicktag1) window.open(this.options.clicktag1,'_blank');
 						}
 					}
+				break;
+				case 'wheel':
+				case 'DOMMouseScroll':
+				case 'mousewheel':
+					console.log(utils.isNodeVisible(jQuery('#ad_window')));
 				break;
 			}
 		},
@@ -548,15 +561,6 @@
 			elm.style[prop] = (currentVal === values.val1) ? values.val2 : values.val1
 
 			console.log(elm.style[prop]);
-
-			// if (this.imgWrapper.style.width == '100%') {
-
-			// 				this.toggleStyle(this.imgWrapper,'width',{val1:'100%',val2:'1px'});
-			// 				//elm.style.display = 'none';
-			// 				//console.log('width');
-			// 				this.imgWrapper.style.width = '1px';
-			// 			}
-
 		},
 		/**
 		 * Animate an element of the DOM using jQuery animate
@@ -599,12 +603,19 @@
 						this.anim(".ad-open",{height:'0px',opacity:'0'},300);
 					}
 				break;
+				case "fullscreen":
+					if (utils.hasJQuery) {
+						if (_device === 'desktop') {
+							this.anim(this.imgWrapper,{paddingTop:'100%'},300);
+							//block scrollbar to scroll other elements of the ad
+						}
+					}
+				break;
 			}
 		}
 	};
 
 	window.KonbiniAd = KonbiniAd;
-
 
 })(window, document, Math);
 

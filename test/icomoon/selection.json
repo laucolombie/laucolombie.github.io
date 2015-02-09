@@ -1,0 +1,95 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M1024 0h-416l160 160-192 192 96 96 192-192 160 160z",
+					"M1024 1024v-416l-160 160-192-192-96 96 192 192-160 160z",
+					"M0 1024h416l-160-160 192-192-96-96-192 192-160-160z",
+					"M0 0v416l160-160 192 192 96-96-192-192 160-160z"
+				],
+				"attrs": [],
+				"tags": [
+					"enlarge",
+					"expand",
+					"maximize",
+					"fullscreen"
+				],
+				"defaultCode": 57791,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 537,
+				"order": 1,
+				"prevSize": 32,
+				"code": 59785,
+				"ligatures": "enlarge, expand",
+				"name": "enlarge"
+			},
+			"setIdx": 0,
+			"iconIdx": 137
+		},
+		{
+			"icon": {
+				"paths": [
+					"M576 448h416l-160-160 192-192-96-96-192 192-160-160z",
+					"M576 576v416l160-160 192 192 96-96-192-192 160-160z",
+					"M448 575.996h-416l160 160-192 192 96 96 192-192 160 160z",
+					"M448 448v-416l-160 160-192-192-96 96 192 192-160 160z"
+				],
+				"attrs": [],
+				"tags": [
+					"shrink",
+					"collapse",
+					"minimize",
+					"contract"
+				],
+				"defaultCode": 57792,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"order": 2,
+				"id": 1644,
+				"prevSize": 32,
+				"code": 59786,
+				"ligatures": "shrink, collapse",
+				"name": "shrink"
+			},
+			"setIdx": 0,
+			"iconIdx": 138
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "icomoon"
+	},
+	"preferences": {
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"fontPref": {
+			"prefix": "icon-",
+			"metadata": {
+				"fontFamily": "icomoon"
+			},
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			}
+		},
+		"imagePref": {
+			"prefix": "icon-",
+			"png": true,
+			"useClassSelector": true,
+			"color": 4473924,
+			"bgColor": 16777215
+		},
+		"historySize": 100,
+		"showCodes": true
+	}
+}
