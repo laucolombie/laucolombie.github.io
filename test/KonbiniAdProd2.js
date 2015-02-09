@@ -465,6 +465,7 @@
 			if (this.fullscreen) eventType(this.fullscreen, 'click', this, true);
 
 			if (utils.hasTouch && this.options.enableTick) {
+				console.log('cata');
 				eventType(window, 'touchstart', this);
 				eventType(window, 'touchmove', this);
 				eventType(window, 'touchend', this);
@@ -521,7 +522,7 @@
 					// }
 				break;
 				case 'touchmove':
-				console.log('forceemenyyyyyyt');
+				
 					e.stopPropagation();
 					if (!utils.isNodeVisible(document.getElementById('ad_window'),30)) {
 						console.log('forceement 2');
