@@ -288,6 +288,7 @@
 					//}, 500);
 				break;
 				case 'touchstart':
+					console.log('jjj');
 					e.stopPropagation();
 					//PLEASE PUT
 					var elm = document.getElementById('ad_image');

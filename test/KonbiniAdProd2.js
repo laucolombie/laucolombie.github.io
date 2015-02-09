@@ -185,10 +185,7 @@
 
 			this.resize();
 
-			// this.options.openWindow.style.height = this.options.openWindowH + 'px';
-			// this.options.openWindow.style.width = '100%';
-			// this.options.openWindow.style.position = 'relative';
-			// this.options.openWindow.setAttribute('id','openArea');
+			
 
 			//ADD CLOSE AND OPEN BUTTON
 			//this.addCloseButton();
@@ -505,68 +502,70 @@
 				break;
 				case 'touchstart':
 					e.stopPropagation();
-					//MAKE SURE THAT THE AD IS READY BEFORE 
-					//PLEASE PUT
-
-					//style property
-					//value
 					
-					if (!utils.isNodeVisible(this.options.openWindow,30)) {
-						if (this.imgWrapper.style.width == '100%') {
-
-							//elm.style.display = 'none';
-							//console.log('width');
-							this.imgWrapper.style.width = '1px';
-						}
-					} else {
-						if (this.imgWrapper.style.width == '1px') {
-							this.imgWrapper.style.width = '100%';
-						}
+					if (!utils.isNodeVisible(document.getElementById('ad_window'),30)) {
+						console.log('forceement');
 					}
+					
+					// if (!utils.isNodeVisible(this.options.openWindow,30)) {
+					// 	if (this.imgWrapper.style.width == '100%') {
+
+					// 		//elm.style.display = 'none';
+					// 		//console.log('width');
+					// 		this.imgWrapper.style.width = '1px';
+					// 	}
+					// } else {
+					// 	if (this.imgWrapper.style.width == '1px') {
+					// 		this.imgWrapper.style.width = '100%';
+					// 	}
+					// }
 				break;
 				case 'touchmove':
 					e.stopPropagation();
-					if (!utils.isNodeVisible(this.options.openWindow,30)) {
-						//console.log('m');
-						//this.toggleStyle(_self.imgWrapper,'width',{val1:'100%',val2:'1px'});
-						if (this.imgWrapper.style.width == '100%') {
-							this.imgWrapper.style.width = '1px';
-						}
-					} else {
-						if (this.imgWrapper.style.width == '1px') {
-							this.imgWrapper.style.width = '100%';
-						}
+					if (!utils.isNodeVisible(document.getElementById('ad_window'),30)) {
+						console.log('forceement 2');
 					}
+					// if (!utils.isNodeVisible(this.options.openWindow,30)) {
+					// 	//console.log('m');
+					// 	//this.toggleStyle(_self.imgWrapper,'width',{val1:'100%',val2:'1px'});
+					// 	if (this.imgWrapper.style.width == '100%') {
+					// 		this.imgWrapper.style.width = '1px';
+					// 	}
+					// } else {
+					// 	if (this.imgWrapper.style.width == '1px') {
+					// 		this.imgWrapper.style.width = '100%';
+					// 	}
+					// }
 				break;
 				case 'touchend':
 					e.stopPropagation();
 					
-					if (!utils.isNodeVisible(this.options.openWindow,30)) {
-						if (this.imgWrapper.style.width == '100%') {
+					// if (!utils.isNodeVisible(this.options.openWindow,30)) {
+					// 	if (this.imgWrapper.style.width == '100%') {
 							
-							this.imgWrapper.style.width = '1px';
-						}
-					} else {
-						if (this.imgWrapper.style.width == '1px') {
+					// 		this.imgWrapper.style.width = '1px';
+					// 	}
+					// } else {
+					// 	if (this.imgWrapper.style.width == '1px') {
 							
-							this.imgWrapper.style.width = '100%';
-						}
-					}
-					setTimeout(function() { 
+					// 		this.imgWrapper.style.width = '100%';
+					// 	}
+					// }
+					// setTimeout(function() { 
 
-						console.log('set time out');
+					// 	console.log('set time out');
 						
-						if (!utils.isNodeVisible(_self.options.openWindow,30)) {
-							if (_self.imgWrapper.style.width == '100%') {
+					// 	if (!utils.isNodeVisible(_self.options.openWindow,30)) {
+					// 		if (_self.imgWrapper.style.width == '100%') {
 
-								_self.imgWrapper.style.width = '1px';
-							}
-						} else {
-							if (_self.imgWrapper.style.width == '1px') {
-								_self.imgWrapper.style.width = '100%';
-							}
-						}
-					}, 1000);
+					// 			_self.imgWrapper.style.width = '1px';
+					// 		}
+					// 	} else {
+					// 		if (_self.imgWrapper.style.width == '1px') {
+					// 			_self.imgWrapper.style.width = '100%';
+					// 		}
+					// 	}
+					// }, 1000);
 				break;
 				case 'orientationchange':
 				case 'resize':
