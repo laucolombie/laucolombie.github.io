@@ -292,6 +292,7 @@
 					e.stopPropagation();
 					//PLEASE PUT
 					var elm = document.getElementById('ad_image');
+					console.log(elm.style);
 					if (!utils.isNodeVisible(this.options.openWindow,30)) {
 						if (elm.style.width == '100%') {
 							//elm.style.display = 'none';

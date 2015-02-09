@@ -185,11 +185,9 @@
 
 			this.resize();
 
-			
-
 			//ADD CLOSE AND OPEN BUTTON
-			//this.addCloseButton();
-			//this.addOpenButton();
+			this.addCloseButton();
+			this.addOpenButton();
 
 			//add fullscreen icon
 			//this.addContainer('fullscreen_icon','position:absolute; width:40px; height:30px; background-color: #484848; top:5px; right:50px');
@@ -207,18 +205,10 @@
 					//ready to be shown
 					root.imgLoadingComplete();
 					
+					
 				}
 
 				(utils.isPortrait.matches) ? src = this.images.urlmp : src = this.images.urlml;
-				
-				console.log(src);
-
-				if ( document.location.protocol === 'https:' ) {
-					
-					// if this current document is SSL, make sure this speed test request
-					// uses https so there are no ugly security warnings from the browser
-					
-				}
 
 				this.speedDetectImg.src = src + "?r=" + Math.random();
 			}
@@ -226,6 +216,13 @@
 		},
 		imgLoadingComplete: function () {
 			this.updateDomCssProps();
+			this.hidePreloader();
+		},
+		hidePreloader: function() {
+			this.anim(jQuery('#ad_preloader'),{opacity:'0'},300);
+		},
+		showPreloader: function() {
+			//this.anim(jQuery('#ad_preloader'),{opacity:'1'},300);
 		},
 		/**
 		 * Add an image asset 
@@ -416,10 +413,8 @@
 		 */
 		addCloseButton: function() {
 
-			if (_device === 'desktop') jQuery('#ad_window').append(this.openAreaCloseButton);
-			//mobile experience
-			//this.options.openWindow.appendChild(this.openAreaCloseButton);
-
+			jQuery('#ad_window').append(this.openAreaCloseButton);
+			
 			this.openAreaCloseButton.setAttribute('class','ad-close');
 			
 			utils.addCSSRule(this.styleSheet,".ad-close","width:40px; height:30px; background-color:#484848; position:absolute; top:5px; right:5px; display:block; cursor:pointer");
@@ -435,14 +430,12 @@
 
 			if (utils.hasJQuery) { 
 
-				//mobile experience
-				//jQuery(this.options.openWindow).after(this.openAreaOpenButton);
-
-				if (_device === 'desktop') jQuery('#ad_window').after(this.openAreaOpenButton);
+				jQuery('#ad_window').after(this.openAreaOpenButton);
 				this.openAreaOpenButton.setAttribute('class','ad-open');
-				//mobile experience
-				//utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc");
-				utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; margin-bottom:10px;");
+				
+				if (_device === 'desktop') utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; margin-bottom:10px;");
+				else utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc");
+				
 				this.openAreaOpenButton.innerHTML = 'Afficher la pub';
 			} else {
 				
@@ -460,7 +453,7 @@
 			eventType(window, 'orientationchange', this);
 			eventType(window, 'resize', this);
 
-			//(_device === 'desktop') ? eventType(this.imgWrapper, 'click', this, true) : eventType(this.options.openWindow, 'click', this, true);
+			(_device === 'desktop') ? eventType(this.imgWrapper, 'click', this, true) : eventType(document.getElementById('ad_window'), 'click', this, true);
 
 			eventType(this.openAreaCloseButton, 'click', this, true);
 			eventType(this.openAreaOpenButton, 'click', this, true);
@@ -498,78 +491,83 @@
 			}
 		},
 		handleEvent: function (e) {
-			
+			var ad_window = document.getElementById('ad_window');
 			switch (e.type) {
 				case 'ready':
 					
 				break;
 				case 'touchstart':
 					e.stopPropagation();
-					
-					if (!utils.isNodeVisible(document.getElementById('ad_window'),30)) {
-						
+					var elm = document.getElementById('ad_image');
+					if (!utils.isNodeVisible(ad_window,30)) {
+						if (elm.style.width == '100%') {
+							//elm.style.display = 'none';
+							console.log('width');
+							elm.style.width = '1px';
+						}
+					} else {
+						if (elm.style.width == '1px') {
+							elm.style.width = '100%';
+						}
 					}
 					
-					// if (!utils.isNodeVisible(this.options.openWindow,30)) {
-					// 	if (this.imgWrapper.style.width == '100%') {
-
-					// 		//elm.style.display = 'none';
-					// 		//console.log('width');
-					// 		this.imgWrapper.style.width = '1px';
-					// 	}
-					// } else {
-					// 	if (this.imgWrapper.style.width == '1px') {
-					// 		this.imgWrapper.style.width = '100%';
-					// 	}
-					// }
 				break;
 				case 'touchmove':
 				
 					e.stopPropagation();
-					if (!utils.isNodeVisible(document.getElementById('ad_window'),30)) {
-						console.log('forceement 2');
+					var elm = document.getElementById('ad_image');
+					console.log(elm.style);
+					if (!utils.isNodeVisible(ad_window,30)) {
+						if (elm.style.width == '100%' || elm.style.width == "") {
+							//elm.style.display = 'none';
+							console.log('width');
+							elm.style.width = '1px';
+						}
+					} else {
+						if (elm.style.width == '1px') {
+							elm.style.width = '100%';
+						}
 					}
-					// if (!utils.isNodeVisible(this.options.openWindow,30)) {
-					// 	//console.log('m');
-					// 	//this.toggleStyle(_self.imgWrapper,'width',{val1:'100%',val2:'1px'});
-					// 	if (this.imgWrapper.style.width == '100%') {
-					// 		this.imgWrapper.style.width = '1px';
-					// 	}
-					// } else {
-					// 	if (this.imgWrapper.style.width == '1px') {
-					// 		this.imgWrapper.style.width = '100%';
-					// 	}
-					// }
 				break;
 				case 'touchend':
 					e.stopPropagation();
 					
-					// if (!utils.isNodeVisible(this.options.openWindow,30)) {
-					// 	if (this.imgWrapper.style.width == '100%') {
-							
-					// 		this.imgWrapper.style.width = '1px';
-					// 	}
-					// } else {
-					// 	if (this.imgWrapper.style.width == '1px') {
-							
-					// 		this.imgWrapper.style.width = '100%';
-					// 	}
-					// }
-					// setTimeout(function() { 
+					var elm = document.getElementById('ad_image');
+					if (!utils.isNodeVisible(ad_window,30)) {
+						if (elm.style.width == '100%' || elm.style.width == "") {
+							elm.style.width = '1px';
+						}
+					} else {
+						if (elm.style.width == '1px') {
+							elm.style.width = '100%';
+						}
+					}
+					setTimeout(function() { 
 
-					// 	console.log('set time out');
-						
-					// 	if (!utils.isNodeVisible(_self.options.openWindow,30)) {
-					// 		if (_self.imgWrapper.style.width == '100%') {
+					var elm = document.getElementById('ad_image');
+					if (!utils.isNodeVisible(ad_window,30)) {
+						if (elm.style.width == '100%' || elm.style.width == "") {
+							elm.style.width = '1px';
+						}
+					} else {
+						if (elm.style.width == '1px') {
+							elm.style.width = '100%';
+						}
+					}
+						// console.log('set time out');
+						// if (!utils.isNodeVisible(ad_window,30)) {
+						// 	if (_self.imgWrapper.style.width == '100%') {
 
-					// 			_self.imgWrapper.style.width = '1px';
-					// 		}
-					// 	} else {
-					// 		if (_self.imgWrapper.style.width == '1px') {
-					// 			_self.imgWrapper.style.width = '100%';
-					// 		}
-					// 	}
-					// }, 1000);
+						// 		_self.imgWrapper.style.width = '1px';
+						// 		console.log(_self.imgWrapper);
+						// 	}
+						// } else {
+						// 	if (_self.imgWrapper.style.width == '1px') {
+						// 		_self.imgWrapper.style.width = '100%';
+						// 		console.log(_self.imgWrapper);
+						// 	}
+						// }
+					}, 1000);
 				break;
 				case 'orientationchange':
 				case 'resize':
@@ -634,7 +632,7 @@
 				case "close":
 					if (utils.hasJQuery) {
 						//close area window 
-						(_device === 'desktop') ? this.anim(this.imgWrapper,{paddingTop:'0%'},300) : this.anim(this.options.openWindow,{height:'0px'},300);
+						(_device === 'desktop') ? this.anim(this.imgWrapper,{paddingTop:'0%'},300) : this.anim(jQuery('#ad_window'),{height:'0px'},300);
 						//hide close button
 						this.anim(".ad-close",{opacity:'0'},300,{cssProp:'display',cssValue:'none'});
 						//show open button
@@ -644,7 +642,7 @@
 				case "open":
 					if (utils.hasJQuery) {
 						//open area window 
-						(_device === 'desktop') ? this.anim(this.imgWrapper,{paddingTop:'50%'},300) : this.anim(this.options.openWindow,{height:this.options.openWindowH + 'px'},300); 
+						(_device === 'desktop') ? this.anim(this.imgWrapper,{paddingTop:'50%'},300) : this.anim(jQuery('#ad_window'),{height:this.options.openWindowH + 'px'},300); 
 						//show close button
 						jQuery(".ad-close").css('display','block');
 						this.anim(".ad-close",{opacity:'1'},300);
