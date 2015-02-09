@@ -183,7 +183,8 @@
 
 		init: function () {	
 
-			//console.log(_device);
+			var root = this,
+				src;
 
 			this.resize();
 
@@ -199,11 +200,11 @@
 			// this.options.openWindow.setAttribute('id','openArea');
 
 			//ADD CLOSE AND OPEN BUTTON
-			this.addCloseButton();
-			this.addOpenButton();
+			//this.addCloseButton();
+			//this.addOpenButton();
 
 			//add fullscreen icon
-			this.addContainer('fullscreen_icon','position:absolute; width:40px; height:30px; background-color: #484848; top:5px; right:50px');
+			//this.addContainer('fullscreen_icon','position:absolute; width:40px; height:30px; background-color: #484848; top:5px; right:50px');
 
 			// //ADAPT LAYOUT TO PAGE
 			// document.getElementById('wrapper').style.background = 'transparent';
@@ -211,10 +212,34 @@
 		 	// document.getElementById('wrapper').style.overflow = 'hidden';
 		 	// document.getElementById('wrapper').style.width = '100%';
 
+
+
 		 	//init events
 			this.initEvents();
 
-			window.dispatchEvent(this.readyEvent);
+			if (this.speedDetectImg) {
+				
+				console.log(this.readyEvent);
+
+				this.speedDetectImg.onload = function () {
+					
+					//ready to be shown
+					window.dispatchEvent(root.readyEvent);
+				}
+
+				(utils.isPortrait.matches) ? src = this.images.urlmp : src = this.images.urlml;
+				
+				console.log(src);
+
+				if ( document.location.protocol === 'https:' ) {
+					
+					// if this current document is SSL, make sure this speed test request
+					// uses https so there are no ugly security warnings from the browser
+					
+				}
+
+				this.speedDetectImg.src = src + "?r=" + Math.random();
+			}
 			
 		},
 		/**
@@ -226,8 +251,13 @@
 			this.images = images;
 
 			//set image using the css property background-image
-			this.addCSSBgImage();
-			this.addCssPropsToImgContainer();
+			if (_device === 'desktop') {
+				this.addCSSBgImage();
+				this.addCssPropsToImgContainer();
+			} else {
+				//show image once loaded only
+				this.speedDetectImg = document.createElement('img');
+			}
 		  	
 		},
 		addContainer: function(id,css) {
@@ -236,7 +266,6 @@
 			container.setAttribute('id',id);
 			utils.addCSSRule(this.styleSheet,"#" + id,css);
 			this.fullscreen  = container;
-			
 		},
 		/**
 		 * Add a window (node) 
@@ -267,7 +296,7 @@
 		addPreloader: function() {
 
 			var cssProps =  'width:100%;'
-							+ 'height: 250px;'
+							+ 'height:' + this.options.openWindowH + 'px;'
 							+ 'position:relative;'
 							+ 'background-color:transparent;'
 							+ 'background-position: 50% 50%;'
@@ -413,7 +442,8 @@
 			eventType(window, 'orientationchange', this);
 			eventType(window, 'resize', this);
 
-			(_device === 'desktop') ? eventType(this.imgWrapper, 'click', this, true) : eventType(this.options.openWindow, 'click', this, true);
+
+			//(_device === 'desktop') ? eventType(this.imgWrapper, 'click', this, true) : eventType(this.options.openWindow, 'click', this, true);
 
 			eventType(this.openAreaCloseButton, 'click', this, true);
 			eventType(this.openAreaOpenButton, 'click', this, true);
@@ -430,9 +460,6 @@
 				eventType(window, 'wheel', this);
 				eventType(window, 'mousewheel', this);
 				eventType(window, 'DOMMouseScroll', this);
-				//utils.addEvent(this.wrapper, 'wheel', this);
-				//utils.addEvent(this.wrapper, 'mousewheel', this);
-				//utils.addEvent(this.wrapper, 'DOMMouseScroll', this);
 			}
 
 		},
@@ -455,7 +482,8 @@
 		handleEvent: function (e) {
 			switch ( e.type ) {
 				case 'ready':
-					
+					console.log('illness');
+					window.alert('loaded')
 				break;
 				case 'touchstart':
 					e.stopPropagation();
