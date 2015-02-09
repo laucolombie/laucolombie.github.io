@@ -450,6 +450,8 @@
 		},
 		initEvents:function(remove) {
 
+			console.log('initEvents');
+
 			var eventType = remove ? utils.removeEvent : utils.addEvent;
 
 			//this.readyEvent = utils.createCustomEvent(window,'ready',this.handleEvent);
@@ -465,7 +467,7 @@
 			if (this.fullscreen) eventType(this.fullscreen, 'click', this, true);
 
 			if (utils.hasTouch && this.options.enableTick) {
-				console.log('cata');
+				console.log('has touch');
 				eventType(window, 'touchstart', this);
 				eventType(window, 'touchmove', this);
 				eventType(window, 'touchend', this);
