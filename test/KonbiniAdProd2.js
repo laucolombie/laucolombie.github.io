@@ -220,9 +220,8 @@
 		},
 		hidePreloader: function() {
 			setTimeout(function() { 
-				this.anim(jQuery('#ad_preloader'),{opacity:'0'},300);
-			},3000);
-			
+				_self.anim(jQuery('#ad_preloader'),{opacity:'0'},300);
+			},2000);
 		},
 		showPreloader: function() {
 			//this.anim(jQuery('#ad_preloader'),{opacity:'1'},300);
@@ -264,21 +263,24 @@
 		 *@param {String} height - value in pixels for the height of the window node
 		 */
 		addAdWindow: function(target,where,height) {
+			var margin_prop;
 			//maybe here further detection will be needed to make sure that the window is not next to an image or video in the article page
 			switch(where) {
 				case 'before':
 					jQuery(target).before('<div id="ad_window"></div>');
 					//if desktop then add a container for the image itself otherwise add a preloader 
 					(_device === 'desktop') ? jQuery('#ad_window').append(this.imgWrapper) : this.addPreloader();
-					//here set margin according to device!!!!!!!!
-					utils.addCSSRule(this.styleSheet,'#ad_window','width: 100%; margin: 10px 0px; display:block; overflow:hidden; position:relative');
+					//set margin according to device
+					(_device === 'desktop') ? margin_prop = '10px 0px' : margin_prop = '0px 0px';
+					utils.addCSSRule(this.styleSheet,'#ad_window','width: 100%; margin: ' + margin_prop + '; display:block; overflow:hidden; position:relative');
 				break;
 				case 'after':
 					jQuery(target).after('<div id="ad_window"></div>');
 					//if desktop then add a container for the image itself otherwise add a preloader 
 					(_device === 'desktop') ? jQuery('#ad_window').append(this.imgWrapper) : this.addPreloader();
-					//here set margin according to device!!!!!!!!
-					utils.addCSSRule(this.styleSheet,'#ad_window','width: 100%; margin: 10px 0px; display:block; overflow:hidden; position:relative');
+					//set margin according to device
+					(_device === 'desktop') ? margin_prop = '10px 0px' : margin_prop = '0px 0px';
+					utils.addCSSRule(this.styleSheet,'#ad_window','width: 100%; margin: ' + margin_prop + '; display:block; overflow:hidden; position:relative');
 				break;
 			}
 		},
