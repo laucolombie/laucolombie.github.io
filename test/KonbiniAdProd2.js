@@ -412,7 +412,7 @@
 				utils.addCSSRule(this.styleSheet,'footer','position:absolute; z-index:1000; margin-top:-20px');
            		jQuery('.mobile .widget-recommendation-results').css('padding','10px');
            		jQuery('.addthis_toolbox.flex-box').css('padding','10px');
-           		jQuery('entry-header').css('margin','0px');
+           		jQuery('.entry-header').css('margin','0px');
 			}
 		},
 		/**
