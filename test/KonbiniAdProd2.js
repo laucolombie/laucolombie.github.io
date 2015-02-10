@@ -465,6 +465,18 @@
 				
 			}
 		},
+		manageImgTouch: function() {
+			var elm = document.getElementById('ad_image');
+			if (!utils.isNodeVisible(ad_window,30)) {
+				if (elm.style.width == '100%') {
+					elm.style.width = '1px';
+				}
+			} else {
+				if (elm.style.width == '1px') {
+					elm.style.width = '100%';
+				}
+			}
+		},
 		initEvents:function(remove) {
 
 			console.log('initEvents');
@@ -522,67 +534,20 @@
 				break;
 				case 'touchstart':
 					e.stopPropagation();
-					var elm = document.getElementById('ad_image');
-					if (!utils.isNodeVisible(ad_window,30)) {
-						if (elm.style.width == '100%') {
-							//elm.style.display = 'none';
-							console.log('width');
-							elm.style.width = '1px';
-						}
-					} else {
-						if (elm.style.width == '1px') {
-							elm.style.width = '100%';
-						}
-					}
+					this.manageImgTouch();
 					
 				break;
 				case 'touchmove':
 				
 					e.stopPropagation();
-					var elm = document.getElementById('ad_image');
-					console.log(elm.style);
-					if (!utils.isNodeVisible(ad_window,30)) {
-						if (elm.style.width == '100%' || elm.style.width == "") {
-							//elm.style.display = 'none';
-							//console.log('width');
-							elm.style.width = '1px';
-							//jQuery(elm).css('opacity','0');
-						}
-					} else {
-						if (elm.style.width == '1px') {
-							elm.style.width = '100%';
-							//this.anim(elm,{opacity:'1'},300)
-						}
-					}
+					this.manageImgTouch();
 				break;
 				case 'touchend':
 					e.stopPropagation();
-					
-					var elm = document.getElementById('ad_image');
-					if (!utils.isNodeVisible(ad_window,30)) {
-						if (elm.style.width == '100%' || elm.style.width == "") {
-							elm.style.width = '1px';
-							//jQuery(elm).css('opacity','0');
-						}
-					} else {
-						if (elm.style.width == '1px') {
-							elm.style.width = '100%';
-							//this.anim(elm,{opacity:'1'},300)
-						}
-					}
+					this.manageImgTouch();
+					//double check
 					setTimeout(function() { 
-
-						var elm = document.getElementById('ad_image');
-						if (!utils.isNodeVisible(ad_window,30)) {
-							if (elm.style.width == '100%' || elm.style.width == "") {
-								elm.style.width = '1px';
-							}
-						} else {
-							if (elm.style.width == '1px') {
-								elm.style.width = '100%';
-							}
-						}
-						
+						_self.manageImgTouch();
 					}, 1000);
 				break;
 				case 'orientationchange':
