@@ -204,8 +204,7 @@
 					
 					//ready to be shown
 					root.imgLoadingComplete();
-					
-					
+				
 				}
 
 				(utils.isPortrait.matches) ? src = this.images.urlmp : src = this.images.urlml;
@@ -220,8 +219,10 @@
 		},
 		hidePreloader: function() {
 			setTimeout(function() { 
+				_self.anim(jQuery('#ad_image'),{opacity:'1'},300);
 				_self.anim(jQuery('#ad_preloader'),{opacity:'0'},300);
-			},2000);
+				_self.anim(jQuery('.ad-close'),{opacity:'1'},300);
+			},1000);
 		},
 		showPreloader: function() {
 			//this.anim(jQuery('#ad_preloader'),{opacity:'1'},300);
@@ -292,7 +293,7 @@
 			var cssProps =  'width:100%;'
 							+ 'height:' + this.options.openWindowH + 'px;'
 							+ 'position:relative;'
-							+ 'background-color:#fff;'
+							+ 'background-color:transparent;'
 							+ 'background-position: 50% 50%;'
 							+ 'background-repeat: no-repeat no-repeat;'
 							+ 'background-image:url("' + LOADERIMG + '")';
@@ -331,6 +332,7 @@
 							+ 'left: 0px;'
 							+ 'top:0px;'
 							+ 'background-color:transparent;'
+							+ 'opacity:0;'
 							+ 'background-size: 100%;'
 							+ 'background-position: 0px 0xp;'
 							+ 'background-repeat: no-repeat no-repeat;'
@@ -401,23 +403,49 @@
 
 			//make sure that is the mobile experience
 			if (utils.hasTouch) {
+
+				this.setWhiteColorBack();
+
 				utils.addCSSRule(this.styleSheet,'#wrapper',cssPropsWrapper);
-				utils.addCSSRule(this.styleSheet,'.wrapper-inner','background:transparent;padding: 0px 0px');
-				utils.addCSSRule(this.styleSheet,'header','background:#ffffff; padding: 15px 0px 0px 0px; margin-top:-15px; margin-bottom:0px');
-				utils.addCSSRule(this.styleSheet,'.entry-content','background:#ffffff;padding: 10px; margin-top:-1px');
-				utils.addCSSRule(this.styleSheet,'.entry-shares','background:#ffffff;margin: 0; padding:10px 0px');
-				utils.addCSSRule(this.styleSheet,'.tablette','background:#ffffff');
-				utils.addCSSRule(this.styleSheet,'.mobile','background:#ffffff');
-				utils.addCSSRule(this.styleSheet,'.entry-biobox','background:#ffffff; padding-top:15px');
-				utils.addCSSRule(this.styleSheet,'footer','position:absolute; z-index:1000; margin-top:-20px');
-				jQuery('.entry-header h1').css('padding','0px 10px');
-				jQuery('.entry-metas').css('padding','0px 10px');
-           		jQuery('.mobile .widget-recommendation-results').css('padding','10px');
-           		jQuery('.container-header').css('margin-bottom','0px');
-           		jQuery('.addthis_toolbox.flex-box').css('padding','10px');
-           		jQuery('.entry-header').css('margin','0px');
+				utils.addCSSRule(this.styleSheet,'.wrapper-inner','background:transparent; padding:0px; margin:0px');
+				jQuery('.container-header').css('margin','0px');
+
+				utils.addCSSRule(this.styleSheet,'.entry-header','padding:20px 10px 0px 10px; margin-bottom:0px');
+				utils.addCSSRule(this.styleSheet,'.entry-shares','margin-bottom: 0px; border-bottom:none;');
+				
+
+				//utils.addCSSRule(this.styleSheet,'.entry-content','margin-left: -10px; margin-right: -10px; padding-right:10px; padding-left:10px; padding-top:10px');
+
+				// //jQuery('.container-header').css('margin-bottom','0px');
+				utils.addCSSRule(this.styleSheet,'footer','position:absolute; z-index:1000;');
+				// 
+				// jQuery('.addthis_toolbox.flex-box').css('padding','0px 10px');
+				// utils.addCSSRule(this.styleSheet,'header','background:#ffffff; padding: 15px 0px 0px 0px; margin-top:-15px; margin-bottom:0px');
+				utils.addCSSRule(this.styleSheet,'.entry-content','padding: 10px;');
+				jQuery('.entry-shares')[1].style.padding = '20px 10px';
+				// utils.addCSSRule(this.styleSheet,'.entry-shares','background:#ffffff;margin: 0; padding:10px 0px');
+				
+				// utils.addCSSRule(this.styleSheet,'.entry-biobox','background:#ffffff; padding-top:15px');
+				
+				// jQuery('.entry-header h1').css('padding','0px 10px');
+				// jQuery('.entry-metas').css('padding','0px 10px');
+    //        		jQuery('.mobile .widget-recommendation-results').css('padding','10px');
+    //        		
+    //        		jQuery('.addthis_toolbox.flex-box').css('padding','10px');
+    //        		jQuery('.entry-header').css('margin','0px');
            		
 			}
+		},
+		setWhiteColorBack: function() {
+
+			var tags = ['header','.entry-content','.entry-shares','.tablette','.mobile','.entry-biobox'],
+				i = 0;
+
+			while (i < tags.length) {
+    			jQuery(tags[i]).css('background','#ffffff');
+    			i++;
+			}
+
 		},
 		/**
 		 * Add a close button
@@ -434,6 +462,7 @@
 			utils.addCSSRule(this.styleSheet,".ad-close::after", "-moz-transform: rotate(135deg); -ms-transform: rotate(135deg); -webkit-transform: rotate(135deg); transform: rotate(135deg);");
 			utils.addCSSRule(this.styleSheet,".ad-close::before, .ad-close::after", "content: ''; position: absolute; top: 14px; left: 9px; display: inline-block; width: 22px; height: 3px; background-color: #fff; -moz-transition: -moz-transform 250ms; -webkit-transition: -webkit-transform 250ms; transition: transform 250ms;");
 
+			if (_device !== 'desktop') jQuery('.ad-close').css('opacity','0');
 		},
 		/**
 		 * Add an open button
@@ -446,9 +475,10 @@
 				this.openAreaOpenButton.setAttribute('class','ad-open');
 				
 				if (_device === 'desktop') utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; margin-bottom:10px;");
-				else utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc");
+				else utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer;");
 				
 				this.openAreaOpenButton.innerHTML = 'Afficher la pub';
+			
 			} else {
 				
 			}
