@@ -403,13 +403,15 @@
 			if (utils.hasTouch) {
 				utils.addCSSRule(this.styleSheet,'#wrapper',cssPropsWrapper);
 				utils.addCSSRule(this.styleSheet,'.wrapper-inner','background:transparent;padding: 0px 0px');
-				utils.addCSSRule(this.styleSheet,'header','background:#ffffff; padding: 15px 10px 0px 10px; margin-top:-15px; margin-bottom:0px');
+				utils.addCSSRule(this.styleSheet,'header','background:#ffffff; padding: 15px 0px 0px 0px; margin-top:-15px; margin-bottom:0px');
 				utils.addCSSRule(this.styleSheet,'.entry-content','background:#ffffff;padding: 10px; margin-top:-1px');
 				utils.addCSSRule(this.styleSheet,'.entry-shares','background:#ffffff;margin: 0');
 				utils.addCSSRule(this.styleSheet,'.tablette','background:#ffffff');
 				utils.addCSSRule(this.styleSheet,'.mobile','background:#ffffff');
 				utils.addCSSRule(this.styleSheet,'.entry-biobox','background:#ffffff; padding-top:15px');
 				utils.addCSSRule(this.styleSheet,'footer','position:absolute; z-index:1000; margin-top:-20px');
+				jQuery('.entry-header h1').css('padding','0px 10px');
+				jQuery('.entry-metas').css('padding','0px 10px');
            		jQuery('.mobile .widget-recommendation-results').css('padding','10px');
            		jQuery('.container-header').css('margin-bottom','0px');
            		jQuery('.addthis_toolbox.flex-box').css('padding','10px');
