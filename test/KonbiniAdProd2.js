@@ -405,7 +405,7 @@
 				utils.addCSSRule(this.styleSheet,'.wrapper-inner','background:transparent;padding: 0px 0px');
 				utils.addCSSRule(this.styleSheet,'header','background:#ffffff; padding: 15px 0px 0px 0px; margin-top:-15px; margin-bottom:0px');
 				utils.addCSSRule(this.styleSheet,'.entry-content','background:#ffffff;padding: 10px; margin-top:-1px');
-				utils.addCSSRule(this.styleSheet,'.entry-shares','background:#ffffff;margin: 0');
+				utils.addCSSRule(this.styleSheet,'.entry-shares','background:#ffffff;margin: 0; padding:10px 0px');
 				utils.addCSSRule(this.styleSheet,'.tablette','background:#ffffff');
 				utils.addCSSRule(this.styleSheet,'.mobile','background:#ffffff');
 				utils.addCSSRule(this.styleSheet,'.entry-biobox','background:#ffffff; padding-top:15px');
