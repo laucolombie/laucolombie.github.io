@@ -466,9 +466,10 @@
 			}
 		},
 		manageImgTouch: function() {
+
 			var elm = document.getElementById('ad_image');
 			if (!utils.isNodeVisible(ad_window,30)) {
-				if (elm.style.width == '100%') {
+				if (elm.style.width == '100%' || elm.style.width == '') {
 					elm.style.width = '1px';
 				}
 			} else {
