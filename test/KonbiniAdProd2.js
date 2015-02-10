@@ -165,7 +165,7 @@
 		this.options = {
 			bgColor: '#ffffff',
 			openWindow: null,
-			openWindowH: 250,
+			openWindowH: 200,
 			enableTick: false
 		};
 
@@ -225,7 +225,7 @@
 			},1000);
 		},
 		showPreloader: function() {
-			//this.anim(jQuery('#ad_preloader'),{opacity:'1'},300);
+			this.anim(jQuery('#ad_preloader'),{opacity:'1'},300);
 		},
 		/**
 		 * Add an image asset 
@@ -457,7 +457,7 @@
 				this.openAreaOpenButton.setAttribute('class','ad-open');
 				
 				if (_device === 'desktop') utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; margin-bottom:10px;");
-				else utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer;");
+				else utils.addCSSRule(this.styleSheet,".ad-open","width:100%; height:0px;background-color:#fff; opacity:0; line-height: 40px; font-size: 16px; text-align:right; padding-right:10px; cursor:pointer; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc;");
 				
 				this.openAreaOpenButton.innerHTML = 'Afficher la pub';
 			
@@ -471,10 +471,12 @@
 			if (!utils.isNodeVisible(ad_window,30)) {
 				if (elm.style.width == '100%' || elm.style.width == '') {
 					elm.style.width = '1px';
+					this.showPreloader();
 				}
 			} else {
 				if (elm.style.width == '1px') {
 					elm.style.width = '100%';
+					_self.anim(jQuery('#ad_preloader'),{opacity:'0'},300);
 				}
 			}
 		},
