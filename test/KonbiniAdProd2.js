@@ -225,7 +225,8 @@
 			},1000);
 		},
 		showPreloader: function() {
-			this.anim(jQuery('#ad_preloader'),{opacity:'1'},300);
+			jQuery('#ad_preloader').css('opacity','1');
+			//this.anim(jQuery('#ad_preloader'),{opacity:'1'},300);
 		},
 		/**
 		 * Add an image asset 
