@@ -415,12 +415,13 @@
 
 				jQuery('.container-header').css('margin','0px');
 				jQuery('.entry-shares')[1].style.padding = '20px 10px';
-				jQuery('.mobile .widget-recommendation-results').css('padding','10px');       
+				jQuery('.mobile .widget-recommendation-results').css('padding','10px');      
+				jQuery('.bloc-like').css('padding','10px');
 			}
 		},
 		setWhiteColorBack: function() {
 
-			var tags = ['header','.entry-content','.entry-shares','.tablette','.mobile','.entry-biobox'],
+			var tags = ['header','.entry-content','.bloc-like','.entry-shares','.tablette','.mobile','.entry-biobox'],
 				i = 0;
 
 			while (i < tags.length) {
