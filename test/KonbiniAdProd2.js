@@ -408,7 +408,7 @@
 
 				utils.addCSSRule(this.styleSheet,'#wrapper',cssPropsWrapper);
 				utils.addCSSRule(this.styleSheet,'.wrapper-inner','background:transparent; padding:0px; margin:0px');
-				utils.addCSSRule(this.styleSheet,'.entry-header','padding:20px 10px 0px 10px; margin-bottom:0px');
+				utils.addCSSRule(this.styleSheet,'.entry-header','padding:15px 10px 0px 10px; margin-bottom:0px');
 				utils.addCSSRule(this.styleSheet,'.entry-shares','margin-bottom: 0px; border-bottom:none;');
 				utils.addCSSRule(this.styleSheet,'footer','position:absolute; z-index:1000;');
 				utils.addCSSRule(this.styleSheet,'.entry-content','padding: 10px;');
