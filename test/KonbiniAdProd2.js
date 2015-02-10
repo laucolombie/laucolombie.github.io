@@ -411,7 +411,7 @@
 				utils.addCSSRule(this.styleSheet,'.entry-biobox','background:#ffffff; padding-top:15px');
 				utils.addCSSRule(this.styleSheet,'footer','position:absolute; z-index:1000; margin-top:-20px');
            		jQuery('.mobile .widget-recommendation-results').css('padding','10px');
-           		jQuery('.container-header').css('margin','0px');
+           		jQuery('.container-header').css('margin-bottom','0px');
            		jQuery('.addthis_toolbox.flex-box').css('padding','10px');
            		jQuery('.entry-header').css('margin','0px');
            		
