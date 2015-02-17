@@ -142,8 +142,8 @@
 			var fb_container = document.createElement('div');
 			fb_container.setAttribute('id','fb_container');
 			fb_container.style.width = '100%';
-			fb_container.style.height = '258px';
-			fb_container.style.backgroundColor = '#ccc';
+			fb_container.style.height = '240px';
+			//fb_container.style.backgroundColor = '#ccc';
 
 			//top_container.style.backgroundColor = '#f5f5f5';
 			//top_container.style.borderBottom = '1px solid #ccc';
