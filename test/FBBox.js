@@ -141,34 +141,34 @@
 			//top_container.style.backgroundColor = '#f5f5f5';
 			//top_container.style.borderBottom = '1px solid #ccc';
 
-			var fb_container = document.createElement('div');
-			fb_container.setAttribute('id','fb_iframe_container');
-			fb_container.style.width = '100%';
-			fb_container.style.height = '240px';
-			
-
-			//var fb_div = '<div class="fb-like-box" data-href="https://www.facebook.com/konbini" data-width="300" data-height="240" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>';
-			
-			var FB_iframe = document.createElement('iframe');
-			//FB_iframe.style.height = (settings.FBBoxSize.height - 40) + 'px';
-			FB_iframe.setAttribute('src',settings.FBpluginURL);
-
 			$($.FBBox.defaults.appendBoxTo).append(settings.container);
 
 			$(top_container).html( "<p style='margin: 10px 0px 0px 0px'>" + settings.FBHeaderText + "</p>" );
-
-			console.log(fb_container);
-
+			
 			$(settings.container).append(top_container);
-			$(settings.container).append(fb_container);
-			$(fb_container).append(FB_iframe);
-
-			//$(settings.container).append(FB_iframe);
+			
+			addFBContent()
 
 			addBoxCloseBtn(top_container);
 
 			addBoxFooter();
 
+		}
+
+		function addFBContent() {
+
+			var fb_container = document.createElement('div');
+			fb_container.setAttribute('id','fb_iframe_container');
+			fb_container.style.width = '100%';
+			fb_container.style.height = '240px';
+			
+			var FB_iframe = document.createElement('iframe');
+			FB_iframe.style.height = (settings.FBBoxSize.height - 40) + 'px';
+			FB_iframe.setAttribute('src',settings.FBpluginURL);
+
+			//add fb_container to main container
+			$(settings.container).append(fb_container);
+			$(fb_container).append(FB_iframe);
 		}
 
 		function addBoxCloseBtn(parent) {
