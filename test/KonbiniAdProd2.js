@@ -543,7 +543,6 @@
 					
 				break;
 				case 'touchmove':
-				
 					e.stopPropagation();
 					this.manageImgTouch();
 				break;
