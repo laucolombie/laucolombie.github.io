@@ -151,7 +151,7 @@
 			
 			var FB_iframe = document.createElement('iframe');
 			//FB_iframe.style.height = (settings.FBBoxSize.height - 40) + 'px';
-			FB_iframe.setAttribute('src',FBpluginURL);
+			FB_iframe.setAttribute('src',settings.FBpluginURL);
 
 			$($.FBBox.defaults.appendBoxTo).append(settings.container);
 
