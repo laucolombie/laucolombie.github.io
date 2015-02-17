@@ -17,7 +17,7 @@
 		appendBoxTo: 'body',
 		FBBoxIsVisible: true,
 		container: document.createElement('div'),
-		FBplugin: '<iframe src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fkonbiniuk&width=250px&height=258&colorscheme=light&show_faces=true&header=false&stream=false&show_border=false"></iframe>',
+		FBpluginURL: 'http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fkonbini&width=300&height=258&colorscheme=light&show_faces=true&header=false&stream=false&show_border=false',
 		FBHeaderText: 'Like us on FB for more awesome posts!'
 	};
 
@@ -138,21 +138,20 @@
 			top_container.style.lineHeight = '30px';
 			top_container.style.paddingLeft = '10px';
 			top_container.style.marginTop = '10px';
-
-			var fb_container = document.createElement('div');
-			fb_container.setAttribute('id','fb_container');
-			fb_container.style.width = '100%';
-			fb_container.style.height = '240px';
-			//fb_container.style.backgroundColor = '#ccc';
-
 			//top_container.style.backgroundColor = '#f5f5f5';
 			//top_container.style.borderBottom = '1px solid #ccc';
 
-			var fb_div = '<div class="fb-like-box" data-href="https://www.facebook.com/konbini" data-width="300" data-height="240" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>';
+			var fb_container = document.createElement('div');
+			fb_container.setAttribute('id','fb_iframe_container');
+			fb_container.style.width = '100%';
+			fb_container.style.height = '240px';
 			
-			/*var FB_iframe = document.createElement('iframe');
-			FB_iframe.style.height = (settings.FBBoxSize.height - 40) + 'px';
-			FB_iframe.setAttribute('src','http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fkonbiniuk&width=300px&height=258&colorscheme=light&show_faces=true&header=false&stream=false&show_border=false');*/
+
+			//var fb_div = '<div class="fb-like-box" data-href="https://www.facebook.com/konbini" data-width="300" data-height="240" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>';
+			
+			var FB_iframe = document.createElement('iframe');
+			//FB_iframe.style.height = (settings.FBBoxSize.height - 40) + 'px';
+			FB_iframe.setAttribute('src',FBpluginURL);
 
 			$($.FBBox.defaults.appendBoxTo).append(settings.container);
 
@@ -162,7 +161,7 @@
 
 			$(settings.container).append(top_container);
 			$(settings.container).append(fb_container);
-			$(fb_container).html(fb_div);
+			$(fb_container).append(FB_iframe);
 
 			//$(settings.container).append(FB_iframe);
 
